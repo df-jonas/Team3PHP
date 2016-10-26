@@ -85,17 +85,6 @@ return [
             'prefix'   => '',
         ],
 
-        'nmbs_mysql' => [
-            'driver'    => 'mysql',
-            'host'      => 'dtsl.ehb.be',
-            'database'  => 'SP2G3',
-            'username'  => 'SP2G3',
-            'password'  => 'qCxNYqKv',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-        ],
-
     ],
 
     /*
