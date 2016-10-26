@@ -15,4 +15,17 @@ Route::get('/', function () {
     return view('test');
 });
 
-Route::post('staff', 'StaffController@index');
+Route::group(['prefix' => 'api/v.1'], function() {
+    Route::group(['prefix' => 'staff'], function() {
+        Route::get('/', 'StaffController@index');
+        Route::get('/{id}', 'StaffController@byID');
+
+        Route::post('login', 'StaffController@login');
+        Route::post('create', 'StaffController@create');
+
+        Route::Put('update/{id}', 'StaffController@update');
+        Route::Delete('delete/{id}', 'StaffController@delete');
+    });
+});
+
+
