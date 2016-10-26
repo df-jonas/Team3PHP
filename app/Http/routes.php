@@ -15,16 +15,18 @@ Route::get('/', function () {
     return view('test');
 });
 
-Route::group(['prefix' => 'api/v.1'], function() {
-    Route::group(['prefix' => 'staff'], function() {
-        Route::get('/', 'StaffController@index');
-        Route::get('/{id}', 'StaffController@byID');
+Route::group(['prefix' => '/~ludovic.marchand/DigX/SP2/public'], function() {
+    Route::group(['prefix' => 'api/v.1'], function() {
+        Route::group(['prefix' => 'staff'], function() {
+            Route::get('/', 'StaffController@index');
+            Route::get('/{id}', 'StaffController@byID');
 
-        Route::post('login', 'StaffController@login');
-        Route::post('create', 'StaffController@create');
+            Route::post('login', 'StaffController@login');
+            Route::post('create', 'StaffController@create');
 
-        Route::Put('update/{id}', 'StaffController@update');
-        Route::Delete('delete/{id}', 'StaffController@delete');
+            Route::Put('update/{id}', 'StaffController@update');
+            Route::Delete('delete/{id}', 'StaffController@delete');
+        });
     });
 });
 
