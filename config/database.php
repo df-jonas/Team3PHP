@@ -87,10 +87,10 @@ return [
 
         'nmbs_mysql' => [
             'driver'    => 'mysql',
-            'host'      => env('DB_HOST', 'https://dtsl.ehb.be'),
-            'database'  => env('DB_DATABASE', 'SP2G3'),
-            'username'  => env('DB_USERNAME', 'SP2G3'),
-            'password'  => env('DB_PASSWORD', 'qCxNYqKv'),
+            'host'      => 'dtsl.ehb.be',
+            'database'  => 'SP2G3',
+            'username'  => 'SP2G3',
+            'password'  => 'qCxNYqKv',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

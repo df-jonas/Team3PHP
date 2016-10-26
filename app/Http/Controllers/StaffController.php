@@ -8,6 +8,8 @@ use Illuminate\Http\Response;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Staff;
+
 class StaffController extends Controller
 {
     /**
@@ -15,11 +17,26 @@ class StaffController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $id = Input::post('id');
 
-        return response('Hello World - ' . $id, 200);
+
+        // return response($request->input('id'), 200);
+
+        $staff = [
+            'id' => $request->input('id'),
+            'yolo' => [
+                'key1' => 'value1',
+                'key2' => 'value2'
+            ]
+
+        ];
+
+        $staff = Staff::all();
+
+
+
+        return response()->json($staff);
     }
 
     /**
