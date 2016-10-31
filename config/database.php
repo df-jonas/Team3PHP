@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'nmbs_mysql'),
+    'default' => env('DB_CONNECTION', 'mysql_nmbs'),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,17 +78,16 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
-
-        'nmbs_mysql' => array(
+        'nmbs_mysql' => [
             'driver'    => 'mysql',
-            'host'      => 'https://dt5.ehb.be/',
-            'database'  => 'SP2G3',
-            'username'  => 'SP2G3',
-            'password'  => 'qCxNYqKv',
+            'host'      => 'dtsl.ehb.be',
+            'database'  => '******',
+            'username'  => '******',
+            'password'  => '******',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
-        ),
+        ],
 
     ],
 
