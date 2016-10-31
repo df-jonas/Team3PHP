@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
-use App\Staff;
-use Illuminate\Support\Facades\Input;
-
-class StaffController extends Controller
+class UserController extends Controller
 {
     public function login()
     {
@@ -21,16 +19,16 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $staff = Staff::all();
+        $user = User::all();
 
-        return response()->json($staff);
+        return response()->json($user);
     }
 
     public function byID($id)
     {
-        $staff_member = Staff::find($id);
-        if (!empty($staff_member))
-            return response()->json($staff_member);
+        $user = Staff::find($id);
+        if (!empty($user))
+            return response()->json($user);
 
         return Response('Not Found', 404);
     }
@@ -54,18 +52,18 @@ class StaffController extends Controller
             && Input::has('Email')
         ) {
 
-            $staff_member = new Staff();
-            $staff_member->AddressID = Input::get('AddressID');
-            $staff_member->StationID = Input::get('StationID');
-            $staff_member->FirstName = Input::get('FirstName');
-            $staff_member->LastName = Input::get('LastName');
-            $staff_member->UserName = Input::get('UserName');
-            $staff_member->Password = Input::get('Password');
-            $staff_member->Rights = Input::get('Rights');
-            $staff_member->BirthDate = Input::get('BirthDate');
-            $staff_member->Email = Input::get('Email');
+            $user = new Staff();
+            $user->AddressID = Input::get('AddressID');
+            $user->StationID = Input::get('StationID');
+            $user->FirstName = Input::get('FirstName');
+            $user->LastName = Input::get('LastName');
+            $user->UserName = Input::get('UserName');
+            $user->Password = Input::get('Password');
+            $user->Rights = Input::get('Rights');
+            $user->BirthDate = Input::get('BirthDate');
+            $user->Email = Input::get('Email');
 
-            if ($staff_member->save())
+            if ($user->save())
                 return Response('Staff member successfully created', 200);
 
             return Response('Not Acceptable', 406);
@@ -83,29 +81,29 @@ class StaffController extends Controller
     public function update(Request $request, $id)
     {
 
-        $staff_member = Staff::find($id);
-        if (!empty($staff_member)) {
+        $user = Staff::find($id);
+        if (!empty($user)) {
             if (Input::has('AddressID'))
-                $staff_member->AddressID = Input::get('AddressID');
+                $user->AddressID = Input::get('AddressID');
             if (Input::has('StationID'))
-                $staff_member->StationID = Input::get('StationID');
+                $user->StationID = Input::get('StationID');
             if (Input::has('FirstName'))
-                $staff_member->FirstName = Input::get('FirstName');
+                $user->FirstName = Input::get('FirstName');
             if (Input::has('LastName'))
-                $staff_member->LastName = Input::get('LastName');
+                $user->LastName = Input::get('LastName');
             if (Input::has('UserName'))
-                $staff_member->UserName = Input::get('UserName');
+                $user->UserName = Input::get('UserName');
             if (Input::has('Password'))
-                $staff_member->Password = Input::get('Password');
+                $user->Password = Input::get('Password');
             if (Input::has('Rights'))
-                $staff_member->Rights = Input::get('Rights');
+                $user->Rights = Input::get('Rights');
             if (Input::has('BirthDate'))
-                $staff_member->BirthDate = Input::get('BirthDate');
+                $user->BirthDate = Input::get('BirthDate');
             if (Input::has('Email'))
-                $staff_member->Email = Input::get('Email');
+                $user->Email = Input::get('Email');
 
 
-            if ($staff_member->save())
+            if ($user->save())
                 return Response('Staff member successfully created', 200);
         } else {
             return Response('Not Found', 404);
@@ -122,9 +120,9 @@ class StaffController extends Controller
      */
     public function delete($id)
     {
-        $staff_member = Staff::find($id);
-        if (!empty($staff_member)) {
-            if ($staff_member->delete())
+        $user = User::find($id);
+        if (!empty($user)) {
+            if ($user->delete())
                 return Response('Staff member with id ' . $id . ' has successfully been deleted', 200);
         } else {
             return Response('Not Found', 404);

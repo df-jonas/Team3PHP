@@ -2,38 +2,30 @@
 
 namespace App;
 
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model implements AuthenticatableContract,
-                                    AuthorizableContract,
-                                    CanResetPasswordContract
+class User extends Authenticatable
 {
-    use Authenticatable, Authorizable, CanResetPassword;
+    use Notifiable;
 
     /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'users';
-
-    /**
-     * The attributes that are mass assignable.
+     * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = ['password', 'remember_token'];
+    protected $connection = 'nmbs_mysql';
+
+    protected $table = 'Staff';
+
+    protected $primaryKey = 'StaffID';
+
+    public $timestamps = false;
+
+    protected $fillable = ['AdressID', 'StationID', 'FirstName', 'LastName', 'UserName', 'Password', 'Rights', 'BirthDate', 'Email'];
+    protected $guarded = ['StaffID'];
 }
