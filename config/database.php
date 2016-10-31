@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql_nmbs'),
+    'default' => env('DB_CONNECTION', 'nmbs_mysql'),
 
     /*
     |--------------------------------------------------------------------------
