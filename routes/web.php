@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::group(['prefix' => '/~ludovic.marchand/DigX/SP/public'], function() {
     Route::get('/', function () {
         return view('temp');

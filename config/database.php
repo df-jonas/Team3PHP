@@ -81,9 +81,9 @@ return [
         'nmbs_mysql' => [
             'driver'    => 'mysql',
             'host'      => 'dtsl.ehb.be',
-            'database'  => '**********',
-            'username'  => '**********',
-            'password'  => '**********',
+            'database'  => '******',
+            'username'  => '******',
+            'password'  => '******',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
