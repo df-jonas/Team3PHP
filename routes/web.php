@@ -11,10 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('temp');
+
+Route::group(['prefix' => '/~ludovic.marchand/DigX/SP/public'], function() {
+    Route::get('/', function () {
+        return view('temp');
+    });
+
+    Auth::routes();
+
+    Route::get('/home', 'HomeController@index');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
