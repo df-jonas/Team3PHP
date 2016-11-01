@@ -19,7 +19,7 @@ Route::get('/user', function (Request $request) {
 
 //Route::group(['prefix' => '/~ludovic.marchand/DigX/SP2/public'], function() {
 //Route::group(['prefix' => '/nmbs_php/laravel/public/'], function() {
-    //Route::group(['prefix' => 'api/v.1'], function() {
+
         Route::group(['prefix' => 'staff'], function()
         {
             Route::post('login', 'UserController@login');
@@ -29,7 +29,7 @@ Route::get('/user', function (Request $request) {
                 Route::get('/', 'UserController@index');
                 Route::get('/{id}', 'UserController@byID');
 
-                Route::post('login', 'UserController@login');
+
                 Route::post('create', 'UserController@create');
 
                 Route::Put('update/{id}', 'UserController@update');
