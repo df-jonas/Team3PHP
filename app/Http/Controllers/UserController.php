@@ -4,12 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+
+
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function login()
+
+
+    public function login(Request $request)
     {
-        return response()->json('login_func');
+        if (Auth::once(['username' => $request->get('username'), 'password' => $request->get('password')]))
+        {
+            $result = [
+              'api_token' => Auth::user()->Api_token,
+            ];
+
+            return response()->json($result);
+        }
+
+        return Response('Bad Request', 400);
     }
 
     /**
@@ -26,7 +41,7 @@ class UserController extends Controller
 
     public function byID($id)
     {
-        $user = Staff::find($id);
+        $user = User::find($id);
         if (!empty($user))
             return response()->json($user);
 
@@ -41,30 +56,30 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        if (Input::has('AddressID')
-            && Input::has('StationID')
-            && Input::has('FirstName')
-            && Input::has('LastName')
-            && Input::has('UserName')
-            && Input::has('Password')
-            && Input::has('Rights')
-            && Input::has('BirthDate')
-            && Input::has('Email')
+        if ($request->AddressID
+            && $request->StationID
+            && $request->FirstName
+            && $request->LastName
+            && $request->UserName
+            && $request->Password
+            && $request->Rights
+            && $request->BirthDate
+            && $request->Email
         ) {
 
-            $user = new Staff();
-            $user->AddressID = Input::get('AddressID');
-            $user->StationID = Input::get('StationID');
-            $user->FirstName = Input::get('FirstName');
-            $user->LastName = Input::get('LastName');
-            $user->UserName = Input::get('UserName');
-            $user->Password = Input::get('Password');
-            $user->Rights = Input::get('Rights');
-            $user->BirthDate = Input::get('BirthDate');
-            $user->Email = Input::get('Email');
+            $user = new User();
+            $user->AddressID = $request->AddressID;
+            $user->StationID = $request->StationID;
+            $user->FirstName = $request->FirstName;
+            $user->LastName = $request->LastName;
+            $user->UserName = $request->UserName;
+            $user->Password = $request->Password;
+            $user->Rights = $request->Rights;
+            $user->BirthDate = $request->BirthDate;
+            $user->Email = $request->Email;
 
             if ($user->save())
-                return Response('Staff member successfully created', 200);
+                return Response('User member successfully created', 200);
 
             return Response('Not Acceptable', 406);
         }
@@ -81,30 +96,30 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
 
-        $user = Staff::find($id);
+        $user = User::find($id);
         if (!empty($user)) {
-            if (Input::has('AddressID'))
-                $user->AddressID = Input::get('AddressID');
-            if (Input::has('StationID'))
-                $user->StationID = Input::get('StationID');
-            if (Input::has('FirstName'))
-                $user->FirstName = Input::get('FirstName');
-            if (Input::has('LastName'))
-                $user->LastName = Input::get('LastName');
-            if (Input::has('UserName'))
-                $user->UserName = Input::get('UserName');
-            if (Input::has('Password'))
-                $user->Password = Input::get('Password');
-            if (Input::has('Rights'))
-                $user->Rights = Input::get('Rights');
-            if (Input::has('BirthDate'))
-                $user->BirthDate = Input::get('BirthDate');
-            if (Input::has('Email'))
-                $user->Email = Input::get('Email');
+            if ($request->AddressID)
+                $user->AddressID = $request->AddressID;
+            if ($request->StationID)
+                $user->StationID = $request->StationID;
+            if ($request->FirstName)
+                $user->FirstName = $request->FirstName;
+            if ($request->LastName)
+                $user->LastName = $request->LastName;
+            if ($request->UserName)
+                $user->UserName = $request->UserName;
+            if ($request->Password)
+                $user->Password = $request->Password;
+            if ($request->Rights)
+                $user->Rights = $request->Rights;
+            if ($request->BirthDate)
+                $user->BirthDate = $request->BirthDate;
+            if ($request->Email)
+                $user->Email = $request->Email;
 
 
             if ($user->save())
-                return Response('Staff member successfully created', 200);
+                return Response('User member successfully created', 200);
         } else {
             return Response('Not Found', 404);
         }
@@ -123,10 +138,23 @@ class UserController extends Controller
         $user = User::find($id);
         if (!empty($user)) {
             if ($user->delete())
-                return Response('Staff member with id ' . $id . ' has successfully been deleted', 200);
+                return Response('User member with id ' . $id . ' has successfully been deleted', 200);
         } else {
             return Response('Not Found', 404);
         }
         return Response('Bad Request', 400);
+    }
+
+
+
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'UserName';
     }
 }

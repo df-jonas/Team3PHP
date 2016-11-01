@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
+
 
 class User extends Authenticatable
 {
@@ -15,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'Password', 'remember_token', 'Api_token',
     ];
 
     protected $connection = 'nmbs_mysql';
@@ -26,6 +28,11 @@ class User extends Authenticatable
 
     public $timestamps = false;
 
-    protected $fillable = ['AdressID', 'StationID', 'FirstName', 'LastName', 'UserName', 'Password', 'Rights', 'BirthDate', 'Email'];
+    protected $fillable = ['AdressID', 'StationID', 'FirstName', 'LastName', 'UserName', 'Password', 'Rights', 'BirthDate', 'Email', 'Api_token'];
     protected $guarded = ['StaffID'];
+
+    public function getAuthPassword()
+    {
+        return $this->Password;
+    }
 }
