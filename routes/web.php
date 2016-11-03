@@ -11,8 +11,7 @@
 |
 */
 
-
-Route::group(['prefix' => '/~ludovic.marchand/DigX/SP/public'], function() {
+//Route::group(['prefix' => '/~ludovic.marchand/DigX/SP/public'], function() {
     Route::get('/', function () {
         return view('temp');
     });
@@ -20,4 +19,4 @@ Route::group(['prefix' => '/~ludovic.marchand/DigX/SP/public'], function() {
     Auth::routes();
 
     Route::get('/home', 'HomeController@index');
-});
+//});
