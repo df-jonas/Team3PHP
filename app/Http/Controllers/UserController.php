@@ -119,7 +119,7 @@ class UserController extends Controller
 
 
             if ($user->save())
-                return Response('User member successfully created', 200);
+                return Response('User member successfully updated', 200);
         } else {
             return Response('Not Found', 404);
         }
