@@ -13,28 +13,43 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+//Route::get('/user', function (Request $request) {
+//    return $request->user();
+//})->middleware('auth:api');
 
-//Route::group(['prefix' => '/~ludovic.marchand/DigX/SP2/public'], function() {
-//Route::group(['prefix' => '/nmbs_php/laravel/public/'], function() {
+Route::group(['prefix' => 'staff'], function()
+{
+    Route::post('login', 'UserController@login');
 
-        Route::group(['prefix' => 'staff'], function()
-        {
-            Route::post('login', 'UserController@login');
+    Route::group(['middleware' => 'auth:api'], function()
+    {
+        Route::get('/', 'UserController@index');
+        Route::get('/{id}', 'UserController@byID');
 
-            Route::group(['middleware' => 'auth:api'], function()
-            {
-                Route::get('/', 'UserController@index');
-                Route::get('/{id}', 'UserController@byID');
+        Route::post('create', 'UserController@create');
 
+        Route::Put('update/{id}', 'UserController@update');
+        Route::Delete('delete/{id}', 'UserController@delete');
+    });
+});
 
-                Route::post('create', 'UserController@create');
+Route::group(['prefix' => 'address', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/{id}', 'AddressController@byID');
 
-                Route::Put('update/{id}', 'UserController@update');
-                Route::Delete('delete/{id}', 'UserController@delete');
-            });
-        });
-    //});
-//});
+    Route::post('create', 'AddressController@create');
+
+    Route::Put('update/{id}', 'AddressController@update');
+    Route::Delete('delete/{id}', 'AddressController@delete');
+});
+
+Route::group(['prefix' => 'lost_object', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/', 'LostObjectController@index');
+    Route::get('/{id}', 'LostObjectController@byID');
+
+    Route::post('create', 'LostObjectController@create');
+
+    Route::Put('update/{id}', 'LostObjectController@update');
+    Route::Delete('delete/{id}', 'LostObjectController@delete');
+});
