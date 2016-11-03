@@ -20,6 +20,6 @@ class LostObject extends Model
 
     public function getStationAttribute()
     {
-        return Address::find($this->StationID);
+        return Station::find($this->StationID);
     }
 }
