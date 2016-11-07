@@ -9,17 +9,17 @@ class RailCard extends Model
     protected $connection = 'nmbs_mysql';
     protected $table = 'RailCard';
 
-    protected $primaryKey = 'RailCardID';
+    protected $primaryKey = 'CardID';
     public $timestamps = false;
 
 
-    protected $guarded = ['RailCardID'];
+    protected $guarded = ['CardID'];
 
     protected $appends = ['Subscriptions'];
 
     public function getSubscriptionsAttribute()
     {
-        return Subscription::find($this->RailCardID);
+        return Subscription::where('RailCardID', '=', $this->CardID)->get();
     }
 
 }

@@ -70,5 +70,5 @@ Route::group(['prefix' => 'test', 'middleware' => 'auth:api'], function()
     Route::get('/subscription', 'SubscriptionController@index');
     Route::get('/route', 'RouteController@index');
     Route::get('/railcard', 'RailCardController@index');
-    Route::get('/discount', 'DiscountControler@index');
+    Route::get('/discount', 'DiscountController@index');
 });

@@ -13,8 +13,6 @@ class Discount extends Model
     public $timestamps = false;
 
 
-    protected $guarded = ['ObjectID'];
+    protected $guarded = ['DiscountID'];
     protected $fillable = ['Name', 'Amount'];
-
-    protected $appends = ['Station'];
 }

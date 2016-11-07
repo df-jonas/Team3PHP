@@ -12,16 +12,11 @@ class Subscription extends Model
     protected $primaryKey = 'SubscriptionID';
     public $timestamps = false;
 
-    protected $hidden = ['RailcardID', 'RouteID', 'DiscountID'];
+    protected $hidden = ['RouteID', 'DiscountID'];
     protected $guarded = ['SubscriptionID'];
     protected $fillable = ['RailcardID', 'RouteID', 'DiscountID', 'ValidFrom', 'ValidUntil'];
 
-    protected $appends = ['Railcard', 'Route', 'Discount'];
-
-    public function getRailcardAttribute()
-    {
-        return RailCard::find($this->RailcardID);
-    }
+    protected $appends = ['Route', 'Discount'];
 
     public function getRouteAttribute()
     {

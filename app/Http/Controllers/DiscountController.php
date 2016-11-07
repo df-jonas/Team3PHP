@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Discount;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller
@@ -35,7 +36,6 @@ class DiscountController extends Controller
 
             return Response('Not Acceptable', 406);
         }
-        return response()->json($request);
         return Response('Bad Request', 400);
     }
 
