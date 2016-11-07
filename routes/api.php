@@ -64,3 +64,11 @@ Route::group(['prefix' => 'station', 'middleware' => 'auth:api'], function()
     Route::Put('update/{id}', 'StationController@update');
     Route::Delete('delete/{id}', 'StationController@delete');
 });
+
+Route::group(['prefix' => 'test', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/subscription', 'SubscriptionController@index');
+    Route::get('/route', 'RouteController@index');
+    Route::get('/railcard', 'RailCardController@index');
+    Route::get('/discount', 'DiscountControler@index');
+});
