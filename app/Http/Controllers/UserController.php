@@ -109,10 +109,8 @@ class UserController extends Controller
             default:
                 $request->request->add(['AddressID' => $createAddressResponse]);
                 return $this->create($request);
-
                 break;
         }
-
     }
 
     /**

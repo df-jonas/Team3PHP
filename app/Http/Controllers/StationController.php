@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Station;
+use App\Traits\AddressTrait;
 use Illuminate\Http\Request;
 
 class StationController extends Controller
 {
+    use AddressTrait;
+
     public function index()
     {
         $station = Station::all();
@@ -34,9 +37,27 @@ class StationController extends Controller
             if ($station->save())
                 return Response('Station successfully created', 200);
 
-            return Response('Not Acceptable', 406);
+            return Response('Station Not Acceptable', 406);
         }
-        return Response('Bad Request', 400);
+        return Response('Station Bad Request', 400);
+    }
+
+    public function createWithAddress(Request $request)
+    {
+        $createAddressResponse = $this->createNewAdress($request);
+
+        switch ($createAddressResponse) {
+            case 400:
+                return Response('Address Bad Request', 400);
+                break;
+            case 406:
+                return Response('Address Not Acceptable', 406);
+                break;
+            default:
+                $request->request->add(['AddressID' => $createAddressResponse]);
+                return $this->create($request);
+                break;
+        }
     }
 
     public function update(Request $request, $id)
