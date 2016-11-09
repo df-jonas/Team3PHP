@@ -27,6 +27,7 @@ Route::group(['prefix' => 'staff'], function()
         Route::get('/{id}', 'UserController@byID');
 
         Route::post('create', 'UserController@create');
+        Route::post('/createWithAddress', 'UserController@createWithAddress');
 
         Route::Put('update/{id}', 'UserController@update');
         Route::Delete('delete/{id}', 'UserController@delete');
@@ -43,7 +44,7 @@ Route::group(['prefix' => 'address', 'middleware' => 'auth:api'], function()
     Route::Delete('delete/{id}', 'AddressController@delete');
 });
 
-Route::group(['prefix' => 'lost_object', 'middleware' => 'auth:api'], function()
+Route::group(['prefix' => 'lostObject', 'middleware' => 'auth:api'], function()
 {
     Route::get('/', 'LostObjectController@index');
     Route::get('/{id}', 'LostObjectController@byID');
@@ -60,6 +61,7 @@ Route::group(['prefix' => 'station', 'middleware' => 'auth:api'], function()
     Route::get('/{id}', 'StationController@byID');
 
     Route::post('create', 'StationController@create');
+    Route::post('createWithAddress', 'StationController@create');
 
     Route::Put('update/{id}', 'StationController@update');
     Route::Delete('delete/{id}', 'StationController@delete');

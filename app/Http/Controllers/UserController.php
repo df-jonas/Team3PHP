@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\User;
+use App\Traits\AddressTrait;
+use App\Traits\ExceptionTrait;
+use Illuminate\Auth\Access\Response;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
-use Illuminate\Support\Facades\Hash;
-
 class UserController extends Controller
 {
-
+    use AddressTrait;
+    use ExceptionTrait;
 
     public function login(Request $request)
     {
-        if (Auth::once(['username' => $request->get('username'), 'password' => $request->get('password')]))
-        {
+        if (Auth::once(['username' => $request->get('username'), 'password' => $request->get('password')])) {
             $result = [
-              'api_token' => Auth::user()->Api_token,
+                'api_token' => Auth::user()->Api_token,
             ];
 
             return response()->json($result);
@@ -56,17 +58,17 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
+
         if ($request->AddressID
             && $request->StationID
             && $request->FirstName
             && $request->LastName
             && $request->UserName
             && $request->Password
-            && $request->Rights
+            && isset($request->Rights)
             && $request->BirthDate
             && $request->Email
         ) {
-
             $user = new User();
             $user->AddressID = $request->AddressID;
             $user->StationID = $request->StationID;
@@ -77,13 +79,40 @@ class UserController extends Controller
             $user->Rights = $request->Rights;
             $user->BirthDate = $request->BirthDate;
             $user->Email = $request->Email;
+            $user->Api_token = md5(uniqid($user->UserName, true));
 
-            if ($user->save())
-                return Response('User member successfully created', 200);
+            try {
+                if ($user->save())
+                    return Response('User member successfully created', 200);
 
-            return Response('Not Acceptable', 406);
+                return Response('User member Not Acceptable', 406);
+            } catch (\Exception $e) {
+
+                return Response( $this->beautifyException($e), 406);
+            }
+
         }
-        return Response('Bad Request', 400);
+        return Response('User member Bad Request', 400);
+    }
+
+    public function createWithAddress(Request $request)
+    {
+        $createAddressResponse = $this->createNewAdress($request);
+
+        switch ($createAddressResponse) {
+            case 400:
+                return Response('Address Bad Request', 400);
+                break;
+            case 406:
+                return Response('Address Not Acceptable', 406);
+                break;
+            default:
+                $request->request->add(['AddressID' => $createAddressResponse]);
+                return $this->create($request);
+
+                break;
+        }
+
     }
 
     /**
@@ -144,8 +173,6 @@ class UserController extends Controller
         }
         return Response('Bad Request', 400);
     }
-
-
 
 
     /**

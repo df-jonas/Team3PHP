@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Traits\AddressTrait;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
 {
+    use AddressTrait;
+
     public function byID($id)
     {
         $address = Address::find($id);
@@ -18,25 +21,20 @@ class AddressController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->Street
-            && $request->Number
-            && $request->City
-            && $request->ZipCode
-            && $request->Coordinates
-        ) {
-            $address = new Address();
-            $address->Street = $request->Street;
-            $address->Number = $request->Number;
-            $address->City = $request->City;
-            $address->ZipCode = $request->ZipCode;
-            $address->Coordinates = $request->Coordinates;
+        $createAddressResponse = $this->createNewAdress($request);
 
-            if ($address->save())
+        switch($createAddressResponse)
+        {
+            case 200:
                 return Response('Address successfully created', 200);
-
-            return Response('Not Acceptable', 406);
+                break;
+            case 406:
+                return Response('Not Acceptable', 406);
+                break;
+            default:
+                return Response('Bad Request', 400);
+                break;
         }
-        return Response('Bad Request', 400);
     }
 
     public function update(Request $request, $id)
