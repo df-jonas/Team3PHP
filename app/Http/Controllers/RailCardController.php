@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\RailCard;
+use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
 
 class RailCardController extends Controller
 {
+    use ReturnTrait;
+
+    protected $className = 'RailCard';
+
     public function index()
     {
         $railCard = RailCard::all();
@@ -19,7 +24,7 @@ class RailCardController extends Controller
         if (!empty($railCard))
             return response()->json($railCard);
 
-        return Response('Not Found', 404);
+        return $this->beautifyReturn(404);
     }
 
     /*
@@ -66,10 +71,10 @@ class RailCardController extends Controller
         $railCard = RailCard::find($id);
         if (!empty($railCard)) {
             if ($railCard->delete())
-                return Response('RailCard with id ' . $id . ' has successfully been deleted', 200);
+                return $this->beautifyReturn(200, 'Deleted');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 }

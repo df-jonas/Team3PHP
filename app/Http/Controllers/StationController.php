@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Station;
+use App\Traits\ReturnTrait;
+use App\Traits\AddressTrait;
 use Illuminate\Http\Request;
 
 class StationController extends Controller
 {
+    use AddressTrait;
+    use ReturnTrait;
+
+    protected $className = 'Station';
+
     public function index()
     {
         $station = Station::all();
@@ -19,7 +26,7 @@ class StationController extends Controller
         if (!empty($station))
             return response()->json($station);
 
-        return Response('Not Found', 404);
+        return $this->beautifyReturn(404);
     }
 
     public function create(Request $request)
@@ -32,11 +39,23 @@ class StationController extends Controller
             $station->Name = $request->Name;
 
             if ($station->save())
-                return Response('Station successfully created', 200);
+                return $this->beautifyReturn(200, 'Created');
 
-            return Response('Not Acceptable', 406);
+            return $this->beautifyReturn(406);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
+    }
+
+    public function createWithAddress(Request $request)
+    {
+        $createAddressResponse = $this->createNewAdress($request);
+
+        if (is_numeric($createAddressResponse)) {
+            $request->request->add(['AddressID' => $createAddressResponse]);
+            return $this->create($request);
+        } else {
+            return $createAddressResponse;
+        }
     }
 
     public function update(Request $request, $id)
@@ -49,11 +68,11 @@ class StationController extends Controller
                 $station->Name = $request->Name;
 
             if ($station->save())
-                return Response('Station successfully updated', 200);
+                return $this->beautifyReturn(200, 'Updated');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
     public function delete($id)
@@ -61,10 +80,10 @@ class StationController extends Controller
         $station = Station::find($id);
         if (!empty($station)) {
             if ($station->delete())
-                return Response('Station with id ' . $id . ' has successfully been deleted', 200);
+                return $this->beautifyReturn(200, 'Deleted');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 }

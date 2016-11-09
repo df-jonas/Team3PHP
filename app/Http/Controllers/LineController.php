@@ -2,41 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Discount;
+use App\Line;
 use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
 
-class DiscountController extends Controller
+class LineController extends Controller
 {
     use ReturnTrait;
 
-    protected $className = 'Discount';
+    protected $className = 'Line';
 
     public function index()
     {
-        $discount = Discount::all();
-        return response()->json($discount);
+        $line = Line::all();
+        return response()->json($line);
     }
 
     public function byID($id)
     {
-        $discount = Discount::find($id);
-        if (!empty($discount))
-            return response()->json($discount);
+        $line = Line::find($id);
+        if (!empty($line))
+            return response()->json($line);
 
         return $this->beautifyReturn(404);
     }
 
     public function create(Request $request)
     {
-        if ($request->Name
-            && $request->Amount
+        if ( $request->RouteID
+            && $request->TrainType
         ) {
-            $discount = new Discount();
-            $discount->Name = $request->Name;
-            $discount->Amount = $request->Amount;
+            $line = new Line();
+            $line->RouteID = $request->RouteID;
+            $line->TrainType = $request->TrainType;
 
-            if ($discount->save())
+            if ($line->save())
                 return $this->beautifyReturn(200, 'Created');
 
             return $this->beautifyReturn(406);
@@ -46,14 +46,15 @@ class DiscountController extends Controller
 
     public function update(Request $request, $id)
     {
-        $discount = Discount::find($id);
-        if (!empty($discount)) {
-            if ($request->Name)
-                $discount->Name = $request->Name;
-            if ($request->Amount)
-                $discount->Amount = $request->Amount;
+        $line = Line::find($id);
+        if (!empty($line)) {
+            if ($request->RouteID)
+                $line->RouteID = $request->RouteID;
+            if ($request->TrainType)
+                $line->TrainType = $request->TrainType;
 
-            if ($discount->save())
+
+            if ($line->save())
                 return $this->beautifyReturn(200, 'Updated');
         } else {
             return $this->beautifyReturn(404);
@@ -63,9 +64,9 @@ class DiscountController extends Controller
 
     public function delete($id)
     {
-        $discount = Discount::find($id);
-        if (!empty($discount)) {
-            if ($discount->delete())
+        $line = Line::find($id);
+        if (!empty($line)) {
+            if ($line->delete())
                 return $this->beautifyReturn(200, 'Deleted');
         } else {
             return $this->beautifyReturn(404);

@@ -2,23 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\User;
+use App\Traits\AddressTrait;
+use App\Traits\ExceptionTrait;
+use App\Traits\ReturnTrait;
+use Illuminate\Auth\Access\Response;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-
 use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
+    use AddressTrait;
+    use ExceptionTrait;
+    use ReturnTrait;
 
+    protected $className = 'Staff Member';
 
     public function login(Request $request)
     {
-        if (Auth::once(['username' => $request->get('username'), 'password' => $request->get('password')]))
-        {
+        if (Auth::once(['username' => $request->get('username'), 'password' => $request->get('password')])) {
             $result = [
-              'api_token' => Auth::user()->Api_token,
+                'api_token' => Auth::user()->Api_token,
             ];
 
             return response()->json($result);
@@ -27,11 +34,6 @@ class UserController extends Controller
         return Response('Bad Request', 400);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $user = User::all();
@@ -45,15 +47,9 @@ class UserController extends Controller
         if (!empty($user))
             return response()->json($user);
 
-        return Response('Not Found', 404);
+        return $this->beautifyReturn(404);
     }
 
-    /**
-     * Created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
         if ($request->AddressID
@@ -62,37 +58,47 @@ class UserController extends Controller
             && $request->LastName
             && $request->UserName
             && $request->Password
-            && $request->Rights
+            && isset($request->Rights)
             && $request->BirthDate
             && $request->Email
         ) {
-
             $user = new User();
             $user->AddressID = $request->AddressID;
             $user->StationID = $request->StationID;
             $user->FirstName = $request->FirstName;
             $user->LastName = $request->LastName;
             $user->UserName = $request->UserName;
-            $user->Password = $request->Password;
+            $user->Password = Hash::make($request->Password);
             $user->Rights = $request->Rights;
             $user->BirthDate = $request->BirthDate;
             $user->Email = $request->Email;
+            $user->Api_token = Hash::make(uniqid($user->UserName, true));
 
-            if ($user->save())
-                return Response('User member successfully created', 200);
+            try {
+                if ($user->save())
+                    return $this->beautifyReturn(200, 'Created');
 
-            return Response('Not Acceptable', 406);
+                return $this->beautifyReturn(406);
+            } catch (\Exception $e) {
+                return $this->beautifyReturn(406, $this->beautifyException($e));
+            }
+
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+    public function createWithAddress(Request $request)
+    {
+        $createAddressResponse = $this->createNewAdress($request);
+
+        if (is_numeric($createAddressResponse)) {
+            $request->request->add(['AddressID' => $createAddressResponse]);
+            return $this->create($request);
+        } else {
+            return $createAddressResponse;
+        }
+    }
+
     public function update(Request $request, $id)
     {
 
@@ -109,8 +115,8 @@ class UserController extends Controller
             if ($request->UserName)
                 $user->UserName = $request->UserName;
             if ($request->Password)
-                $user->Password = $request->Password;
-            if ($request->Rights)
+                $user->Password = Hash::make($request->Password);
+            if (isset($request->Rights))
                 $user->Rights = $request->Rights;
             if ($request->BirthDate)
                 $user->BirthDate = $request->BirthDate;
@@ -119,33 +125,25 @@ class UserController extends Controller
 
 
             if ($user->save())
-                return Response('User member successfully updated', 200);
+                return $this->beautifyReturn(200, 'Updated');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function delete($id)
     {
         $user = User::find($id);
         if (!empty($user)) {
             if ($user->delete())
-                return Response('User member with id ' . $id . ' has successfully been deleted', 200);
+                return $this->beautifyReturn(200, 'Deleted');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
-
-
 
 
     /**
