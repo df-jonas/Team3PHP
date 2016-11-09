@@ -10,6 +10,7 @@ use App\Traits\ReturnTrait;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
@@ -32,7 +33,7 @@ class UserController extends Controller
 
         return Response('Bad Request', 400);
     }
-    
+
     public function index()
     {
         $user = User::all();
@@ -51,7 +52,6 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-
         if ($request->AddressID
             && $request->StationID
             && $request->FirstName
@@ -68,11 +68,11 @@ class UserController extends Controller
             $user->FirstName = $request->FirstName;
             $user->LastName = $request->LastName;
             $user->UserName = $request->UserName;
-            $user->Password = $request->Password;
+            $user->Password = Hash::make($request->Password);
             $user->Rights = $request->Rights;
             $user->BirthDate = $request->BirthDate;
             $user->Email = $request->Email;
-            $user->Api_token = md5(uniqid($user->UserName, true));
+            $user->Api_token = Hash::make(uniqid($user->UserName, true));
 
             try {
                 if ($user->save())
@@ -115,7 +115,7 @@ class UserController extends Controller
             if ($request->UserName)
                 $user->UserName = $request->UserName;
             if ($request->Password)
-                $user->Password = $request->Password;
+                $user->Password = Hash::make($request->Password);
             if (isset($request->Rights))
                 $user->Rights = $request->Rights;
             if ($request->BirthDate)
