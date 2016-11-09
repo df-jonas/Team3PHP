@@ -55,6 +55,17 @@ Route::group(['prefix' => 'lostObject', 'middleware' => 'auth:api'], function()
     Route::Delete('delete/{id}', 'LostObjectController@delete');
 });
 
+Route::group(['prefix' => 'ticket', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/', 'TicketController@index');
+    Route::get('/{id}', 'TicketController@byID');
+
+    Route::post('create', 'TicketController@create');
+
+    Route::Put('update/{id}', 'TicketController@update');
+    Route::Delete('delete/{id}', 'TicketController@delete');
+});
+
 Route::group(['prefix' => 'station', 'middleware' => 'auth:api'], function()
 {
     Route::get('/', 'StationController@index');

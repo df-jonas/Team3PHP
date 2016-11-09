@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3717dbb7-2986-47ff-a432-e2256ee779ef" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Traits/ReturnTrait.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AddressController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AddressController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/DiscountController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/DiscountController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/LineController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/LineController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/LostObjectController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/LostObjectController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/RailCardController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/RailCardController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/RouteController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/RouteController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/StationController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/StationController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/SubscriptionController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/SubscriptionController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Traits/AddressTrait.php" afterPath="$PROJECT_DIR$/app/Traits/AddressTrait.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Traits/ExceptionTrait.php" afterPath="$PROJECT_DIR$/app/Traits/ExceptionTrait.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/TicketController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/TicketController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Ticket.php" afterPath="$PROJECT_DIR$/app/Ticket.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/database.php" afterPath="$PROJECT_DIR$/config/database.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/api.php" afterPath="$PROJECT_DIR$/routes/api.php" />
     </list>
@@ -40,14 +29,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RouteController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/RouteController.php">
+      <file leaf-file-name="api.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/routes/api.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1099">
-              <caret line="73" column="40" selection-start-line="73" selection-start-column="40" selection-end-line="73" selection-end-column="40" />
-              <folding>
-                <element signature="e#40#54#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="759">
+              <caret line="65" column="50" selection-start-line="65" selection-start-column="50" selection-end-line="65" selection-end-column="50" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -67,8 +54,8 @@
       <file leaf-file-name="SubscriptionController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SubscriptionController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1031">
-              <caret line="90" column="16" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="61" />
+            <state relative-caret-position="419">
+              <caret line="54" column="8" selection-start-line="54" selection-start-column="8" selection-end-line="54" selection-end-column="42" />
               <folding>
                 <element signature="e#40#61#0#PHP" expanded="true" />
               </folding>
@@ -79,14 +66,16 @@
       <file leaf-file-name="TicketController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TicketController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="1513">
+              <caret line="89" column="42" selection-start-line="89" selection-start-column="42" selection-end-line="89" selection-end-column="42" />
+              <folding>
+                <element signature="e#40#55#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="708">
@@ -94,6 +83,16 @@
               <folding>
                 <element signature="e#41#54#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Ticket.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Ticket.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="95" selection-start-line="16" selection-start-column="95" selection-end-line="16" selection-end-column="95" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -144,18 +143,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddressController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AddressController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1070">
-              <caret line="75" column="40" selection-start-line="75" selection-start-column="40" selection-end-line="75" selection-end-column="40" />
-              <folding>
-                <element signature="e#40#56#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="Git.Settings">
@@ -164,7 +151,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/.gitattributes" />
         <option value="$PROJECT_DIR$/.env.example" />
@@ -199,10 +185,8 @@
         <option value="$PROJECT_DIR$/app/Subscription.php" />
         <option value="$PROJECT_DIR$/config/database.php" />
         <option value="$PROJECT_DIR$/app/Line.php" />
-        <option value="$PROJECT_DIR$/app/Ticket.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Traits/AddressTrait.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/Traits/AddressTrait.php" />
-        <option value="$PROJECT_DIR$/routes/api.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/SubscriptionController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AddressController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/DiscountController.php" />
@@ -215,6 +199,9 @@
         <option value="$PROJECT_DIR$/app/Traits/AddressTrait.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/app/Traits/ReturnTrait.php" />
+        <option value="$PROJECT_DIR$/app/Ticket.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/TicketController.php" />
+        <option value="$PROJECT_DIR$/routes/api.php" />
       </list>
     </option>
   </component>
@@ -477,12 +464,12 @@
       <workItem from="1478183853182" duration="8404000" />
       <workItem from="1478508806190" duration="5840000" />
       <workItem from="1478699964327" duration="793000" />
-      <workItem from="1478701073651" duration="17288000" />
+      <workItem from="1478701073651" duration="17747000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="90574000" />
+    <option name="totallyTimeSpent" value="91033000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
@@ -702,14 +689,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Ticket.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="63" column="62" selection-start-line="63" selection-start-column="62" selection-end-line="63" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Providers/AuthServiceProvider.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -762,14 +741,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="22" column="83" selection-start-line="22" selection-start-column="77" selection-end-line="22" selection-end-column="83" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="75" column="74" selection-start-line="75" selection-start-column="74" selection-end-line="75" selection-end-column="74" />
           <folding />
         </state>
       </provider>
@@ -878,24 +849,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TicketController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SubscriptionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1031">
-          <caret line="90" column="16" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="61" />
-          <folding>
-            <element signature="e#40#61#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/StationController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="589">
@@ -913,6 +866,42 @@
           <folding>
             <element signature="e#41#54#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Ticket.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="95" selection-start-line="16" selection-start-column="95" selection-end-line="16" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SubscriptionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="54" column="8" selection-start-line="54" selection-start-column="8" selection-end-line="54" selection-end-column="42" />
+          <folding>
+            <element signature="e#40#61#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TicketController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1513">
+          <caret line="89" column="42" selection-start-line="89" selection-start-column="42" selection-end-line="89" selection-end-column="42" />
+          <folding>
+            <element signature="e#40#55#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="759">
+          <caret line="65" column="50" selection-start-line="65" selection-start-column="50" selection-end-line="65" selection-end-column="50" />
+          <folding />
         </state>
       </provider>
     </entry>
