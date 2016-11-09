@@ -67,6 +67,19 @@ Route::group(['prefix' => 'station', 'middleware' => 'auth:api'], function()
     Route::Delete('delete/{id}', 'StationController@delete');
 });
 
+Route::group(['prefix' => 'subscription', 'middleware' => 'auth:api'], function()
+{
+//    Route::get('/', 'StationController@index');
+//    Route::get('/{id}', 'StationController@byID');
+
+//    Route::post('create', 'StationController@create');
+    Route::post('createWithRoute', 'SubscriptionController@createWithRoute');
+
+//    Route::Put('update/{id}', 'StationController@update');
+//    Route::Delete('delete/{id}', 'StationController@delete');
+});
+
+
 Route::group(['prefix' => 'test', 'middleware' => 'auth:api'], function()
 {
     Route::get('/subscription', 'SubscriptionController@index');

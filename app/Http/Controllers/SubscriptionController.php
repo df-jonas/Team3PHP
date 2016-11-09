@@ -3,10 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Subscription;
+use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
 
 class SubscriptionController extends Controller
 {
+    use ReturnTrait;
+
+    /**
+     * ClassName to return on BeautifulRespons (Response Trait)
+     * @var string
+     */
+    protected $className = 'Subscription';
+
+
     public function index()
     {
         $subscription = Subscription::all();
@@ -19,7 +29,7 @@ class SubscriptionController extends Controller
         if (!empty($subscription))
             return response()->json($subscription);
 
-        return Response('Not Found', 404);
+        return $this->beautifyReturn(404);
     }
 
     public function create(Request $request)
@@ -38,11 +48,16 @@ class SubscriptionController extends Controller
             $subscription->ValidUntil = $request->ValidUntil;
 
             if ($subscription->save())
-                return Response('Subscription successfully created', 200);
+                return $this->beautifyReturn(200, 'Created');
 
-            return Response('Not Acceptable', 406);
+            return $this->beautifyReturn(406);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
+    }
+
+    public function createWithRoute(Request $request)
+    {
+        return $this->beautifyReturn(200);
     }
 
     public function update(Request $request, $id)
@@ -61,11 +76,11 @@ class SubscriptionController extends Controller
                 $subscription->ValidUntil = $request->ValidUntil;
 
             if ($subscription->save())
-                return Response('Subscription successfully updated', 200);
+                return $this->beautifyReturn(200, 'Updated');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
     public function delete($id)
@@ -73,10 +88,10 @@ class SubscriptionController extends Controller
         $subscription = Subscription::find($id);
         if (!empty($subscription)) {
             if ($subscription->delete())
-                return Response('Subscription with id ' . $id . ' has successfully been deleted', 200);
+                return $this->beautifyReturn(200, 'Deleted');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 }

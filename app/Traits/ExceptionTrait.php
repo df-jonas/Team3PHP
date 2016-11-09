@@ -8,9 +8,6 @@
 
 namespace App\Traits;
 
-use App\Address;
-use Illuminate\Http\Request;
-
 trait ExceptionTrait
 {
     public function beautifyException(\Exception $e)

@@ -31,8 +31,8 @@ trait AddressTrait
             if ($address->save())
                 return $address->AddressID;
 
-            return 406;
+            return $this->beautifyReturnMessage(406, 'Address Not Acceptable');
         }
-        return 400;
+        return $this->beautifyReturnMessage(406, 'Address Bad Request');
     }
 }

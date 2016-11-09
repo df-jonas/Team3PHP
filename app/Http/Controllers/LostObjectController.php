@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\LostObject;
+use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
 
 class LostObjectController extends Controller
 {
+    use ReturnTrait;
+
+    protected $className = 'LostObject';
+
     public function index()
     {
         $lostObject = LostObject::all();
@@ -19,7 +24,7 @@ class LostObjectController extends Controller
         if (!empty($lostObject))
             return response()->json($lostObject);
 
-        return Response('Not Found', 404);
+        return $this->beautifyReturn(404);
     }
 
     public function create(Request $request)
@@ -36,11 +41,11 @@ class LostObjectController extends Controller
             $lostObject->TrainID = $request->TrainID;
 
             if ($lostObject->save())
-                return Response('LostObject successfully created', 200);
+                return $this->beautifyReturn(200, 'Created');
 
-            return Response('Not Acceptable', 406);
+            return $this->beautifyReturn(406);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
     public function update(Request $request, $id)
@@ -57,11 +62,11 @@ class LostObjectController extends Controller
                 $lostObject->TrainID = $request->TrainID;
 
             if ($lostObject->save())
-                return Response('LostObject successfully updated', 200);
+                return $this->beautifyReturn(200, 'Updated');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
     public function delete($id)
@@ -69,10 +74,10 @@ class LostObjectController extends Controller
         $lostObject = LostObject::find($id);
         if (!empty($lostObject)) {
             if ($lostObject->delete())
-                return Response('LostObject with id ' . $id . ' has successfully been deleted', 200);
+                return $this->beautifyReturn(200, 'Deleted');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 }

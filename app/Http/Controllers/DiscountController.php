@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Discount;
+use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller
 {
+    use ReturnTrait;
+
+    protected $className = 'Discount';
+
     public function index()
     {
         $discount = Discount::all();
@@ -19,7 +24,7 @@ class DiscountController extends Controller
         if (!empty($discount))
             return response()->json($discount);
 
-        return Response('Not Found', 404);
+        return $this->beautifyReturn(404);
     }
 
     public function create(Request $request)
@@ -32,11 +37,11 @@ class DiscountController extends Controller
             $discount->Amount = $request->Amount;
 
             if ($discount->save())
-                return Response('Discount successfully created', 200);
+                return $this->beautifyReturn(200, 'Created');
 
-            return Response('Not Acceptable', 406);
+            return $this->beautifyReturn(406);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
     public function update(Request $request, $id)
@@ -49,11 +54,11 @@ class DiscountController extends Controller
                 $discount->Amount = $request->Amount;
 
             if ($discount->save())
-                return Response('Discount successfully updated', 200);
+                return $this->beautifyReturn(200, 'Updated');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
     public function delete($id)
@@ -61,10 +66,10 @@ class DiscountController extends Controller
         $discount = Discount::find($id);
         if (!empty($discount)) {
             if ($discount->delete())
-                return Response('Discount with id ' . $id . ' has successfully been deleted', 200);
+                return $this->beautifyReturn(200, 'Deleted');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 }

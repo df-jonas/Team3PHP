@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Address;
 use App\Traits\AddressTrait;
+use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
 {
     use AddressTrait;
+    use ReturnTrait;
+
+    protected $className = 'Address';
 
     public function byID($id)
     {
@@ -16,7 +20,7 @@ class AddressController extends Controller
         if (!empty($address))
             return response()->json($address);
 
-        return Response('Not Found', 404);
+        return $this->beautifyReturn(404);
     }
 
     public function create(Request $request)
@@ -26,13 +30,13 @@ class AddressController extends Controller
         switch($createAddressResponse)
         {
             case 200:
-                return Response('Address successfully created', 200);
+                return $this->beautifyReturn(200, 'Created');
                 break;
             case 406:
-                return Response('Not Acceptable', 406);
+                return $this->beautifyReturn(406);
                 break;
             default:
-                return Response('Bad Request', 400);
+                return $this->beautifyReturn(400);
                 break;
         }
     }
@@ -53,11 +57,11 @@ class AddressController extends Controller
                 $address->Coordinates = $request->UserName;
 
             if ($address->save())
-                return Response('Address successfully updated', 200);
+                return $this->beautifyReturn(200, 'Updated');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
     public function delete($id)
@@ -65,10 +69,10 @@ class AddressController extends Controller
         $address = Address::find($id);
         if (!empty($address)) {
             if ($address->delete())
-                return Response('Address with id ' . $id . ' has successfully been deleted', 200);
+                return $this->beautifyReturn(200, 'Deleted');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 }

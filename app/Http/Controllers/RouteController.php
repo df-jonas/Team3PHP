@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Route;
+use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
 
 class RouteController extends Controller
 {
+    use ReturnTrait;
+
+    protected $className = 'Route';
+
     public function index()
     {
         $route = Route::all();
@@ -19,7 +24,7 @@ class RouteController extends Controller
         if (!empty($route))
             return response()->json($route);
 
-        return Response('Not Found', 404);
+        return $this->beautifyReturn(404);
     }
 
     public function create(Request $request)
@@ -32,11 +37,11 @@ class RouteController extends Controller
             $route->ArrivalStationID = $request->ArrivalStationID;
 
             if ($route->save())
-                return Response('Route successfully created', 200);
+                return $this->beautifyReturn(200, 'Created');
 
-            return Response('Not Acceptable', 406);
+            return $this->beautifyReturn(406);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
     public function update(Request $request, $id)
@@ -50,11 +55,11 @@ class RouteController extends Controller
 
 
             if ($route->save())
-                return Response('Route successfully updated', 200);
+                return $this->beautifyReturn(200, 'Updated');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
     public function delete($id)
@@ -62,10 +67,10 @@ class RouteController extends Controller
         $route = Route::find($id);
         if (!empty($route)) {
             if ($route->delete())
-                return Response('Route with id ' . $id . ' has successfully been deleted', 200);
+                return $this->beautifyReturn(200, 'Deleted');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 }

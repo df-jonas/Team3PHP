@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Traits\AddressTrait;
 use App\Traits\ExceptionTrait;
+use App\Traits\ReturnTrait;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,9 @@ class UserController extends Controller
 {
     use AddressTrait;
     use ExceptionTrait;
+    use ReturnTrait;
+
+    protected $className = 'Staff Member';
 
     public function login(Request $request)
     {
@@ -47,7 +51,7 @@ class UserController extends Controller
         if (!empty($user))
             return response()->json($user);
 
-        return Response('Not Found', 404);
+        return $this->beautifyReturn(404);
     }
 
     /**
@@ -83,33 +87,26 @@ class UserController extends Controller
 
             try {
                 if ($user->save())
-                    return Response('User member successfully created', 200);
+                    return $this->beautifyReturn(200, 'Created');
 
-                return Response('User member Not Acceptable', 406);
+                return $this->beautifyReturn(406);
             } catch (\Exception $e) {
-
-                return Response( $this->beautifyException($e), 406);
+                return $this->beautifyReturn(406, $this->beautifyException($e));
             }
 
         }
-        return Response('User member Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
     public function createWithAddress(Request $request)
     {
         $createAddressResponse = $this->createNewAdress($request);
 
-        switch ($createAddressResponse) {
-            case 400:
-                return Response('Address Bad Request', 400);
-                break;
-            case 406:
-                return Response('Address Not Acceptable', 406);
-                break;
-            default:
-                $request->request->add(['AddressID' => $createAddressResponse]);
-                return $this->create($request);
-                break;
+        if (is_numeric($createAddressResponse)) {
+            $request->request->add(['AddressID' => $createAddressResponse]);
+            return $this->create($request);
+        } else {
+            return $createAddressResponse;
         }
     }
 
@@ -146,11 +143,11 @@ class UserController extends Controller
 
 
             if ($user->save())
-                return Response('User member successfully updated', 200);
+                return $this->beautifyReturn(200, 'Updated');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
 
     }
 
@@ -165,11 +162,11 @@ class UserController extends Controller
         $user = User::find($id);
         if (!empty($user)) {
             if ($user->delete())
-                return Response('User member with id ' . $id . ' has successfully been deleted', 200);
+                return $this->beautifyReturn(200, 'Deleted');
         } else {
-            return Response('Not Found', 404);
+            return $this->beautifyReturn(404);
         }
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
 
