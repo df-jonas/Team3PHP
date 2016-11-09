@@ -32,12 +32,7 @@ class UserController extends Controller
 
         return Response('Bad Request', 400);
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         $user = User::all();
@@ -54,12 +49,6 @@ class UserController extends Controller
         return $this->beautifyReturn(404);
     }
 
-    /**
-     * Created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
 
@@ -110,13 +99,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
 
@@ -134,7 +116,7 @@ class UserController extends Controller
                 $user->UserName = $request->UserName;
             if ($request->Password)
                 $user->Password = $request->Password;
-            if ($request->Rights)
+            if (isset($request->Rights))
                 $user->Rights = $request->Rights;
             if ($request->BirthDate)
                 $user->BirthDate = $request->BirthDate;
@@ -151,12 +133,6 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function delete($id)
     {
         $user = User::find($id);
