@@ -36,7 +36,6 @@ class StationController extends Controller
 
             return Response('Not Acceptable', 406);
         }
-        return response()->json($request);
         return Response('Bad Request', 400);
     }
 

@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\RailCard;
+use Illuminate\Http\Request;
+
+class RailCardController extends Controller
+{
+    public function index()
+    {
+        $railCard = RailCard::all();
+        return response()->json($railCard);
+    }
+
+    public function byID($id)
+    {
+        $railCard = RailCard::find($id);
+        if (!empty($railCard))
+            return response()->json($railCard);
+
+        return Response('Not Found', 404);
+    }
+
+    /*
+    public function create(Request $request)
+    {
+        if ( $request->DepartureStationID
+            && $request->ArrivalStationID
+        ) {
+            $railCard = new RailCard();
+            $railCard->DepartureStationID = $request->DepartureStationID;
+            $railCard->ArrivalStationID = $request->ArrivalStationID;
+
+            if ($railCard->save())
+                return Response('RailCard successfully created', 200);
+
+            return Response('Not Acceptable', 406);
+        }
+        return response()->json($request);
+        return Response('Bad Request', 400);
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $railCard = RailCard::find($id);
+        if (!empty($railCard)) {
+            if ($request->DepartureStationID)
+                $railCard->DepartureStationID = $request->DepartureStationID;
+            if ($request->ArrivalStationID)
+                $railCard->ArrivalStationID = $request->ArrivalStationID;
+
+
+            if ($railCard->save())
+                return Response('RailCard successfully updated', 200);
+        } else {
+            return Response('Not Found', 404);
+        }
+        return Response('Bad Request', 400);
+    }
+    */
+
+    public function delete($id)
+    {
+        $railCard = RailCard::find($id);
+        if (!empty($railCard)) {
+            if ($railCard->delete())
+                return Response('RailCard with id ' . $id . ' has successfully been deleted', 200);
+        } else {
+            return Response('Not Found', 404);
+        }
+        return Response('Bad Request', 400);
+    }
+}
