@@ -17,22 +17,6 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //})->middleware('auth:api');
 
-Route::group(['prefix' => 'staff'], function()
-{
-    Route::post('login', 'UserController@login');
-
-    Route::group(['middleware' => 'auth:api'], function()
-    {
-        Route::get('/', 'UserController@index');
-        Route::get('/{id}', 'UserController@byID');
-
-        Route::post('create', 'UserController@create');
-
-        Route::Put('update/{id}', 'UserController@update');
-        Route::Delete('delete/{id}', 'UserController@delete');
-    });
-});
-
 Route::group(['prefix' => 'address', 'middleware' => 'auth:api'], function()
 {
     Route::get('/{id}', 'AddressController@byID');
@@ -43,7 +27,77 @@ Route::group(['prefix' => 'address', 'middleware' => 'auth:api'], function()
     Route::Delete('delete/{id}', 'AddressController@delete');
 });
 
-Route::group(['prefix' => 'lost_object', 'middleware' => 'auth:api'], function()
+Route::group(['prefix' => 'station', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/', 'StationController@index');
+    Route::get('/{id}', 'StationController@byID');
+
+    Route::post('create', 'StationController@create');
+    Route::post('createWithAddress', 'StationController@createWithAddress');
+
+    Route::Put('update/{id}', 'StationController@update');
+    Route::Delete('delete/{id}', 'StationController@delete');
+});
+
+Route::group(['prefix' => 'staff'], function()
+{
+    Route::post('login', 'UserController@login');
+
+    Route::group(['middleware' => 'auth:api'], function()
+    {
+        Route::get('/', 'UserController@index');
+        Route::get('/{id}', 'UserController@byID');
+
+        Route::post('create', 'UserController@create');
+        Route::post('/createWithAddress', 'UserController@createWithAddress');
+
+        Route::Put('update/{id}', 'UserController@update');
+        Route::Delete('delete/{id}', 'UserController@delete');
+    });
+});
+
+Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/', 'CustomerController@index');
+    Route::get('/{id}', 'CustomerController@byID');
+
+    Route::post('create', 'CustomerController@create');
+    Route::post('/createWithAddress', 'CustomerController@createWithAddress');
+
+    Route::Put('update/{id}', 'CustomerController@update');
+});
+@todo;
+// Rotue
+
+Route::group(['prefix' => 'subscription', 'middleware' => 'auth:api'], function()
+{
+//    Route::get('/', 'StationController@index');
+//    Route::get('/{id}', 'StationController@byID');
+
+//    Route::post('create', 'StationController@create');
+    Route::post('createWithRoute', 'SubscriptionController@createWithRoute');
+
+//    Route::Put('update/{id}', 'StationController@update');
+//    Route::Delete('delete/{id}', 'StationController@delete');
+});
+
+@todo;
+// Discount
+// RailCard
+// Line
+
+Route::group(['prefix' => 'ticket', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/', 'TicketController@index');
+    Route::get('/{id}', 'TicketController@byID');
+
+    Route::post('create', 'TicketController@create');
+
+    Route::Put('update/{id}', 'TicketController@update');
+    Route::Delete('delete/{id}', 'TicketController@delete');
+});
+
+Route::group(['prefix' => 'lostObject', 'middleware' => 'auth:api'], function()
 {
     Route::get('/', 'LostObjectController@index');
     Route::get('/{id}', 'LostObjectController@byID');
@@ -54,13 +108,12 @@ Route::group(['prefix' => 'lost_object', 'middleware' => 'auth:api'], function()
     Route::Delete('delete/{id}', 'LostObjectController@delete');
 });
 
-Route::group(['prefix' => 'station', 'middleware' => 'auth:api'], function()
+
+
+Route::group(['prefix' => 'test', 'middleware' => 'auth:api'], function()
 {
-    Route::get('/', 'StationController@index');
-    Route::get('/{id}', 'StationController@byID');
-
-    Route::post('create', 'StationController@create');
-
-    Route::Put('update/{id}', 'StationController@update');
-    Route::Delete('delete/{id}', 'StationController@delete');
+    Route::get('/subscription', 'SubscriptionController@index');
+    Route::get('/route', 'RouteController@index');
+    Route::get('/railcard', 'RailCardController@index');
+    Route::get('/discount', 'DiscountController@index');
 });
