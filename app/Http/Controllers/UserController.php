@@ -27,7 +27,9 @@ class UserController extends Controller
         if (Auth::once(['username' => $request->username, 'password' => $request->password]))
         {
             $result = [
-                'api_token' => Auth::user()->Api_token,
+                'StatusCode' => 200,
+                'Api_token' => Auth::user()->Api_token,
+                'StaffID' => Auth::user()->StaffID,
             ];
 
             return response()->json($result);
