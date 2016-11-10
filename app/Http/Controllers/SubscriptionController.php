@@ -55,11 +55,6 @@ class SubscriptionController extends Controller
         return $this->beautifyReturn(400);
     }
 
-    public function createWithRoute(Request $request)
-    {
-        return $this->beautifyReturn(200);
-    }
-
     public function update(Request $request, $id)
     {
         $subscription = Subscription::find($id);
