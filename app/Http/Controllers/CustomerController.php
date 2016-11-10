@@ -40,8 +40,7 @@ class CustomerController extends Controller
     public function create(Request $request)
     {
 
-        if ($request->RailCardID
-            && $request->AddressID
+        if ($request->AddressID
             && $request->FirstName
             && $request->LastName
             && $request->BirthDate
@@ -88,8 +87,6 @@ class CustomerController extends Controller
 
         $customer = Customer::find($id);
         if (!empty($customer)) {
-            if ($request->RailCardID)
-                $customer->RailCardID = $request->RailCardID;
             if ($request->AddressID)
                 $customer->AddressID = $request->AddressID;
             if ($request->FirstName)

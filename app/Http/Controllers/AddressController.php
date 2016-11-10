@@ -14,6 +14,13 @@ class AddressController extends Controller
 
     protected $className = 'Address';
 
+    public function index()
+    {
+        $address = Address::all();
+
+        return response()->json($address);
+    }
+
     public function byID($id)
     {
         $address = Address::find($id);
