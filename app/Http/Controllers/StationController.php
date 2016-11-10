@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Station;
+use App\Traits\ExceptionTrait;
 use App\Traits\ReturnTrait;
 use App\Traits\AddressTrait;
 use Illuminate\Http\Request;
 
 class StationController extends Controller
 {
+    use ExceptionTrait;
     use AddressTrait;
     use ReturnTrait;
 
@@ -38,10 +40,14 @@ class StationController extends Controller
             $station->AddressID = $request->AddressID;
             $station->Name = $request->Name;
 
-            if ($station->save())
-                return $this->beautifyReturn(200, ['Extra' => 'Created', 'StationID' => $station->StationID]);
+            try {
+                if ($station->save())
+                    return $this->beautifyReturn(200, ['Extra' => 'Created', 'StationID' => $station->StationID]);
 
-            return $this->beautifyReturn(406);
+                return $this->beautifyReturn(406);
+            } catch (\Exception $e) {
+                return $this->beautifyReturn(406, ['Error' => $this->beautifyException($e)]);
+            }
         }
         return $this->beautifyReturn(400);
     }
