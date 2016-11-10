@@ -28,6 +28,11 @@ class User extends Authenticatable
         return $this->Password;
     }
 
+    public function getAuthIdentifier()
+    {
+        return $this->UserName;
+    }
+
     public function getAddressAttribute()
     {
         return Address::find($this->AddressID);
