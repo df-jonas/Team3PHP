@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'address', 'middleware' => 'auth:api'], function()
 {
+    Route::get('/', 'AddressController@index');
     Route::get('/{id}', 'AddressController@byID');
 
     Route::post('create', 'AddressController@create');
