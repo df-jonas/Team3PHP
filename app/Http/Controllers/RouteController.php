@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Route;
+use App\Traits\ExceptionTrait;
 use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
 
 class RouteController extends Controller
 {
+    use ExceptionTrait;
     use ReturnTrait;
 
     protected $className = 'Route';
@@ -36,10 +38,14 @@ class RouteController extends Controller
             $route->DepartureStationID = $request->DepartureStationID;
             $route->ArrivalStationID = $request->ArrivalStationID;
 
-            if ($route->save())
-                return $this->beautifyReturn(200, ['Extra' => 'Created', 'RouteID' => $route->RouteID]);
+            try {
+                if ($route->save())
+                    return $this->beautifyReturn(200, ['Extra' => 'Created', 'RouteID' => $route->RouteID]);
 
-            return $this->beautifyReturn(406);
+                return $this->beautifyReturn(406);
+            } catch (\Exception $e) {
+                return $this->beautifyReturn(406, ['Error' => $this->beautifyException($e)]);
+            }
         }
         return $this->beautifyReturn(400);
     }
