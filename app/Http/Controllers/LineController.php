@@ -37,7 +37,7 @@ class LineController extends Controller
             $line->TrainType = $request->TrainType;
 
             if ($line->save())
-                return $this->beautifyReturn(200, 'Created');
+                return $this->beautifyReturn(200, ['Extra' => 'Created', 'LineID' => $line->LineID]);
 
             return $this->beautifyReturn(406);
         }
@@ -55,7 +55,7 @@ class LineController extends Controller
 
 
             if ($line->save())
-                return $this->beautifyReturn(200, 'Updated');
+                return $this->beautifyReturn(200, ['Extra' => 'Updated']);
         } else {
             return $this->beautifyReturn(404);
         }
@@ -67,7 +67,7 @@ class LineController extends Controller
         $line = Line::find($id);
         if (!empty($line)) {
             if ($line->delete())
-                return $this->beautifyReturn(200, 'Deleted');
+                return $this->beautifyReturn(200, ['Extra' => 'Deleted']);
         } else {
             return $this->beautifyReturn(404);
         }

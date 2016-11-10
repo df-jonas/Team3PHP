@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\RailCard;
 use App\Traits\AddressTrait;
 use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
@@ -47,7 +48,8 @@ class CustomerController extends Controller
             && $request->Email
         ) {
             $customer = new Customer();
-            $customer->RailCardID = $request->RailCardID;
+            $railcard = new RailCard();
+            $customer->RailCardID = $railcard->RailCardID;
             $customer->AddressID = $request->AddressID;
             $customer->FirstName = $request->FirstName;
             $customer->LastName = $request->LastName;
@@ -55,7 +57,7 @@ class CustomerController extends Controller
             $customer->Email = $request->Email;
 
             if ($customer->save())
-                return $this->beautifyReturn(200, 'Created');
+                return $this->beautifyReturn(200, ['Extra' => 'Created', 'CustomerID' => $customer->CustomerID]);
 
             return $this->beautifyReturn(406);
         }
@@ -101,7 +103,7 @@ class CustomerController extends Controller
 
 
             if ($customer->save())
-                return $this->beautifyReturn(200, 'Updated');
+                return $this->beautifyReturn(200, ['Extra' => 'Updated']);
         } else {
             return $this->beautifyReturn(404);
         }
@@ -120,7 +122,7 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         if (!empty($customer)) {
             if ($customer->delete())
-                return $this->beautifyReturn(200, 'Deleted');
+                return $this->beautifyReturn(200, ['Extra' => 'Deleted']);
         } else {
             return $this->beautifyReturn(404);
         }

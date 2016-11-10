@@ -76,11 +76,11 @@ class UserController extends Controller
 
             try {
                 if ($user->save())
-                    return $this->beautifyReturn(200, 'Created');
+                    return $this->beautifyReturn(200, ['Extra' => 'Created', 'Staff MemberID' => $user->StaffID]);
 
                 return $this->beautifyReturn(406);
             } catch (\Exception $e) {
-                return $this->beautifyReturn(406, $this->beautifyException($e));
+                return $this->beautifyReturn(406, ['Error' => $this->beautifyException($e)]);
             }
 
         }
@@ -125,7 +125,7 @@ class UserController extends Controller
 
 
             if ($user->save())
-                return $this->beautifyReturn(200, 'Updated');
+                return $this->beautifyReturn(200, ['Extra' => 'Updated']);
         } else {
             return $this->beautifyReturn(404);
         }
@@ -138,7 +138,7 @@ class UserController extends Controller
         $user = User::find($id);
         if (!empty($user)) {
             if ($user->delete())
-                return $this->beautifyReturn(200, 'Deleted');
+                return $this->beautifyReturn(200, ['Extra' => 'Deleted']);
         } else {
             return $this->beautifyReturn(404);
         }
