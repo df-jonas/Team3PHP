@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
 {
-    protected $connection = 'nmbs_mysql';
     protected $table = 'Subscription';
 
     protected $primaryKey = 'SubscriptionID';

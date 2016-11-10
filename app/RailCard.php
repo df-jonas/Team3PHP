@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class RailCard extends Model
 {
-    protected $connection = 'nmbs_mysql';
     protected $table = 'RailCard';
 
     protected $primaryKey = 'CardID';

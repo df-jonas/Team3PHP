@@ -11,7 +11,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $connection = 'nmbs_mysql';
     protected $table = 'Staff';
 
     protected $primaryKey = 'StaffID';
