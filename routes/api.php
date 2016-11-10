@@ -67,25 +67,50 @@ Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function()
     Route::Put('update/{id}', 'CustomerController@update');
 //    Route::Delete('delete/{id}', 'CustomerController@delete');
 });
-@todo;
-// Rotue
+
+Route::group(['prefix' => 'route', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/', 'RouteController@index');
+    Route::get('/{id}', 'RouteController@byID');
+
+    Route::post('create', 'RouteController@create');
+
+    Route::Put('update/{id}', 'RouteController@update');
+//    Route::Delete('delete/{id}', 'RouteController@delete');
+});
 
 Route::group(['prefix' => 'subscription', 'middleware' => 'auth:api'], function()
 {
-//    Route::get('/', 'StationController@index');
-//    Route::get('/{id}', 'StationController@byID');
+    Route::get('/', 'SubscriptionController@index');
+    Route::get('/{id}', 'SubscriptionController@byID');
 
-//    Route::post('create', 'StationController@create');
-    Route::post('createWithRoute', 'SubscriptionController@createWithRoute');
+    Route::post('create', 'StationController@create');
 
-//    Route::Put('update/{id}', 'StationController@update');
+    Route::Put('update/{id}', 'StationController@update');
 //    Route::Delete('delete/{id}', 'StationController@delete');
 });
 
-@todo;
-// Discount
-// RailCard
-// Line
+Route::group(['prefix' => 'discount', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/', 'DiscountController@index');
+    Route::get('/{id}', 'DiscountController@byID');
+
+    Route::post('create', 'DiscountController@create');
+
+    Route::Put('update/{id}', 'DiscountController@update');
+//    Route::Delete('delete/{id}', 'RouteController@delete');
+});
+
+Route::group(['prefix' => 'line', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/', 'LineController@index');
+    Route::get('/{id}', 'LineController@byID');
+
+    Route::post('create', 'LineController@create');
+
+    Route::Put('update/{id}', 'LineController@update');
+//    Route::Delete('delete/{id}', 'RouteController@delete');
+});
 
 Route::group(['prefix' => 'ticket', 'middleware' => 'auth:api'], function()
 {
@@ -106,15 +131,15 @@ Route::group(['prefix' => 'lostObject', 'middleware' => 'auth:api'], function()
     Route::post('create', 'LostObjectController@create');
 
     Route::Put('update/{id}', 'LostObjectController@update');
-    Route::Delete('delete/{id}', 'LostObjectController@delete');
+//    Route::Delete('delete/{id}', 'LostObjectController@delete');
 });
 
 
 
-Route::group(['prefix' => 'test', 'middleware' => 'auth:api'], function()
-{
-    Route::get('/subscription', 'SubscriptionController@index');
-    Route::get('/route', 'RouteController@index');
-    Route::get('/railcard', 'RailCardController@index');
-    Route::get('/discount', 'DiscountController@index');
-});
+//Route::group(['prefix' => 'test', 'middleware' => 'auth:api'], function()
+//{
+//    Route::get('/subscription', 'SubscriptionController@index');
+//    Route::get('/route', 'RouteController@index');
+//    Route::get('/railcard', 'RailCardController@index');
+//    Route::get('/discount', 'DiscountController@index');
+//});
