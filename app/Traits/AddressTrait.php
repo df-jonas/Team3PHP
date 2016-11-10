@@ -33,6 +33,6 @@ trait AddressTrait
 
             return $this->beautifyReturnMessage(406, 'Address Not Acceptable');
         }
-        return $this->beautifyReturnMessage(406, 'Address Bad Request');
+        return $this->beautifyReturnMessage(400, 'Address Bad Request');
     }
 }

@@ -27,17 +27,10 @@ class AddressController extends Controller
     {
         $createAddressResponse = $this->createNewAdress($request);
 
-        switch($createAddressResponse)
-        {
-            case 200:
-                return $this->beautifyReturn(200, 'Created');
-                break;
-            case 406:
-                return $this->beautifyReturn(406);
-                break;
-            default:
-                return $this->beautifyReturn(400);
-                break;
+        if (is_numeric($createAddressResponse)) {
+            return $this->beautifyReturn(200, ['Extra' => 'Created', 'AddressID' => $createAddressResponse]);
+        } else {
+            return $createAddressResponse;
         }
     }
 
@@ -57,7 +50,7 @@ class AddressController extends Controller
                 $address->Coordinates = $request->UserName;
 
             if ($address->save())
-                return $this->beautifyReturn(200, 'Updated');
+                return $this->beautifyReturn(200, ['Extra' => 'Updated']);
         } else {
             return $this->beautifyReturn(404);
         }
@@ -69,7 +62,7 @@ class AddressController extends Controller
         $address = Address::find($id);
         if (!empty($address)) {
             if ($address->delete())
-                return $this->beautifyReturn(200, 'Deleted');
+                return $this->beautifyReturn(200, ['Extra' => 'Deleted']);
         } else {
             return $this->beautifyReturn(404);
         }

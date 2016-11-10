@@ -14,8 +14,8 @@ trait ExceptionTrait
     {
         $errorInfo = ((array) $e)['errorInfo'];
         $errorInfo['SQLSTATE'] = $errorInfo[0];
-        $errorInfo['violation'] = $errorInfo[1];
-        $errorInfo['message'] = $errorInfo[2];
+        $errorInfo['Violation'] = $errorInfo[1];
+        $errorInfo['Message'] = $errorInfo[2];
 
         unset($errorInfo[0]);
         unset($errorInfo[1]);

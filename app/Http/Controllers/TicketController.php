@@ -45,7 +45,7 @@ class TicketController extends Controller
             $ticket->ComfortClass = $request->ComfortClass;
 
             if ($ticket->save())
-                return $this->beautifyReturn(200, 'Created');
+                return $this->beautifyReturn(200, ['Extra' => 'Created', 'TicketID' => $ticket->TicketID]);
 
             return $this->beautifyReturn(406);
         }
@@ -71,7 +71,7 @@ class TicketController extends Controller
 
 
             if ($ticket->save())
-                return $this->beautifyReturn(200, 'Updated');
+                return $this->beautifyReturn(200, ['Extra' => 'Updated']);
         } else {
             return $this->beautifyReturn(404);
         }
@@ -83,7 +83,7 @@ class TicketController extends Controller
         $ticket = Ticket::find($id);
         if (!empty($ticket)) {
             if ($ticket->delete())
-                return $this->beautifyReturn(200, 'Deleted');
+                return $this->beautifyReturn(200, ['Extra' => 'Deleted']);
         } else {
             return $this->beautifyReturn(404);
         }
