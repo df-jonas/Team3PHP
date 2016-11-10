@@ -17,16 +17,19 @@ trait ReturnTrait
                 return $this->beautifyReturnMessage($code, $this->className . ' Successfully ' . $extra['Extra'], (isset($extra[$this->className . 'ID'])) ? $extra[$this->className . 'ID'] : '');
                 break;
             case 400:
-                return $this->beautifyReturnMessage($code, $this->className . ' Bad Request', $extra['Error']);
+                return $this->beautifyReturnMessage($code, $this->className . ' Bad Request', (isset($extra['Error'])) ? $extra['Error'] : '');
+                break;
+            case 401:
+                return $this->beautifyReturnMessage($code, 'Request Unauthorized', (isset($extra['Error'])) ? $extra['Error'] : '');
                 break;
             case 404:
-                return $this->beautifyReturnMessage($code, $this->className . ' Not Found', $extra['Error']);
+                return $this->beautifyReturnMessage($code, $this->className . ' Not Found', (isset($extra['Error'])) ? $extra['Error'] : '');
                 break;
             case 406:
-                return $this->beautifyReturnMessage($code, $this->className . ' Not Acceptable', $extra['Error']);
+                return $this->beautifyReturnMessage($code, $this->className . ' Not Acceptable', (isset($extra['Error'])) ? $extra['Error'] : '');
                 break;
             default:
-                return $this->beautifyReturnMessage($code, $this->className . ' Unspecified Error', $extra['Error']);
+                return $this->beautifyReturnMessage($code, $this->className . ' Unspecified Error', (isset($extra['Error'])) ? $extra['Error'] : '');
                 break;
         }
     }

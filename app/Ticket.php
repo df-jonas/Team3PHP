@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    protected $connection = 'nmbs_mysql';
     protected $table = 'Ticket';
 
     protected $primaryKey = 'TicketID';
