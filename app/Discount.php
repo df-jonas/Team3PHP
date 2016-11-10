@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Discount extends Model
 {
-    protected $connection = 'nmbs_mysql';
     protected $table = 'Discount';
 
     protected $primaryKey = 'DiscountID';

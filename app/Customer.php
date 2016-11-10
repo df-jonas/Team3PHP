@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    protected $connection = 'nmbs_mysql';
     protected $table = 'Customer';
 
     protected $primaryKey = 'CustomerID';

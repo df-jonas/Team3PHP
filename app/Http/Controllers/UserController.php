@@ -23,7 +23,9 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        if (Auth::once(['username' => $request->get('username'), 'password' => $request->get('password')])) {
+        Auth::logout();
+        if (Auth::once(['username' => $request->username, 'password' => $request->password]))
+        {
             $result = [
                 'api_token' => Auth::user()->Api_token,
             ];
@@ -31,7 +33,7 @@ class UserController extends Controller
             return response()->json($result);
         }
 
-        return Response('Bad Request', 400);
+        return $this->beautifyReturn(400);
     }
 
     public function index()
