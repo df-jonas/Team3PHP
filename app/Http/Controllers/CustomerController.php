@@ -55,7 +55,7 @@ class CustomerController extends Controller
             $customer->Email = $request->Email;
 
             if ($customer->save())
-                return $this->beautifyReturn(200, 'Created');
+                return $this->beautifyReturn(200, ['Extra' => 'Created', 'CustomerID' => $customer->CustomerID]);
 
             return $this->beautifyReturn(406);
         }
@@ -101,7 +101,7 @@ class CustomerController extends Controller
 
 
             if ($customer->save())
-                return $this->beautifyReturn(200, 'Updated');
+                return $this->beautifyReturn(200, ['Extra' => 'Updated']);
         } else {
             return $this->beautifyReturn(404);
         }
@@ -120,7 +120,7 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         if (!empty($customer)) {
             if ($customer->delete())
-                return $this->beautifyReturn(200, 'Deleted');
+                return $this->beautifyReturn(200, ['Extra' => 'Deleted']);
         } else {
             return $this->beautifyReturn(404);
         }

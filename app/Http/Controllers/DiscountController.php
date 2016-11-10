@@ -37,7 +37,7 @@ class DiscountController extends Controller
             $discount->Amount = $request->Amount;
 
             if ($discount->save())
-                return $this->beautifyReturn(200, 'Created');
+                return $this->beautifyReturn(200, ['Extra' => 'Created', 'DiscountID' => $discount->DiscountID]);
 
             return $this->beautifyReturn(406);
         }
@@ -54,7 +54,7 @@ class DiscountController extends Controller
                 $discount->Amount = $request->Amount;
 
             if ($discount->save())
-                return $this->beautifyReturn(200, 'Updated');
+                return $this->beautifyReturn(200, ['Extra' => 'Updated']);
         } else {
             return $this->beautifyReturn(404);
         }
@@ -66,7 +66,7 @@ class DiscountController extends Controller
         $discount = Discount::find($id);
         if (!empty($discount)) {
             if ($discount->delete())
-                return $this->beautifyReturn(200, 'Deleted');
+                return $this->beautifyReturn(200, ['Extra' => 'Deleted']);
         } else {
             return $this->beautifyReturn(404);
         }

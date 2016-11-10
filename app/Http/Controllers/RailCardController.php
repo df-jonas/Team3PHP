@@ -71,7 +71,7 @@ class RailCardController extends Controller
         $railCard = RailCard::find($id);
         if (!empty($railCard)) {
             if ($railCard->delete())
-                return $this->beautifyReturn(200, 'Deleted');
+                return $this->beautifyReturn(200, ['Extra' => 'Deleted']);
         } else {
             return $this->beautifyReturn(404);
         }

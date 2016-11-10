@@ -24,7 +24,7 @@ Route::group(['prefix' => 'address', 'middleware' => 'auth:api'], function()
     Route::post('create', 'AddressController@create');
 
     Route::Put('update/{id}', 'AddressController@update');
-    Route::Delete('delete/{id}', 'AddressController@delete');
+//    Route::Delete('delete/{id}', 'AddressController@delete');
 });
 
 Route::group(['prefix' => 'station', 'middleware' => 'auth:api'], function()
@@ -36,7 +36,7 @@ Route::group(['prefix' => 'station', 'middleware' => 'auth:api'], function()
     Route::post('createWithAddress', 'StationController@createWithAddress');
 
     Route::Put('update/{id}', 'StationController@update');
-    Route::Delete('delete/{id}', 'StationController@delete');
+//    Route::Delete('delete/{id}', 'StationController@delete');
 });
 
 Route::group(['prefix' => 'staff'], function()
@@ -52,7 +52,7 @@ Route::group(['prefix' => 'staff'], function()
         Route::post('/createWithAddress', 'UserController@createWithAddress');
 
         Route::Put('update/{id}', 'UserController@update');
-        Route::Delete('delete/{id}', 'UserController@delete');
+//        Route::Delete('delete/{id}', 'UserController@delete');
     });
 });
 
@@ -65,6 +65,7 @@ Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function()
     Route::post('/createWithAddress', 'CustomerController@createWithAddress');
 
     Route::Put('update/{id}', 'CustomerController@update');
+//    Route::Delete('delete/{id}', 'CustomerController@delete');
 });
 @todo;
 // Rotue
@@ -93,8 +94,8 @@ Route::group(['prefix' => 'ticket', 'middleware' => 'auth:api'], function()
 
     Route::post('create', 'TicketController@create');
 
-    Route::Put('update/{id}', 'TicketController@update');
-    Route::Delete('delete/{id}', 'TicketController@delete');
+//    Route::Put('update/{id}', 'TicketController@update');
+//    Route::Delete('delete/{id}', 'TicketController@delete');
 });
 
 Route::group(['prefix' => 'lostObject', 'middleware' => 'auth:api'], function()

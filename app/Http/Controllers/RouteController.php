@@ -37,7 +37,7 @@ class RouteController extends Controller
             $route->ArrivalStationID = $request->ArrivalStationID;
 
             if ($route->save())
-                return $this->beautifyReturn(200, 'Created');
+                return $this->beautifyReturn(200, ['Extra' => 'Created', 'RouteID' => $route->RouteID]);
 
             return $this->beautifyReturn(406);
         }
@@ -55,7 +55,7 @@ class RouteController extends Controller
 
 
             if ($route->save())
-                return $this->beautifyReturn(200, 'Updated');
+                return $this->beautifyReturn(200, ['Extra' => 'Updated']);
         } else {
             return $this->beautifyReturn(404);
         }
@@ -67,7 +67,7 @@ class RouteController extends Controller
         $route = Route::find($id);
         if (!empty($route)) {
             if ($route->delete())
-                return $this->beautifyReturn(200, 'Deleted');
+                return $this->beautifyReturn(200, ['Extra' => 'Deleted']);
         } else {
             return $this->beautifyReturn(404);
         }

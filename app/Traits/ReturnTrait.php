@@ -10,37 +10,41 @@ namespace App\Traits;
 
 trait ReturnTrait
 {
-    public function beautifyReturn($code, $extra = '')
+    public function beautifyReturn($code, $extra = array())
     {
-        switch ($code)
-        {
+        switch ($code) {
             case 200:
-                return $this->beautifyReturnMessage($code, $this->className . ' Successfully ' . $extra);
+                return $this->beautifyReturnMessage($code, $this->className . ' Successfully ' . $extra['Extra'], (isset($extra[$this->className . 'ID'])) ? $extra[$this->className . 'ID'] : '');
                 break;
             case 400:
-                return $this->beautifyReturnMessage($code, $this->className . ' Bad Request', $extra);
+                return $this->beautifyReturnMessage($code, $this->className . ' Bad Request', $extra['Error']);
                 break;
             case 404:
-                return $this->beautifyReturnMessage($code, $this->className . ' Not Found', $extra);
+                return $this->beautifyReturnMessage($code, $this->className . ' Not Found', $extra['Error']);
                 break;
             case 406:
-                return $this->beautifyReturnMessage($code, $this->className . ' Not Acceptable', $extra);
+                return $this->beautifyReturnMessage($code, $this->className . ' Not Acceptable', $extra['Error']);
                 break;
             default:
-                return $this->beautifyReturnMessage($code, $this->className . ' Unspecified Error', $extra);
+                return $this->beautifyReturnMessage($code, $this->className . ' Unspecified Error', $extra['Error']);
                 break;
         }
     }
 
-    public function beautifyReturnMessage($code, $message, $error = '')
+    public function beautifyReturnMessage($code, $message, $extra = '')
     {
         $return = [
             'StatusCode' => $code,
             'StatusMessage' => $message
         ];
 
-        if($error != '')
-            $return['Error'] = $error;
+        if ($extra != '') {
+            if ($code == 200)
+                $return[$this->className . 'ID'] = $extra;
+            else
+                $return['Error'] = $extra;
+        }
+
 
         return Response()->json($return);
     }

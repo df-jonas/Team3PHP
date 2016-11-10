@@ -39,7 +39,7 @@ class StationController extends Controller
             $station->Name = $request->Name;
 
             if ($station->save())
-                return $this->beautifyReturn(200, 'Created');
+                return $this->beautifyReturn(200, ['Extra' => 'Created', 'StationID' => $station->StationID]);
 
             return $this->beautifyReturn(406);
         }
@@ -68,7 +68,7 @@ class StationController extends Controller
                 $station->Name = $request->Name;
 
             if ($station->save())
-                return $this->beautifyReturn(200, 'Updated');
+                return $this->beautifyReturn(200, ['Extra' => 'Updated']);
         } else {
             return $this->beautifyReturn(404);
         }
@@ -80,7 +80,7 @@ class StationController extends Controller
         $station = Station::find($id);
         if (!empty($station)) {
             if ($station->delete())
-                return $this->beautifyReturn(200, 'Deleted');
+                return $this->beautifyReturn(200, ['Extra' => 'Deleted']);
         } else {
             return $this->beautifyReturn(404);
         }
