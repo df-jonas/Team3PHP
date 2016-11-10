@@ -80,7 +80,7 @@ class UserController extends Controller
 
                 return $this->beautifyReturn(406);
             } catch (\Exception $e) {
-                return $this->beautifyReturn(406, $this->beautifyException($e));
+                return $this->beautifyReturn(406, ['Error' => $this->beautifyException($e)]);
             }
 
         }
