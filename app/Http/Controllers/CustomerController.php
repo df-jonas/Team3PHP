@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\RailCard;
 use App\Traits\AddressTrait;
 use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
@@ -47,7 +48,8 @@ class CustomerController extends Controller
             && $request->Email
         ) {
             $customer = new Customer();
-            $customer->RailCardID = $request->RailCardID;
+            $railcard = new RailCard();
+            $customer->RailCardID = $railcard->RailCardID;
             $customer->AddressID = $request->AddressID;
             $customer->FirstName = $request->FirstName;
             $customer->LastName = $request->LastName;
