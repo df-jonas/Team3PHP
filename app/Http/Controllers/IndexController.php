@@ -11,9 +11,12 @@ class IndexController extends Controller
 
         //https://api.irail.be/connections/?to={station1}&from={station2} (OPTIONAL:) &date={dmy}&time=2359&timeSel=arrive or depart
 
-        $url = sprintf('https://api.irail.be/connections/?format=json&to=%s&from=%s&date=%s&time=%s', $request->To, $request->From, $request->Date, $request->Time);
-//        $url = sprintf('https://api.irail.be/connections/?to=%s&from=%s&date=%s&time=%s', 'Bruxelles-Midi', 'Bruxelles-Nord', '181116', '2000');
-//        $url = "https://api.irail.be/connections/?to=Bruxelles-Midi&from=Bruxelles-Nord&date=181116&time=2000&format=json";
+        $dateArray = explode('-', $request->Date);
+        $date = $dateArray[2] . $dateArray[1] . substr($dateArray[0], 2);
+        $time = str_replace($request->Time, ':', '');
+
+
+        $url = sprintf('https://api.irail.be/connections/?format=json&to=%s&from=%s&date=%s&time=%s', $request->To, $request->From, $date, $time);
 
         $client = new \GuzzleHttp\Client();
         $res = $client->get($url);
@@ -24,8 +27,6 @@ class IndexController extends Controller
 
             $body = json_decode($res->getBody());
             $dienstRegeling = $body->connection;
-
-            return respons()->json($request);
 
             return view('pages.index', array('dienstRegelingen' => $dienstRegeling));
 

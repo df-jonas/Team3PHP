@@ -5824,6 +5824,8 @@ h2 {
       height: 2em; }
     .search-form input[type=submit] {
       width: auto; }
+      .search-form input[type=submit]:disabled {
+        opacity: .7; }
 
 .search-results .search-result {
   border: 1px solid lightgray;
@@ -5854,5 +5856,23 @@ h2 {
       padding-left: 1em; }
     .search-results .search-result-info .via-icon .glyphicon {
       padding-left: .7em; }
+
+@media (max-width: 767px) {
+  body {
+    font-size: 2em;
+    min-width: 480px; }
+  .search-form {
+    margin-bottom: 50px; }
+    .search-form .row {
+      margin: 1em 0; }
+    .search-form input {
+      height: 2em;
+      width: 100%; }
+      .search-form input[type=date] {
+        height: 2em; }
+      .search-form input[type=submit] {
+        width: 100%; }
+        .search-form input[type=submit]:disabled {
+          opacity: .7; } }
 
 /*# sourceMappingURL=app.css.map */
