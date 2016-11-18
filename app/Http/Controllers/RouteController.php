@@ -23,7 +23,7 @@ class RouteController extends Controller
 
     public function byID($id)
     {
-        $route = Route::RouteWithStation($id);
+        $route = RouteWithStation::find($id);
         if (!empty($route))
             return response()->json($route);
 
@@ -37,7 +37,8 @@ class RouteController extends Controller
                         ->where('DepartureStationID', '=', $departureStationID)
                         ->get();
 
-        if(!empty($route))
+
+        if(!empty($route) && $route->count())
             return response()->json($route);
 
         return $this->beautifyReturn(404);
