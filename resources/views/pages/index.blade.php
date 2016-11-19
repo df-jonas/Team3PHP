@@ -65,12 +65,12 @@
                             {{--card content--}}
                             <div id="collapse_{{ $loop->index }}" class="search-result-info collapse {{ $loop->index == 0 ? 'in': '' }}" role="tabpanel" aria-labelledby="heading_{{ $loop->index }}">
                                 <div class="card-block">
-                                    <div class="departure row">
+                                    <div class="departure row {{ ($dienstRegeling->departure->canceled != 0)? 'canceled' : '' }}">
                                         <div class="col-xs-2">{{ date('H:i', $dienstRegeling->departure->time) }}</div>
                                         <div class="col-xs-9">
                                             {{ $dienstRegeling->departure->station }}
                                             <div class="extra-info">
-                                                {{ $dienstRegeling->departure->stationinfo->standardname }} - {{ substr($dienstRegeling->departure->vehicle, strripos($dienstRegeling->departure->vehicle, '.')+1) }}
+                                                {{ $dienstRegeling->departure->direction->name }} - {{ substr($dienstRegeling->departure->vehicle, strripos($dienstRegeling->departure->vehicle, '.')+1) }}
                                             </div>
                                         </div>
                                         <div class="col-xs-1"><span class="platform">{{ $dienstRegeling->departure->platform }}</span></div>
@@ -80,7 +80,7 @@
                                     @if(isset($dienstRegeling->vias))
                                         @foreach($dienstRegeling->vias->via as $via)
 
-                                            <div class="via-arrival row">
+                                            <div class="via-arrival row {{ ($via->arrival->canceled != 0)? 'canceled' : '' }}">
                                                 <div class="col-xs-2">
                                                     {{ date('H:i', $via->arrival->time) }}
                                                     @if($via->arrival->delay != 0)
@@ -95,7 +95,7 @@
 
                                             <div class="via-icon row"><div class="col-xs-1"><span class="glyphicon glyphicon-sort"></span></div></div>
 
-                                            <div class="via-departure row">
+                                            <div class="via-departure row {{ ($via->departure->canceled != 0)? 'canceled' : '' }}">
                                                 <div class="col-xs-2">
                                                     {{ date('H:i', $via->departure->time) }}
                                                     @if($via->departure->delay != 0)
@@ -105,8 +105,18 @@
                                                 <div class="col-xs-9">
                                                     {{ $via->stationinfo->standardname }}
                                                     <div class="extra-info">
-                                                        {{ $via->direction->name }} -
-                                                        {{ substr($via->vehicle, strripos($via->vehicle, '.')+1) }}
+                                                        @if($loop->last)
+                                                            {{ $dienstRegeling->arrival->direction->name }} -
+                                                            {{ substr($dienstRegeling->arrival->vehicle, strripos($dienstRegeling->arrival->vehicle, '.')+1) }}
+
+                                                        @else
+                                                            @php
+                                                                $newtVia = $dienstRegeling->vias->via[$loop->iteration];
+                                                             @endphp
+                                                            {{ $newtVia->direction->name }} -
+                                                            {{ substr($newtVia->vehicle, strripos($newtVia->vehicle, '.')+1) }}
+
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-1"><span class="platform">{{ $via->departure->platform }}</span></div>
@@ -115,13 +125,10 @@
                                         @endforeach
                                     @endif
 
-                                    <div class="arrival row">
+                                    <div class="arrival row {{ ($dienstRegeling->arrival->canceled != 0)? 'canceled' : '' }}">
                                         <div class="col-xs-2">{{ date('H:i', $dienstRegeling->arrival->time) }}</div>
                                         <div class="col-xs-9">
                                             {{ $dienstRegeling->arrival->station }}
-                                            {{--<div class="extra-info">--}}
-                                                {{--{{ $dienstRegeling->arrival->stationinfo->standardname }} - {{ substr($dienstRegeling->arrival->vehicle, strripos($dienstRegeling->arrival->vehicle, '.')+1) }}--}}
-                                            {{--</div>--}}
                                         </div>
                                         <div class="col-xs-1"><span class="platform">{{ $dienstRegeling->arrival->platform }}</span></div>
                                     </div>
