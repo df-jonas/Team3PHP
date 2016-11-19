@@ -70,7 +70,7 @@
                                         <div class="col-xs-9">
                                             {{ $dienstRegeling->departure->station }}
                                             <div class="extra-info">
-                                                {{ $dienstRegeling->departure->stationinfo->standardname }} - {{ substr($dienstRegeling->departure->vehicle, strripos($dienstRegeling->departure->vehicle, '.')+1) }}
+                                                {{ $dienstRegeling->departure->direction->name }} - {{ substr($dienstRegeling->departure->vehicle, strripos($dienstRegeling->departure->vehicle, '.')+1) }}
                                             </div>
                                         </div>
                                         <div class="col-xs-1"><span class="platform">{{ $dienstRegeling->departure->platform }}</span></div>
@@ -105,8 +105,18 @@
                                                 <div class="col-xs-9">
                                                     {{ $via->stationinfo->standardname }}
                                                     <div class="extra-info">
-                                                        {{ $via->direction->name }} -
-                                                        {{ substr($via->vehicle, strripos($via->vehicle, '.')+1) }}
+                                                        @if($loop->last)
+                                                            {{ $dienstRegeling->arrival->direction->name }} -
+                                                            {{ substr($dienstRegeling->arrival->vehicle, strripos($dienstRegeling->arrival->vehicle, '.')+1) }}
+
+                                                        @else
+                                                            @php
+                                                                $newtVia = $dienstRegeling->vias->via[$loop->iteration];
+                                                             @endphp
+                                                            {{ $newtVia->direction->name }} -
+                                                            {{ substr($newtVia->vehicle, strripos($newtVia->vehicle, '.')+1) }}
+
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-1"><span class="platform">{{ $via->departure->platform }}</span></div>
