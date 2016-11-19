@@ -13,7 +13,7 @@ class IndexController extends Controller
 
         $dateArray = explode('-', $request->Date);
         $date = $dateArray[2] . $dateArray[1] . substr($dateArray[0], 2);
-        $time = str_replace($request->Time, ':', '');
+        $time = str_replace(':', '', $request->Time);
 
 
         $url = sprintf('https://api.irail.be/connections/?format=json&to=%s&from=%s&date=%s&time=%s', $request->To, $request->From, $date, $time);

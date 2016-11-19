@@ -119,9 +119,9 @@
                                         <div class="col-xs-2">{{ date('H:i', $dienstRegeling->arrival->time) }}</div>
                                         <div class="col-xs-9">
                                             {{ $dienstRegeling->arrival->station }}
-                                            <div class="extra-info">
-                                                {{ $dienstRegeling->arrival->stationinfo->standardname }} - {{ substr($dienstRegeling->arrival->vehicle, strripos($dienstRegeling->arrival->vehicle, '.')+1) }}
-                                            </div>
+                                            {{--<div class="extra-info">--}}
+                                                {{--{{ $dienstRegeling->arrival->stationinfo->standardname }} - {{ substr($dienstRegeling->arrival->vehicle, strripos($dienstRegeling->arrival->vehicle, '.')+1) }}--}}
+                                            {{--</div>--}}
                                         </div>
                                         <div class="col-xs-1"><span class="platform">{{ $dienstRegeling->arrival->platform }}</span></div>
                                     </div>
