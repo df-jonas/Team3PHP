@@ -88,6 +88,28 @@ h2{
     padding: 1em;
     margin: .5em 0;
 
+    .canceled {
+      color: $color-vertraging;
+      text-decoration: none;
+
+      &::after {
+        @extend .col-xs-9;
+        @extend .col-xs-offset-2;
+
+        content: '(canceled)';
+        text-decoration: none;
+        color: $color-vertraging;
+        font-size: .7em;
+        padding-left: 2.5em;
+      }
+
+      div {
+        text-decoration: line-through;
+
+
+      }
+    }
+
     .vertraging {
       color: $color-vertraging;
       &::before {
