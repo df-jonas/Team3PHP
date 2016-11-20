@@ -17,14 +17,13 @@
                 <div class="col-sm-2">{{ Form::label('To', 'To') }}</div>
                 <div class="col-sm-4">{{ Form::text('To', 'Kiewit') }}</div>
                 <div class="col-sm-2">{{ Form::label('Time', 'Time') }}</div>
-                <div class="col-sm-4">{{ Form::text('Time', \Carbon\Carbon::now()->format('H:i')) }}</div>
+                <div class="col-sm-4">{{ Form::text('Time', \Carbon\Carbon::now('Europe/Brussels')->format('H:i')) }}</div>
             </div>
             <div class="row">
                 <div class="col-sm-2 col-sm-offset-10 col-xs-12">
                     {{ Form::submit('Search') }}
                 </div>
             </div>
-
 
             {{ Form::close() }}
         </div>
