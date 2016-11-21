@@ -14,12 +14,12 @@
             <div class="row">
                 <div class="col-sm-2">{{ Form::label('Date', 'Datum') }}</div>
                 <div class="col-sm-6">{{ Form::date('Date', \Carbon\Carbon::now()) }}</div>
-                <div class="col-sm-2 radio-align">{{ Form::radio('TimeSel', 'ARR', true) }} {{ Form::label('TimeSel', 'Arrive') }}</div>
+                <div class="col-sm-2 radio-align">{{ Form::radio('TimeSel', 'DEP', true) }} {{ Form::label('TimeSel', 'Depart') }}</div>
             </div>
             <div class="row">
                 <div class="col-sm-2">{{ Form::label('Time', 'Uur') }}</div>
                 <div class="col-sm-6">{{ Form::text('Time', \Carbon\Carbon::now()->format('H:i')) }}</div>
-                <div class="col-sm-2 radio-align">{{ Form::radio('TimeSel', 'DEP', false) }} {{ Form::label('TimeSel', 'Depart') }}</div>
+                <div class="col-sm-2 radio-align">{{ Form::radio('TimeSel', 'ARR', false) }} {{ Form::label('TimeSel', 'Arrive') }}</div>
             </div>
 
 
