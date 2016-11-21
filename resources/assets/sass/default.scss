@@ -62,18 +62,34 @@ h2{
 
   .row {
     margin: 1em 0;
+    
+    .col-sm-2 {
+      text-align: right;
+    }
+
+    .radio-align {
+      display: flex;
+      align-items: center;
+
+      label, input[type="radio"] {
+        margin: 0;
+      }
+    }
   }
 
   input {
     height: 2em;
-    width: 70%;
+    width: 100%;
 
     &[type=date] {
       height: 2em;
     }
+    &[type=radio] {
+      width: 25%;
+    }
 
     &[type=submit] {
-      width: auto;
+
 
       &:disabled {
         opacity: .7;
@@ -105,8 +121,6 @@ h2{
 
       div {
         text-decoration: line-through;
-
-
       }
     }
 
