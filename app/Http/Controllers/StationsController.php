@@ -17,8 +17,7 @@ class StationsController extends Controller
 
         $url = "https://api.irail.be/liveboard/?format=json";
 
-        if ($request->SearchType == "Station")
-            $url .= "&station=" . $request->Name;
+        $url .= "&station=" . $request->Name;
 
         if (isset($request->Date))
             $url .= "&date=" . $date;
@@ -39,9 +38,9 @@ class StationsController extends Controller
 
         $body = json_decode($res->getBody());
         $station = $body->stationinfo;
-        $arrivals = $body->arrivals;
+        $departures = $body->departures;
 
-        return view('pages.index', array('error' => false, 'station' => $station, 'arrivals' => $arrivals));
+        return view('pages.stations', array('error' => false, 'station' => $station, 'departures' => $departures));
 
     }
 
