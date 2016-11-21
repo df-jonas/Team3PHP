@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class StationsController extends Controller
+class StationsViewController extends Controller
 {
-    public function getStationOrStation(Request $request)
+    public function getStation(Request $request)
     {
 
         //https://api.irail.be/connections/?to={station1}&from={station2} (OPTIONAL:) &date={dmy}&time=2359&timeSel=arrive or depart

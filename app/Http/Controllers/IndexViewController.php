@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+class IndexViewController extends Controller
 {
     public function getDienstRegeling(Request $request)
     {
