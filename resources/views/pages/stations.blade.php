@@ -9,20 +9,19 @@
             {{ Form::token() }}
             <div class="row">
                 <div class="col-sm-2">{{ Form::label('Name', 'Station') }}</div>
-                <div class="col-sm-8">{{ Form::text('Name', 'Groenendael') }}</div>
+                <div class="col-sm-8">{{ Form::text('Name', 'Groenendael', ['required' => true]) }}</div>
             </div>
             <div class="row">
                 <div class="col-sm-2">{{ Form::label('Date', 'Datum') }}</div>
-                <div class="col-sm-6">{{ Form::date('Date', \Carbon\Carbon::now()) }}</div>
+                <div class="col-sm-6">{{ Form::date('Date', \Carbon\Carbon::now(), ['required' => true]) }}</div>
                 <div class="col-sm-2 radio-align">{{ Form::radio('TimeSel', 'DEP', true) }} {{ Form::label('TimeSel', 'Depart') }}</div>
             </div>
             <div class="row">
                 <div class="col-sm-2">{{ Form::label('Time', 'Uur') }}</div>
-                <div class="col-sm-6">{{ Form::text('Time', \Carbon\Carbon::now()->format('H:i')) }}</div>
+                <div class="col-sm-6">{{ Form::text('Time', \Carbon\Carbon::now()->format('H:i'), ['required' => true]) }}</div>
                 <div class="col-sm-2 radio-align">{{ Form::radio('TimeSel', 'ARR', false) }} {{ Form::label('TimeSel', 'Arrive') }}</div>
             </div>
-
-
+            <br/>
             <div class="row">
                 <div class="col-xs-8 col-xs-offset-2">
                     {{ Form::submit('Search') }}
@@ -47,7 +46,8 @@
 
 
                     @foreach($departures->departure as $departure)
-                        <a href="#toTreinInfo{{ $departure->vehicle }}">
+                        {{ Form::open(['url' => '/trains', 'class'=>'search-result-link']) }}
+                        <button type="submit" name="TreinID" value="{{ substr($departure->vehicle, strripos($departure->vehicle, '.')+1) }}">
                             <div class="search-result">
                                 <div class="title-primary row">
                                     <div class="col-xs-2">
@@ -60,8 +60,8 @@
                                     <div class="col-xs-2">{{ $departure->platform }}</div>
                                 </div>
                             </div>
-                        </a>
-
+                        </button>
+                        {{ Form::close() }}
 
                     @endforeach
                 @endif
