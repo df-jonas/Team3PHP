@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  padding : 0;
+  padding: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,36 +19,40 @@ ul {
       display: block;
       color: white;
       text-align: center;
-      padding: 14px 16px;
+      padding: 2em 1.7em;
       text-decoration: none;
 
       &:hover {
-        background-color: #111;
+        background-color: #333;
+        color: white;
       }
     }
   }
 }
 
-
-
-header, footer {
-  padding: 1em;
+header{
   color: white;
   background-color: black;
   clear: left;
   text-align: center;
-
+  overflow: visible;
 }
 
-.contents{
+footer {
+  @extend header;
+
+  padding: 1em;
+}
+
+.contents {
 
   border-left: 1px solid gray;
   padding: 1em;
   overflow: hidden;
-  flex:1;
+  flex: 1;
 }
 
-h2{
+h2 {
   text-align: center;
 }
 
@@ -62,7 +66,7 @@ h2{
 
   .row {
     margin: 1em 0;
-    
+
     .col-sm-2 {
       text-align: right;
     }
@@ -89,7 +93,6 @@ h2{
     }
 
     &[type=submit] {
-
 
       &:disabled {
         opacity: .7;
@@ -142,10 +145,10 @@ h2{
           text-decoration: none;
         }
       }
-      &-primary{
+      &-primary {
         color: $color-search-title;
       }
-      &-secundary{
+      &-secundary {
         color: $color-search-title-secundary;
       }
     }
@@ -159,12 +162,12 @@ h2{
         font-size: .7em;
         padding-left: 1em;
       }
-      .via-icon .glyphicon{
+      .via-icon .glyphicon {
         padding-left: .7em;
       }
     }
 
-    &-link button[type="submit"]{
+    &-link button[type="submit"] {
       border: none;
       outline: none;
       background: none;

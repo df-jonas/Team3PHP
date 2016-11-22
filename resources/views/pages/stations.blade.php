@@ -18,7 +18,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-2">{{ Form::label('Time', 'Uur') }}</div>
-                <div class="col-sm-6">{{ Form::text('Time', \Carbon\Carbon::now()->format('H:i'), ['required' => true]) }}</div>
+                <div class="col-sm-6">{{ Form::time('Time', \Carbon\Carbon::now()->format('H:i'), ['required' => true]) }}</div>
                 <div class="col-sm-2 radio-align">{{ Form::radio('TimeSel', 'ARR', false) }} {{ Form::label('TimeSel', 'Arrive') }}</div>
             </div>
             <br/>

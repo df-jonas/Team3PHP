@@ -22,7 +22,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-2">{{ Form::label('Time', 'Time') }}</div>
-                <div class="col-sm-6">{{ Form::text('Time', \Carbon\Carbon::now('Europe/Brussels')->format('H:i')), ['required' => true] }}</div>
+                <div class="col-sm-6">{{ Form::time('Time', \Carbon\Carbon::now('Europe/Brussels')->format('H:i')), ['required' => true] }}</div>
                 <div class="col-sm-2 radio-align">{{ Form::radio('TimeSel', 'arrival', false) }} {{ Form::label('TimeSel', 'Arrive') }}</div>
             </div>
             <br/>
@@ -50,6 +50,7 @@
                                     <div class="title">
                                         <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true"
                                            href="#collapse_{{ $loop->index }}">
+
                                             <div class="title-primary row">
                                                 {{ date('H:i', $dienstRegeling->departure->time) }}
                                                 @if ($dienstRegeling->departure->delay != 0)
@@ -78,6 +79,7 @@
                                 <div id="collapse_{{ $loop->index }}"
                                      class="search-result-info collapse {{ $loop->index == 0 ? 'in': '' }}"
                                      role="tabpanel" aria-labelledby="heading_{{ $loop->index }}">
+
                                     <div class="card-block">
                                         <div class="departure row {{ ($dienstRegeling->departure->canceled != 0)? 'canceled' : '' }}">
                                             <div class="col-xs-2">{{ date('H:i', $dienstRegeling->departure->time) }}</div>
@@ -88,8 +90,9 @@
                                                     - {{ substr($dienstRegeling->departure->vehicle, strripos($dienstRegeling->departure->vehicle, '.')+1) }}
                                                 </div>
                                             </div>
-                                            <div class="col-xs-1"><span
-                                                        class="platform">{{ $dienstRegeling->departure->platform }}</span>
+                                            <div class="col-xs-1">
+                                                <span class="platform">{{ $dienstRegeling->departure->platform }}
+                                            </span>
                                             </div>
                                         </div>
 
@@ -107,8 +110,9 @@
                                                     <div class="col-xs-9">
                                                         {{ $via->stationinfo->standardname }}
                                                     </div>
-                                                    <div class="col-xs-1"><span
-                                                                class="platform">{{ $via->arrival->platform }}</span>
+                                                    <div class="col-xs-1">
+                                                        <span class="platform">{{ $via->arrival->platform }}
+                                                    </span>
                                                     </div>
                                                 </div>
 
@@ -141,8 +145,9 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-1"><span
-                                                                class="platform">{{ $via->departure->platform }}</span>
+                                                    <div class="col-xs-1">
+                                                        <span class="platform">{{ $via->departure->platform }}
+                                                    </span>
                                                     </div>
                                                 </div>
 
@@ -154,8 +159,9 @@
                                             <div class="col-xs-9">
                                                 {{ $dienstRegeling->arrival->station }}
                                             </div>
-                                            <div class="col-xs-1"><span
-                                                        class="platform">{{ $dienstRegeling->arrival->platform }}</span>
+                                            <div class="col-xs-1">
+                                                <span class="platform">{{ $dienstRegeling->arrival->platform }}
+                                            </span>
                                             </div>
                                         </div>
 
