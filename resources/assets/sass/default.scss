@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  padding : 0;
+  padding: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@ nav {
       width: auto;
     }
   }
-
+  
   .right {
   float: right;
 
@@ -62,21 +62,29 @@ footer {
   background-color: black;
   clear: left;
   text-align: center;
-
+  overflow: visible;
 }
+
+footer {
+  @extend header;
+
+  padding: 1em;
+}
+
 
 .header_form {
   background: $color-website-form;
 }
-.contents{
 
+.contents{
   border-left: 1px solid gray;
   padding: 1em;
   overflow: hidden;
-  flex:1;
+  flex: 1;
+
 }
 
-h2{
+h2 {
   text-align: center;
 }
 
@@ -89,7 +97,7 @@ h2{
 
   .row {
     margin: 1em 0;
-    
+
     .col-sm-2 {
       text-align: right;
     }
@@ -175,10 +183,10 @@ h2{
           text-decoration: none;
         }
       }
-      &-primary{
+      &-primary {
         color: $color-search-title;
       }
-      &-secundary{
+      &-secundary {
         color: $color-search-title-secundary;
       }
     }
@@ -192,12 +200,12 @@ h2{
         font-size: .7em;
         padding-left: 1em;
       }
-      .via-icon .glyphicon{
+      .via-icon .glyphicon {
         padding-left: .7em;
       }
     }
 
-    &-link button[type="submit"]{
+    &-link button[type="submit"] {
       border: none;
       outline: none;
       background: none;
