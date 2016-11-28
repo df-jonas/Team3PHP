@@ -22,7 +22,7 @@ nav {
       width: auto;
     }
   }
-  
+
   .right {
   float: right;
 
@@ -55,22 +55,38 @@ nav {
   }
 }
 
-//header,
-footer {
-  padding: 1em;
-  color: white;
-  background-color: black;
-  clear: left;
-  text-align: center;
-  overflow: visible;
-}
 
 footer {
-  @extend header;
-
+  color: initial;
+  background-color: $color-website-form;
   padding: 1em;
-}
+  clear: both;
 
+  .footer_header {
+    color: $color-website-accent_1;
+    font-size: 1.7em;
+    font-weight: bolder;
+    text-align: center;
+  }
+
+  .footer_list {
+    ul {
+      list-style: none;
+
+      li {
+
+        .name {
+          color: $color-website-accent_1;
+
+          &::after {
+            content: ' - ';
+            color: $color-search-title;
+          }
+        }
+      }
+    }
+  }
+}
 
 .header_form {
   background: $color-website-form;

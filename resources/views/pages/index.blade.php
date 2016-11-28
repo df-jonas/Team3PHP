@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('title', 'NMBSTeam WebApp')
 @section('content')
-    <div class="header_form">
+    <div class="header_form row">
     <h2>Dienstregeling</h2>
 
         <div class="container">

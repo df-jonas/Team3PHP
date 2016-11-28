@@ -1,27 +1,31 @@
 @extends('layouts.default')
 @section('title', 'NMBSTeam WebApp')
 @section('content')
-    <h2>Trains</h2>
+    <div class="header_form row">
+        <h2>Trains</h2>
 
-    <div class="container">
-        <div class="search-form row">
-            {{ Form::open(['url' => '/trains']) }}
-            {{ Form::token() }}
-            <div class="row">
-                <div class="col-sm-2">{{ Form::label('TreinID', 'Train ID') }}</div>
-                <div class="col-sm-8">{{ Form::text('TreinID', 'S83964', ['required' => true]) }}</div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-xs-8 col-xs-offset-2">
-                    {{ Form::submit('Search') }}
+        <div class="container">
+            <div class="search-form row">
+                {{ Form::open(['url' => '/trains']) }}
+                {{ Form::token() }}
+                <div class="row">
+                    <div class="col-sm-2">{{ Form::label('TreinID', 'Train ID') }}</div>
+                    <div class="col-sm-8">{{ Form::text('TreinID', 'S83964', ['required' => true]) }}</div>
                 </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-8 col-xs-offset-2">
+                        {{ Form::submit('Search') }}
+                    </div>
+                </div>
+
+                {{ Form::close() }}
             </div>
-
-            {{ Form::close() }}
         </div>
+    </div>
 
-        <div class="search-results row">
+    <div class="search-results row">
+        <div class="container">
 
             @if(isset($error))
                 @if($error)
