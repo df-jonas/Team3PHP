@@ -1,41 +1,45 @@
 @extends('layouts.default')
 @section('title', 'NMBSTeam WebApp')
 @section('content')
+    <div class="header_form">
     <h2>Dienstregeling</h2>
 
-    <div class="container">
-        <div class="search-form row">
-            {{ Form::open(['url' => '/']) }}
-            {{ Form::token() }}
-            <div class="row">
-                <div class="col-sm-2">{{ Form::label('From', 'From') }}</div>
-                <div class="col-sm-8">{{ Form::text('From', 'Groenendael', ['required' => true]) }}</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-2">{{ Form::label('To', 'To', ['required' => true]) }}</div>
-                <div class="col-sm-8">{{ Form::text('To', 'Kiewit') }}</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-2">{{ Form::label('Date', 'Date') }}</div>
-                <div class="col-sm-6">{{ Form::date('Date', \Carbon\Carbon::now()), ['required' => true] }}</div>
-                <div class="col-sm-2 radio-align">{{ Form::radio('TimeSel', 'depart', true) }} {{ Form::label('TimeSel', 'Depart') }}</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-2">{{ Form::label('Time', 'Time') }}</div>
-                <div class="col-sm-6">{{ Form::text('Time', \Carbon\Carbon::now('Europe/Brussels')->format('H:i')), ['required' => true] }}</div>
-                <div class="col-sm-2 radio-align">{{ Form::radio('TimeSel', 'arrival', false) }} {{ Form::label('TimeSel', 'Arrive') }}</div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-xs-8 col-xs-offset-2">
-                    {{ Form::submit('Search') }}
+        <div class="container">
+            <div class="search-form row">
+                {{ Form::open(['url' => '/']) }}
+                {{ Form::token() }}
+                <div class="row">
+                    <div class="col-sm-2">{{ Form::label('From', 'From') }}</div>
+                    <div class="col-sm-8">{{ Form::text('From', 'Groenendael', ['required' => true]) }}</div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-2">{{ Form::label('To', 'To', ['required' => true]) }}</div>
+                    <div class="col-sm-8">{{ Form::text('To', 'Kiewit') }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">{{ Form::label('Date', 'Date') }}</div>
+                    <div class="col-sm-6">{{ Form::date('Date', \Carbon\Carbon::now()), ['required' => true] }}</div>
+                    <div class="col-sm-2 radio-align">{{ Form::radio('TimeSel', 'depart', true) }} {{ Form::label('TimeSel', 'Depart') }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">{{ Form::label('Time', 'Time') }}</div>
+                    <div class="col-sm-6">{{ Form::text('Time', \Carbon\Carbon::now('Europe/Brussels')->format('H:i')), ['required' => true] }}</div>
+                    <div class="col-sm-2 radio-align">{{ Form::radio('TimeSel', 'arrival', false) }} {{ Form::label('TimeSel', 'Arrive') }}</div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-8 col-xs-offset-2">
+                        {{ Form::submit('Search') }}
+                    </div>
+                </div>
+
+                {{ Form::close() }}
             </div>
-
-            {{ Form::close() }}
         </div>
+    </div>
 
-        <div class="search-results row">
+    <div class="search-results row">
+        <div class="container">
 
             @if(isset($error))
                 @if($error)

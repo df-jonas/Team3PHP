@@ -86,9 +86,9 @@ Route::group(['prefix' => 'subscription', 'middleware' => 'auth:api'], function(
     Route::get('/', 'SubscriptionController@index');
     Route::get('/{id}', 'SubscriptionController@byID');
 
-    Route::post('create', 'StationController@create');
+    Route::post('create', 'SubscriptionController@create');
 
-    Route::Put('update/{id}', 'StationController@update');
+    Route::Put('update/{id}', 'SubscriptionController@update');
 //    Route::Delete('delete/{id}', 'StationController@delete');
 });
 
