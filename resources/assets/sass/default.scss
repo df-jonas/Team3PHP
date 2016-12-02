@@ -164,6 +164,11 @@ footer {
       &:disabled {
         opacity: .7;
       }
+      
+      &:hover {
+        color: $color-submit-white-hover;
+        background-color: $color-submit-green-hover;
+      }
     }
   }
 }
