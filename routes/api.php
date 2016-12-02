@@ -125,6 +125,50 @@ Route::group(['prefix' => 'ticket', 'middleware' => 'auth:api'], function()
 //    Route::Delete('delete/{id}', 'TicketController@delete');
 });
 
+Route::group(['prefix' => 'typeTicket', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/', 'TypeTicketController@index');
+    Route::get('/{id}', 'TypeTicketController@byID');
+
+    Route::post('create', 'TypeTicketController@create');
+
+    Route::Put('update/{id}', 'TypeTicketController@update');
+//    Route::Delete('delete/{id}', 'TypeTicketController@delete');
+});
+
+Route::group(['prefix' => 'pass', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/', 'PassController@index');
+    Route::get('/{id}', 'PassController@byID');
+
+    Route::post('create', 'PassController@create');
+
+    Route::Put('update/{id}', 'PassController@update');
+//    Route::Delete('delete/{id}', 'PassController@delete');
+});
+
+Route::group(['prefix' => 'typePass', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/', 'TypePassController@index');
+    Route::get('/{id}', 'TypePassController@byID');
+
+    Route::post('create', 'TypePassController@create');
+
+    Route::Put('update/{id}', 'TypePassController@update');
+//    Route::Delete('delete/{id}', 'TypePassController@delete');
+});
+
+Route::group(['prefix' => 'reservation', 'middleware' => 'auth:api'], function()
+{
+    Route::get('/', 'ReservationController@index');
+    Route::get('/{id}', 'ReservationController@byID');
+
+    Route::post('create', 'ReservationController@create');
+
+    Route::Put('update/{id}', 'ReservationController@update');
+//    Route::Delete('delete/{id}', 'ReservationController@delete');
+});
+
 Route::group(['prefix' => 'lostObject', 'middleware' => 'auth:api'], function()
 {
     Route::get('/', 'LostObjectController@index');
@@ -135,13 +179,3 @@ Route::group(['prefix' => 'lostObject', 'middleware' => 'auth:api'], function()
     Route::Put('update/{id}', 'LostObjectController@update');
 //    Route::Delete('delete/{id}', 'LostObjectController@delete');
 });
-
-
-
-//Route::group(['prefix' => 'test', 'middleware' => 'auth:api'], function()
-//{
-//    Route::get('/subscription', 'SubscriptionController@index');
-//    Route::get('/route', 'RouteController@index');
-//    Route::get('/railcard', 'RailCardController@index');
-//    Route::get('/discount', 'DiscountController@index');
-//});
