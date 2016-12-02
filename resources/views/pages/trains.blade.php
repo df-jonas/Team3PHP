@@ -5,7 +5,7 @@
     <div class="header_title row">
         <h1>Trains</h1>
     </div>
-    
+
     <div class="header_form row">
         <div class="container">
             <div class="search-form row">
