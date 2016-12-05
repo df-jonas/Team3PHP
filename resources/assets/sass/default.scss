@@ -283,11 +283,6 @@ footer {
       width: auto;
     }
   }
-
-
-  html {
-    font-size: 3em;
-  }
   
   body {
     font-size: 2em;
@@ -349,4 +344,30 @@ footer {
     }
   }
 
+}
+
+@media (max-width: 590px) {
+
+  nav {
+    .right {
+      margin-top: 1em;
+
+      ul {
+        li {
+          display: block;
+
+          &.active {
+            border: 0;
+            background: $color-website-accent_1;
+            a {
+            color: white;
+            }
+          }
+          a {
+            padding: 1em;
+          }
+        }
+      }
+    }
+  }
 }
