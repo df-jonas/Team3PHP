@@ -13,7 +13,7 @@ class Ticket extends Model
 
     protected $hidden = ['RouteID'];
     protected $guarded = ['TicketID'];
-    protected $fillable = ['RouteID', 'TypeTicketID','Date', 'Price', 'ValidFrom', 'ValidUntil', 'ComfortClass'];
+    protected $fillable = ['RouteID', 'TypeTicketID','Date', 'ValidFrom', 'ValidUntil'];
 
     protected $appends = ['Route', 'TypeTicketID'];
 
