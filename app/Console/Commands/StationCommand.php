@@ -56,9 +56,10 @@ class StationCommand extends Command
         try
         {
             $xml = new XMLWriter();
-            $xml->setIndent(true);
             $xml->openUri($path);
             $xml->startDocument('1.0');
+            $xml->setIndent(true);
+            
             $xml->startElement('Stations');
 
             foreach ($stations as $station) {
