@@ -2,8 +2,6 @@
 
 namespace App\Console;
 
-//use App\Http\Controllers\StationController;
-
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\StationCommand::class,
     ];
 
     /**
@@ -26,19 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-
-
-
-//        Not working on hostinger...
-//
-//
-//        $schedule->call(function () {
-//
-//            StationController::indexToXML();
-//
-//        })->daily();
+        $schedule->command('indexStations:xml')->daily();
     }
 
     /**

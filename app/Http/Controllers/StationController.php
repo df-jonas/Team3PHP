@@ -100,18 +100,16 @@ class StationController extends Controller
     public static function indexToXML()
     {
         $stations = StationWithAddress::all();
+        $path = "documents/stations.xml";
+
+        $log = new Log();
+        $log->CreatedAt = \Carbon\Carbon::now()->timestamp;
+        $log->LogOrigin = "Station index to xml";
 
         try
         {
-            $path = "documents/stations.xml";
-
-            $log = new Log();
-            $log->CreatedAt = \Carbon\Carbon::now()->timestamp;
-            $log->LogOrigin = "Station index to xml";
-
             $xml = new XMLWriter();
-
-            $xml->openURI($path);
+            $xml->openUri($path);
             $xml->startDocument('1.0');
             $xml->startElement('stations');
 
@@ -141,11 +139,11 @@ class StationController extends Controller
 
             $xml->flush();
 
-            $log->LogMessage = "Stations succesfully indexed to \"" + $path + "\".";
+            $log->LogMessage = "Stations succesfully indexed to \"" . $path . "\".";
         }
         catch(Exception $e)
         {
-            $log->LogMessage = "Stations NOT succesfully indexed to \"" + $path + "\". \n" + $e->getMessage();
+            $log->LogMessage = "Stations NOT succesfully indexed to \"" . $path . "\". \n" . $e->getMessage();
         }
         finally
         {
