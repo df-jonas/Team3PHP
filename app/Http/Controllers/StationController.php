@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Station;
 use App\StationWithAddress;
+use App\Log;
+
 use App\Traits\ExceptionTrait;
 use App\Traits\ReturnTrait;
 use App\Traits\AddressTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StationController extends Controller
@@ -92,5 +95,61 @@ class StationController extends Controller
             return $this->beautifyReturn(404);
         }
         return $this->beautifyReturn(400);
+    }
+
+    public static function indexToXML()
+    {
+        $stations = StationWithAddress::all();
+
+        try
+        {
+            $path = "documents/stations.xml";
+
+            $log = new Log();
+            $log->CreatedAt = \Carbon\Carbon::now()->timestamp;
+            $log->LogOrigin = "Station index to xml";
+
+            $xml = new XMLWriter();
+
+            $xml->openURI($path);
+            $xml->startDocument('1.0');
+            $xml->startElement('stations');
+
+            foreach ($stations as $station) {
+
+
+                $xml->startElement('station');
+
+                $xml->writeElement('StationID', $station->StationID);
+
+                $xml->startElement('Address');
+
+                $xml->writeElement('AddressID', $station->Address->AddressID);
+                $xml->writeElement('AddressID', $station->Address->Street);
+                $xml->writeElement('AddressID', $station->Address->Number);
+                $xml->writeElement('AddressID', $station->Address->City);
+                $xml->writeElement('AddressID', $station->Address->ZipCode);
+                $xml->writeElement('AddressID', $station->Address->Coordinates);
+
+                $xml->writeElement('Name', $station->Name);
+
+                $xml->endElement();
+            }
+
+            $xml->endElement();
+            $xml->endDocument();
+
+            $xml->flush();
+
+            $log->LogMessage = "Stations succesfully indexed to \"" + $path + "\".";
+        }
+        catch(Exception $e)
+        {
+            $log->LogMessage = "Stations NOT succesfully indexed to \"" + $path + "\". \n" + $e->getMessage();
+        }
+        finally
+        {
+            $log->save();
+        }
     }
 }
