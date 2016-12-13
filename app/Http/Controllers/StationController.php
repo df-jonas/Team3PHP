@@ -97,57 +97,17 @@ class StationController extends Controller
         return $this->beautifyReturn(400);
     }
 
-    public static function indexToXML()
+    public function stationsAutocomplete()
     {
-        $stations = StationWithAddress::all();
-        $path = "documents/stations.xml";
+        $stationNames = [];
+        $path = storage_path('xmls/stations.xml');
 
-        $log = new Log();
-        $log->CreatedAt = \Carbon\Carbon::now()->timestamp;
-        $log->LogOrigin = "Station index to xml";
+        $stationsXMLElement = simplexml_load_file($path);
 
-        try
-        {
-            $xml = new XMLWriter();
-            $xml->openUri($path);
-            $xml->startDocument('1.0');
-            $xml->startElement('stations');
-
-            foreach ($stations as $station) {
-
-
-                $xml->startElement('station');
-
-                $xml->writeElement('StationID', $station->StationID);
-
-                $xml->startElement('Address');
-
-                $xml->writeElement('AddressID', $station->Address->AddressID);
-                $xml->writeElement('AddressID', $station->Address->Street);
-                $xml->writeElement('AddressID', $station->Address->Number);
-                $xml->writeElement('AddressID', $station->Address->City);
-                $xml->writeElement('AddressID', $station->Address->ZipCode);
-                $xml->writeElement('AddressID', $station->Address->Coordinates);
-
-                $xml->writeElement('Name', $station->Name);
-
-                $xml->endElement();
-            }
-
-            $xml->endElement();
-            $xml->endDocument();
-
-            $xml->flush();
-
-            $log->LogMessage = "Stations succesfully indexed to \"" . $path . "\".";
+        foreach ($stationsXMLElement->Station as $station) {
+            $stationNames[] = (string)$station->Name;
         }
-        catch(Exception $e)
-        {
-            $log->LogMessage = "Stations NOT succesfully indexed to \"" . $path . "\". \n" . $e->getMessage();
-        }
-        finally
-        {
-            $log->save();
-        }
+
+        return $stationNames;
     }
 }
