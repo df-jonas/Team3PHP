@@ -13,6 +13,6 @@ class TypePass extends Model
 
 
     protected $guarded = ['TypePassID'];
-    protected $fillable = ['Name', 'Price'];
+    protected $fillable = ['Name', 'Price', 'LastUpdated'];
 
 }

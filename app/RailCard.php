@@ -13,7 +13,7 @@ class RailCard extends Model
 
 
     protected $guarded = ['CardID'];
-
+    protected $fillable = ['LastUpdated'];
     protected $appends = ['Subscriptions'];
 
     public function getSubscriptionsAttribute()

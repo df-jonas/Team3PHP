@@ -12,6 +12,6 @@ class Station extends Model
     public $timestamps = false;
 
     protected $guarded = ['StationID'];
-    protected $fillable = ['AddressID', 'Name'];
+    protected $fillable = ['AddressID', 'Name', 'LastUpdated'];
 
 }

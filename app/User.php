@@ -18,7 +18,7 @@ class User extends Authenticatable
 
     protected $hidden = ['AddressID', 'StationID', 'Password', 'remember_token', 'Api_token'];
     protected $guarded = ['StaffID'];
-    protected $fillable = ['AddressID', 'StationID', 'FirstName', 'LastName', 'UserName', 'Password', 'Rights', 'BirthDate', 'Email', 'Api_token'];
+    protected $fillable = ['AddressID', 'StationID', 'FirstName', 'LastName', 'UserName', 'Password', 'Rights', 'BirthDate', 'Email', 'Api_token', 'LastUpdated'];
 
     protected $appends = ['Address', 'Station'];
 

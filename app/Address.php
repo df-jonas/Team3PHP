@@ -13,6 +13,6 @@ class Address extends Model
 
     protected $hidden = [];
     protected $guarded = ['AddressID'];
-    protected $fillable = ['Street', 'Number', 'City', 'ZipCode', 'Coordinates'];
+    protected $fillable = ['Street', 'Number', 'City', 'ZipCode', 'Coordinates', 'LastUpdated'];
 
 }

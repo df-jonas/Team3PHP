@@ -13,7 +13,7 @@ class Line extends Model
 
     protected $hidden = ['RouteID'];
     protected $guarded = ['LineID'];
-    protected $fillable = ['RouteID', 'TrainType'];
+    protected $fillable = ['RouteID', 'TrainType', 'LastUpdated'];
 
     protected $appends = ['Route'];
 

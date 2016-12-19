@@ -12,5 +12,5 @@ class Log extends Model
     public $timestamps = false;
 
     protected $guarded = ['LogID'];
-    protected $fillable = ['CreatedAT', 'LogOrigin', 'LogMessage'];
+    protected $fillable = ['CreatedAT', 'LogOrigin', 'LogMessage', 'LastUpdated'];
 }
