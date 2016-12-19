@@ -32,7 +32,7 @@ class AddressController extends Controller
 
     public function create(Request $request)
     {
-        $createAddressResponse = $this->createNewAdress($request);
+        $createAddressResponse = $this->createNewAddress($request);
 
         if (is_numeric($createAddressResponse)) {
             return $this->beautifyReturn(200, ['Extra' => 'Created', 'AddressID' => $createAddressResponse]);
@@ -55,6 +55,10 @@ class AddressController extends Controller
                 $address->ZipCode = $request->LastName;
             if ($request->Coordinates)
                 $address->Coordinates = $request->UserName;
+            if ($request->LastUpdated)
+                $address->LastUpdated = $request->LastUpdated;
+            else
+                $address->LastUpdated = time();
 
             if ($address->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Updated']);

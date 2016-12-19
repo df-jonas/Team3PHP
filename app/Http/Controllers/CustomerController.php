@@ -40,24 +40,31 @@ class CustomerController extends Controller
     public function create(Request $request)
     {
 
-        if ($request->AddressID
+        if ($request->CustommerID
+            && $request->AddressID
             && $request->FirstName
             && $request->LastName
             && $request->BirthDate
             && $request->Email
+            && $request->LastUpdated
         ) {
             $customer = new Customer();
+
             $railcard = new RailCard();
+            $railcard->RailcardID = $request->CustomerID;
+            $railcard->LastUpdated = $request->LastUpdated;
 
             if (!$railcard->save())
                 return $this->beautifyReturnMessage('400', 'Railcard could not be saved');
 
+            $customer->CustommerID = $request->CustommerID;
             $customer->RailCardID = $railcard->CardID;
             $customer->AddressID = $request->AddressID;
             $customer->FirstName = $request->FirstName;
             $customer->LastName = $request->LastName;
             $customer->BirthDate = $request->BirthDate;
             $customer->Email = $request->Email;
+            $customer->LastUpdated = $request->LastUpdated;
 
             if ($customer->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'CustomerID' => $customer->CustomerID]);
@@ -69,7 +76,7 @@ class CustomerController extends Controller
 
     public function createWithAddress(Request $request)
     {
-        $createAddressResponse = $this->createNewAdress($request);
+        $createAddressResponse = $this->createNewAddress($request);
 
         if (is_numeric($createAddressResponse)) {
             $request->request->add(['AddressID' => $createAddressResponse]);
@@ -101,6 +108,10 @@ class CustomerController extends Controller
                 $customer->BirthDate = $request->BirthDate;
             if ($request->Email)
                 $customer->Email = $request->Email;
+            if ($request->LastUpdated)
+                $customer->LastUpdated = $request->LastUpdated;
+            else
+                $customer->LastUpdated = time();
 
 
             if ($customer->save())

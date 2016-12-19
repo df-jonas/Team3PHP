@@ -29,12 +29,16 @@ class LineController extends Controller
 
     public function create(Request $request)
     {
-        if ( $request->RouteID
+        if ($request->LineID
+            && $request->RouteID
             && $request->TrainType
+            && $request->LastUpdated
         ) {
             $line = new Line();
+            $line->LineID = $request->LineID;
             $line->RouteID = $request->RouteID;
             $line->TrainType = $request->TrainType;
+            $line->LastUpdated = $request->LastUpdated;
 
             if ($line->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'LineID' => $line->LineID]);
@@ -52,6 +56,10 @@ class LineController extends Controller
                 $line->RouteID = $request->RouteID;
             if ($request->TrainType)
                 $line->TrainType = $request->TrainType;
+            if ($request->LastUpdated)
+                $line->LastUpdated = $request->LastUpdated;
+            else
+                $line->LastUpdated = time();
 
 
             if ($line->save())

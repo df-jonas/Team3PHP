@@ -34,18 +34,22 @@ class SubscriptionController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->RailCardID
+        if ($request->SubscriptionID
+            && $request->RailCardID
             && $request->RouteID
             && $request->DiscountID
             && $request->ValidFrom
             && $request->ValidUntil
+            && $request->LastUpdated
         ) {
             $subscription = new Subscription();
+            $subscription->SubscriptionID = $request->SubscriptionID;
             $subscription->RailCardID = $request->RailCardID;
             $subscription->RouteID = $request->RouteID;
             $subscription->DiscountID = $request->DiscountID;
             $subscription->ValidFrom = $request->ValidFrom;
             $subscription->ValidUntil = $request->ValidUntil;
+            $subscription->LastUpdated = $request->LastUpdated;
 
             if ($subscription->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'SubscriptionID' => $subscription->SubscriptionID]);
@@ -69,6 +73,10 @@ class SubscriptionController extends Controller
                 $subscription->ValidFrom = $request->ValidFrom;
             if ($request->ValidUntil)
                 $subscription->ValidUntil = $request->ValidUntil;
+            if ($request->LastUpdated)
+                $subscription->LastUpdated = $request->LastUpdated;
+            else
+                $subscription->LastUpdated = time();
 
             if ($subscription->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Updated']);

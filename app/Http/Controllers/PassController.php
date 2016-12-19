@@ -34,16 +34,20 @@ class PassController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->TypePassID
+        if ($request->PassID
+            && $request->TypePassID
             && $request->Date
             && $request->StartDate
             && $request->ComfortClass
+            && $request->LastUpdated
         ) {
             $pass = new Pass();
+            $pass->PassID = $request->PassID;
             $pass->TypePassID = $request->TypePassID;
             $pass->Date = $request->Date;
             $pass->StartDate = $request->StartDate;
             $pass->ComfortClass = $request->ComfortClass;
+            $pass->LastUpdated = $request->LastUpdated;
 
             if ($pass->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'SubscriptionID' => $pass->PassID]);
@@ -65,6 +69,10 @@ class PassController extends Controller
                 $pass->StartDate = $request->StartDate;
             if ($request->ComfortClass)
                 $pass->ComfortClass = $request->ComfortClass;
+            if ($request->LastUpdated)
+                $pass->LastUpdated = $request->LastUpdated;
+            else
+                $pass->LastUpdated = time();
 
             if ($pass->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Updated']);

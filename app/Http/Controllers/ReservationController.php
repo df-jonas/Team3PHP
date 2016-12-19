@@ -34,16 +34,20 @@ class ReservationController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->PassengerCount
+        if ($request->ReservationID
+            && $request->PassengerCount
             && $request->TrainID
             && $request->Price
             && $request->RouteID
+            && $request->LastUpdated
         ) {
             $reservation = new Reservation();
+            $reservation->ReservationID = $request->ReservationID;
             $reservation->PassengerCount = $request->PassengerCount;
             $reservation->TrainID = $request->TrainID;
             $reservation->Price = $request->Price;
             $reservation->RouteID = $request->RouteID;
+            $reservation->LastUpdated = $request->LastUpdated;
 
             if ($reservation->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'SubscriptionID' => $reservation->ReservationID]);
@@ -65,6 +69,10 @@ class ReservationController extends Controller
                 $reservation->Price = $request->Price;
             if ($request->RouteID)
                 $reservation->RouteID = $request->RouteID;
+            if ($request->LastUpdated)
+                $reservation->LastUpdated = $request->LastUpdated;
+            else
+                $reservation->LastUpdated = time();
 
             if ($reservation->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Updated']);

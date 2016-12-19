@@ -48,12 +48,16 @@ class RouteController extends Controller
 
     public function create(Request $request)
     {
-        if ( $request->DepartureStationID
+        if ( $request->RouteID
+            && $request->DepartureStationID
             && $request->ArrivalStationID
+            && $request->LastUpdated
         ) {
             $route = new Route();
+            $route->RouteID = $request->RouteID;
             $route->DepartureStationID = $request->DepartureStationID;
             $route->ArrivalStationID = $request->ArrivalStationID;
+            $route->LastUpdated = $request->LastUpdated;
 
             try {
                 if ($route->save())
@@ -75,6 +79,10 @@ class RouteController extends Controller
                 $route->DepartureStationID = $request->DepartureStationID;
             if ($request->ArrivalStationID)
                 $route->ArrivalStationID = $request->ArrivalStationID;
+            if ($request->LastUpdated)
+                $route->LastUpdated = $request->LastUpdated;
+            else
+                $route->LastUpdated = time();
 
 
             if ($route->save())

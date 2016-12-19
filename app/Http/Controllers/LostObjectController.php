@@ -29,16 +29,20 @@ class LostObjectController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->StationID
+        if ($request->LostObjectID
+            && $request->StationID
             && $request->Description
             && $request->Date
             && $request->TrainID
+            && $request->LastUpdated
         ) {
             $lostObject = new LostObject();
+            $lostObject->LostObjectID = $request->LostObjectID;
             $lostObject->StationID = $request->StationID;
             $lostObject->Description = $request->Description;
             $lostObject->Date = $request->Date;
             $lostObject->TrainID = $request->TrainID;
+            $lostObject->LastUpdated = $request->LastUpdated;
 
             if ($lostObject->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'LostObjectID' => $lostObject->LostObjectID]);
@@ -60,6 +64,10 @@ class LostObjectController extends Controller
                 $lostObject->Date = $request->Date;
             if ($request->TrainID)
                 $lostObject->TrainID = $request->TrainID;
+            if ($request->LastUpdated)
+                $lostObject->LastUpdated = $request->LastUpdated;
+            else
+                $lostObject->LastUpdated = time();
 
             if ($lostObject->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Updated']);

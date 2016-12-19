@@ -29,18 +29,22 @@ class TicketController extends Controller
 
     public function create(Request $request)
     {
-        if ( $request->RouteID
+        if ( $request->TicketID
+            && $request->RouteID
             && $request->TypeTicketID
             && $request->Date
             && $request->ValidFrom
             && $request->ValidUntil
+            && $request->LastUpdated
         ) {
             $ticket = new Ticket();
+            $ticket->TicketID = $request->TicketID;
             $ticket->RouteID = $request->RouteID;
             $ticket->TypeTicketID = $request->TypeTicketID;
             $ticket->Date = $request->Date;
             $ticket->ValidFrom = $request->ValidFrom;
             $ticket->ValidUntil = $request->ValidUntil;
+            $ticket->LastUpdated = $request->LastUpdated;
 
             if ($ticket->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'TicketID' => $ticket->TicketID]);
@@ -64,6 +68,10 @@ class TicketController extends Controller
                 $ticket->ValidFrom = $request->ValidFrom;
             if ($request->ValidUntil)
                 $ticket->ValidUntil = $request->ValidUntil;
+            if ($request->LastUpdated)
+                $ticket->LastUpdated = $request->LastUpdated;
+            else
+                $ticket->LastUpdated = time();
 
 
             if ($ticket->save())

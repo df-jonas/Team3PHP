@@ -29,12 +29,16 @@ class DiscountController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->Name
+        if ($request->DiscountID
+            && $request->Name
             && $request->Amount
+            && $request->LastUpdated
         ) {
             $discount = new Discount();
+            $discount->DiscountID = $request->DiscountID;
             $discount->Name = $request->Name;
             $discount->Amount = $request->Amount;
+            $discount->LastUpdated = $request->LastUpdated;
 
             if ($discount->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'DiscountID' => $discount->DiscountID]);
@@ -52,6 +56,10 @@ class DiscountController extends Controller
                 $discount->Name = $request->Name;
             if ($request->Amount)
                 $discount->Amount = $request->Amount;
+            if ($request->LastUpdated)
+                $discount->LastUpdated = $request->LastUpdated;
+            else
+                $discount->LastUpdated = time();
 
             if ($discount->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Updated']);

@@ -37,12 +37,16 @@ class StationController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->AddressID
+        if ($request->StationID
+            && $request->AddressID
             && $request->Name
+            && $request->LastUpdated
         ) {
             $station = new Station();
+            $station->StationID = $request->StationID;
             $station->AddressID = $request->AddressID;
             $station->Name = $request->Name;
+            $station->LastUpdated = $request->LastUpdated;
 
             try {
                 if ($station->save())
@@ -58,7 +62,7 @@ class StationController extends Controller
 
     public function createWithAddress(Request $request)
     {
-        $createAddressResponse = $this->createNewAdress($request);
+        $createAddressResponse = $this->createNewAddress($request);
 
         if (is_numeric($createAddressResponse)) {
             $request->request->add(['AddressID' => $createAddressResponse]);
@@ -76,6 +80,10 @@ class StationController extends Controller
                 $station->AddressID = $request->AddressID;
             if ($request->Name)
                 $station->Name = $request->Name;
+            if ($request->LastUpdated)
+                $station->LastUpdated = $request->LastUpdated;
+            else
+                $station->LastUpdated = time();
 
             if ($station->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Updated']);
