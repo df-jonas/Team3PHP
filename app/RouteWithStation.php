@@ -13,7 +13,7 @@ class RouteWithStation extends Model
 
     protected $hidden = ['DepartureStationID', 'ArrivalStationID'];
     protected $guarded = ['RouteID'];
-    protected $fillable = ['DepartureStationID', 'ArrivalStationID'];
+    protected $fillable = ['DepartureStationID', 'ArrivalStationID', 'LastUpdated'];
 
     protected $appends = ['DepartureStation', 'ArrivalStation'];
 

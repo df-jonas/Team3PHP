@@ -29,12 +29,16 @@ class DiscountController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->Name
+        if ($request->DiscountID
+            && $request->Name
             && $request->Amount
+            && $request->LastUpdated
         ) {
             $discount = new Discount();
+            $discount->DiscountID = $request->DiscountID;
             $discount->Name = $request->Name;
             $discount->Amount = $request->Amount;
+            $discount->LastUpdated = $request->LastUpdated;
 
             if ($discount->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'DiscountID' => $discount->DiscountID]);
@@ -52,12 +56,52 @@ class DiscountController extends Controller
                 $discount->Name = $request->Name;
             if ($request->Amount)
                 $discount->Amount = $request->Amount;
+            if ($request->LastUpdated)
+                $discount->LastUpdated = $request->LastUpdated;
+            else
+                $discount->LastUpdated = time();
 
             if ($discount->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Updated']);
         } else {
             return $this->beautifyReturn(404);
         }
+        return $this->beautifyReturn(400);
+    }
+
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->DiscountList)) {
+
+            $discountList = $request->DiscountList;
+
+            try
+            {
+                foreach ($discountList as $discount)
+                {
+                    $myDiscount = Discount::find($discount['DiscountID']);
+
+                    if (empty($myCustomer))
+                        $myDiscount = New Discount();
+
+                    $myDiscount->DiscountID = $discount['DiscountID'];
+                    $myDiscount->Name = $discount['Name'];
+                    $myDiscount->Amount = $discount['Amount'];
+                    $myDiscount->LastUpdated = $discount['LastUpdated'];
+
+                    if (!$myDiscount->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
         return $this->beautifyReturn(400);
     }
 

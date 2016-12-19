@@ -13,6 +13,6 @@ class TypeTicket extends Model
 
 
     protected $guarded = ['TypeTicketID'];
-    protected $fillable = ['Name', 'Price', 'ComfortClass'];
+    protected $fillable = ['Name', 'Price', 'ComfortClass', 'LastUpdated'];
 
 }

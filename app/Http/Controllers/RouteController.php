@@ -48,12 +48,16 @@ class RouteController extends Controller
 
     public function create(Request $request)
     {
-        if ( $request->DepartureStationID
+        if ( $request->RouteID
+            && $request->DepartureStationID
             && $request->ArrivalStationID
+            && $request->LastUpdated
         ) {
             $route = new Route();
+            $route->RouteID = $request->RouteID;
             $route->DepartureStationID = $request->DepartureStationID;
             $route->ArrivalStationID = $request->ArrivalStationID;
+            $route->LastUpdated = $request->LastUpdated;
 
             try {
                 if ($route->save())
@@ -75,6 +79,10 @@ class RouteController extends Controller
                 $route->DepartureStationID = $request->DepartureStationID;
             if ($request->ArrivalStationID)
                 $route->ArrivalStationID = $request->ArrivalStationID;
+            if ($request->LastUpdated)
+                $route->LastUpdated = $request->LastUpdated;
+            else
+                $route->LastUpdated = time();
 
 
             if ($route->save())
@@ -82,6 +90,42 @@ class RouteController extends Controller
         } else {
             return $this->beautifyReturn(404);
         }
+        return $this->beautifyReturn(400);
+    }
+
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->RouteList)) {
+
+            $routeList = $request->RouteList;
+
+            try
+            {
+                foreach ($routeList as $route)
+                {
+                    $myRoute = Route::find($route['RouteID']);
+
+                    if (empty($myRoute))
+                        $myRoute = New Route();
+
+                    $myRoute->RouteID = $route['RouteID'];
+                    $myRoute->DepartureStationID = $route['DepartureStationID'];
+                    $myRoute->ArrivalStationID = $route['ArrivalStationID'];
+                    $myRoute->LastUpdated = $route['LastUpdated'];
+
+                    if (!$myRoute->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
         return $this->beautifyReturn(400);
     }
 

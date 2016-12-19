@@ -13,5 +13,5 @@ class Discount extends Model
 
 
     protected $guarded = ['DiscountID'];
-    protected $fillable = ['Name', 'Amount'];
+    protected $fillable = ['Name', 'Amount', 'LastUpdated'];
 }
