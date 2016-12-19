@@ -14,6 +14,9 @@
 
     <title>@yield('title')</title>
 
+    <link rel="shortcut icon" href="{{ elixir('img/G3_favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ elixir('img/G3_favicon.ico') }}" type="image/x-icon">
+
 </head>
 <body>
     <header> @include('layouts.header') </header>
