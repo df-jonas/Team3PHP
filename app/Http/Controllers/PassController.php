@@ -81,6 +81,44 @@ class PassController extends Controller
         }
         return $this->beautifyReturn(400);
     }
+    
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->PassList)) {
+
+            $passList = $request->PassList;
+
+            try
+            {
+                foreach ($passList as $pass)
+                {
+                    $myPass = Pass::find($pass['PassID']);
+
+                    if (empty($myPass))
+                        $myPass = New Pass();
+
+                    $myPass->PassID = $pass['PassID'];
+                    $myPass->TypePassID = $pass['TypePassID'];
+                    $myPass->Date = $pass['Date'];
+                    $myPass->StartDate = $pass['StartDate'];
+                    $myPass->ComfortClass = $pass['ComfortClass'];
+                    $myPass->LastUpdated = $pass['LastUpdated'];
+
+                    if (!$myPass->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
+    }
 
     public function delete($id)
     {

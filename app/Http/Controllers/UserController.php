@@ -146,6 +146,50 @@ class UserController extends Controller
 
     }
 
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->StaffList)) {
+
+            $staffList = $request->StaffList;
+
+            try
+            {
+                foreach ($staffList as $staff)
+                {
+                    $myStaff = User::find($staff['StaffID']);
+
+                    if (empty($myStaff))
+                        $myStaff = New User();
+
+                    $myStaff->StaffID = $staff['StaffID'];
+                    $myStaff->AddressID = $staff['AddressID'];
+                    $myStaff->StationID = $staff['StationID'];
+                    $myStaff->FirstName = $staff['FirstName'];
+                    $myStaff->LastName = $staff['LastName'];
+                    $myStaff->UserName = $staff['UserName'];
+                    $myStaff->Password = $staff['Password'];
+                    $myStaff->Rights = $staff['Rights'];
+                    $myStaff->BirthDate = $staff['BirthDate'];
+                    $myStaff->Email = $staff['Email'];
+                    $myStaff->Api_token = $staff['Api_token'];
+                    $myStaff->LastUpdated = $staff['LastUpdated'];
+
+                    if (!$myStaff->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
+    }
+
     public function delete($id)
     {
         $user = User::find($id);

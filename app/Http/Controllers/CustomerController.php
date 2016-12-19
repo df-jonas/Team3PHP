@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\RailCard;
 use App\Traits\AddressTrait;
-use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     use AddressTrait;
-    use ReturnTrait;
 
     protected $className = 'Customer';
 
@@ -123,12 +121,46 @@ class CustomerController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->CustomerList)) {
+
+            $customerList = $request->CustomerList;
+
+            try
+            {
+                foreach ($customerList as $customer)
+                {
+                    $myCustomer = Customer::find($customer['CustommerID']);
+
+                    if (empty($myCustomer))
+                        $myCustomer = New Customer();
+
+                    $myCustomer->CustommerID = $customer['CustommerID'];
+                    $myCustomer->RailCardID = $customer['RailCardID'];
+                    $myCustomer->AddressID = $customer['AddressID'];
+                    $myCustomer->FirstName = $customer['FirstName'];
+                    $myCustomer->LastName = $customer['LastName'];
+                    $myCustomer->BirthDate = $customer['BirthDate'];
+                    $myCustomer->Email = $customer['Email'];
+                    $myCustomer->LastUpdated = $customer['LastUpdated'];
+
+                    if (!$myCustomer->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
+    }
+
     public function delete($id)
     {
         $customer = Customer::find($id);

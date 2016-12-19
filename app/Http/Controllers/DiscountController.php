@@ -69,6 +69,42 @@ class DiscountController extends Controller
         return $this->beautifyReturn(400);
     }
 
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->DiscountList)) {
+
+            $discountList = $request->DiscountList;
+
+            try
+            {
+                foreach ($discountList as $discount)
+                {
+                    $myDiscount = Discount::find($discount['DiscountID']);
+
+                    if (empty($myCustomer))
+                        $myDiscount = New Discount();
+
+                    $myDiscount->DiscountID = $discount['DiscountID'];
+                    $myDiscount->Name = $discount['Name'];
+                    $myDiscount->Amount = $discount['Amount'];
+                    $myDiscount->LastUpdated = $discount['LastUpdated'];
+
+                    if (!$myDiscount->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
+    }
+
     public function delete($id)
     {
         $discount = Discount::find($id);

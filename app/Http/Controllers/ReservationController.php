@@ -82,6 +82,44 @@ class ReservationController extends Controller
         return $this->beautifyReturn(400);
     }
 
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->ReservationList)) {
+
+            $reservationList = $request->ReservationList;
+
+            try
+            {
+                foreach ($reservationList as $reservation)
+                {
+                    $myReservation = Customer::find($reservation['ReservationID']);
+
+                    if (empty($myReservation))
+                        $myReservation = New Customer();
+
+                    $myReservation->ReservationID = $reservation['ReservationID'];
+                    $myReservation->PassengerCount = $reservation['PassengerCount'];
+                    $myReservation->TrainID = $reservation['TrainID'];
+                    $myReservation->Price = $reservation['Price'];
+                    $myReservation->RouteID = $reservation['RouteID'];
+                    $myReservation->LastUpdated = $reservation['LastUpdated'];
+
+                    if (!$myReservation->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
+    }
+    
     public function delete($id)
     {
         $reservation = Reservation::find($id);

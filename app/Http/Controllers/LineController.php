@@ -70,6 +70,42 @@ class LineController extends Controller
         return $this->beautifyReturn(400);
     }
 
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->LineList)) {
+
+            $lineList = $request->LineList;
+
+            try
+            {
+                foreach ($lineList as $line)
+                {
+                    $myLine = Line::find($line['LineID']);
+
+                    if (empty($myLine))
+                        $myLine = New Line();
+
+                    $myLine->LineID = $line['LineID'];
+                    $myLine->RouteID = $line['RouteID'];
+                    $myLine->TrainType = $line['TrainType'];
+                    $myLine->LastUpdated = $line['LastUpdated'];
+
+                    if (!$myLine->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
+    }
+
     public function delete($id)
     {
         $line = Line::find($id);

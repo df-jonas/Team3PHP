@@ -82,6 +82,45 @@ class TicketController extends Controller
         return $this->beautifyReturn(400);
     }
 
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->TicketList)) {
+
+            $ticketList = $request->TicketList;
+
+            try
+            {
+                foreach ($ticketList as $ticket)
+                {
+                    $myTicket = Ticket::find($ticket['TicketID']);
+
+                    if (empty($myTicket))
+                        $myTicket = New Ticket();
+
+                    $myTicket->TicketID = $ticket['TicketID'];
+                    $myTicket->RouteID = $ticket['RouteID'];
+                    $myTicket->TypeTicketID = $ticket['TypeTicketID'];
+                    $myTicket->Date = $ticket['Date'];
+                    $myTicket->ValidFrom = $ticket['ValidFrom'];
+                    $myTicket->ValidUntil = $ticket['ValidUntil'];
+                    $myTicket->LastUpdated = $ticket['LastUpdated'];
+
+                    if (!$myTicket->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
+    }
+
     public function delete($id)
     {
         $ticket = Ticket::find($id);

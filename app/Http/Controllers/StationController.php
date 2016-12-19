@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Station;
 use App\StationWithAddress;
-use App\Log;
 
 use App\Traits\ExceptionTrait;
 use App\Traits\ReturnTrait;
 use App\Traits\AddressTrait;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StationController extends Controller
@@ -90,6 +88,42 @@ class StationController extends Controller
         } else {
             return $this->beautifyReturn(404);
         }
+        return $this->beautifyReturn(400);
+    }
+
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->StationList)) {
+
+            $stationList = $request->StationList;
+
+            try
+            {
+                foreach ($stationList as $station)
+                {
+                    $myStation = Station::find($station['StationID']);
+
+                    if (empty($myStation))
+                        $myStation = New Station();
+
+                    $myStation->StationID = $station['StationID'];
+                    $myStation->AddressID = $station['AddressID'];
+                    $myStation->Name = $station['Name'];
+                    $myStation->LastUpdated = $station['LastUpdated'];
+
+                    if (!$myStation->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
         return $this->beautifyReturn(400);
     }
 

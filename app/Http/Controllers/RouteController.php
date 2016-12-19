@@ -93,6 +93,42 @@ class RouteController extends Controller
         return $this->beautifyReturn(400);
     }
 
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->RouteList)) {
+
+            $routeList = $request->RouteList;
+
+            try
+            {
+                foreach ($routeList as $route)
+                {
+                    $myRoute = Route::find($route['RouteID']);
+
+                    if (empty($myRoute))
+                        $myRoute = New Route();
+
+                    $myRoute->RouteID = $route['RouteID'];
+                    $myRoute->DepartureStationID = $route['DepartureStationID'];
+                    $myRoute->ArrivalStationID = $route['ArrivalStationID'];
+                    $myRoute->LastUpdated = $route['LastUpdated'];
+
+                    if (!$myRoute->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
+    }
+
     public function delete($id)
     {
         $route = Route::find($id);

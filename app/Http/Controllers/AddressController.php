@@ -46,15 +46,15 @@ class AddressController extends Controller
         $address = Address::find($id);
         if (!empty($address)) {
             if ($request->Street)
-                $address->Street = $request->AddressID;
+                $address->Street = $request->Street;
             if ($request->Number)
-                $address->Number = $request->StationID;
+                $address->Number = $request->Number;
             if ($request->City)
-                $address->City = $request->FirstName;
+                $address->City = $request->City;
             if ($request->ZipCode)
-                $address->ZipCode = $request->LastName;
+                $address->ZipCode = $request->ZipCode;
             if ($request->Coordinates)
-                $address->Coordinates = $request->UserName;
+                $address->Coordinates = $request->Coordinates;
             if ($request->LastUpdated)
                 $address->LastUpdated = $request->LastUpdated;
             else
@@ -65,6 +65,46 @@ class AddressController extends Controller
         } else {
             return $this->beautifyReturn(404);
         }
+        return $this->beautifyReturn(400);
+    }
+
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->AddressList)) {
+
+            $addressList = $request->AddressList;
+
+            try
+            {
+                foreach ($addressList as $address)
+                {
+                    $myAddress = Address::find($address['AddressID']);
+
+                    if (empty($myAddress))
+                        $myAddress = New Address();
+
+                    $myAddress->AddressID = $address['AddressID'];
+                    $myAddress->Street = $address['Street'];
+                    $myAddress->Number = $address['Number'];
+                    $myAddress->City = $address['City'];
+                    $myAddress->ZipCode = $address['ZipCode'];
+                    $myAddress->Coordinates = $address['Coordinates'];
+                    $myAddress->LastUpdated = $address['LastUpdated'];
+
+                    if (!$myAddress->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                print_r($e->getLine());
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
         return $this->beautifyReturn(400);
     }
 

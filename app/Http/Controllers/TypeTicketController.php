@@ -74,6 +74,43 @@ class TypeTicketController extends Controller
         return $this->beautifyReturn(400);
     }
 
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->TypeTicketList)) {
+
+            $typeTicketList = $request->TypeTicketList;
+
+            try
+            {
+                foreach ($typeTicketList as $typeTicket)
+                {
+                    $myTypeTicket = TypeTicket::find($typeTicket['TypeTicketID']);
+
+                    if (empty($myTypeTicket))
+                        $myTypeTicket = New TypeTicket();
+
+                    $myTypeTicket->TypeTicketID = $typeTicket['TypeTicketID'];
+                    $myTypeTicket->Name = $typeTicket['Name'];
+                    $myTypeTicket->Price = $typeTicket['Price'];
+                    $myTypeTicket->ComfortClass = $typeTicket['ComfortClass'];
+                    $myTypeTicket->LastUpdated = $typeTicket['LastUpdated'];
+
+                    if (!$myTypeTicket->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
+    }
+
     public function delete($id)
     {
         $typeTicket = TypeTicket::find($id);

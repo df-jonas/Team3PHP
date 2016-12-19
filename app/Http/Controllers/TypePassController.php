@@ -74,6 +74,42 @@ class TypePassController extends Controller
         return $this->beautifyReturn(400);
     }
 
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->TypePassList)) {
+
+            $typePassList = $request->TypePassList;
+
+            try
+            {
+                foreach ($typePassList as $typePass)
+                {
+                    $myTypePass = TypePass::find($typePass['TypePassID']);
+
+                    if (empty($myTypePass))
+                        $myTypePass = New TypePass();
+
+                    $myTypePass->TypePassID = $typePass['TypePassID'];
+                    $myTypePass->Name = $typePass['Name'];
+                    $myTypePass->Price = $typePass['Price'];
+                    $myTypePass->LastUpdated = $typePass['LastUpdated'];
+
+                    if (!$myTypePass->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
+    }
+
     public function delete($id)
     {
         $typePass = TypePass::find($id);

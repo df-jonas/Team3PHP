@@ -86,6 +86,45 @@ class SubscriptionController extends Controller
         return $this->beautifyReturn(400);
     }
 
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->SubscriptionList)) {
+
+            $subscriptionList = $request->SubscriptionList;
+
+            try
+            {
+                foreach ($subscriptionList as $subscription)
+                {
+                    $mySubscription = Subscription::find($subscription['SubscriptionID']);
+
+                    if (empty($mySubscription))
+                        $mySubscription = New Subscription();
+
+                    $mySubscription->SubscriptionID = $subscription['SubscriptionID'];
+                    $mySubscription->RailCardID = $subscription['RailCardID'];
+                    $mySubscription->RouteID = $subscription['RouteID'];
+                    $mySubscription->DiscountID = $subscription['DiscountID'];
+                    $mySubscription->ValidFrom = $subscription['ValidFrom'];
+                    $mySubscription->ValidUntil = $subscription['ValidUntil'];
+                    $mySubscription->LastUpdated = $subscription['LastUpdated'];
+
+                    if (!$mySubscription->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
+    }
+    
     public function delete($id)
     {
         $subscription = Subscription::find($id);

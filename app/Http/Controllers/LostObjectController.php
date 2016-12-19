@@ -29,7 +29,7 @@ class LostObjectController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->LostObjectID
+        if ($request->ObjectID
             && $request->StationID
             && $request->Description
             && $request->Date
@@ -37,7 +37,7 @@ class LostObjectController extends Controller
             && $request->LastUpdated
         ) {
             $lostObject = new LostObject();
-            $lostObject->LostObjectID = $request->LostObjectID;
+            $lostObject->ObjectID = $request->ObjectID;
             $lostObject->StationID = $request->StationID;
             $lostObject->Description = $request->Description;
             $lostObject->Date = $request->Date;
@@ -77,6 +77,44 @@ class LostObjectController extends Controller
         return $this->beautifyReturn(400);
     }
 
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->ObjectList)) {
+
+            $lostObjectList = $request->ObjectList;
+
+            try
+            {
+                foreach ($lostObjectList as $Object)
+                {
+                    $myObject = LostObject::find($Object['ObjectID']);
+
+                    if (empty($myObject))
+                        $myObject = New LostObject();
+
+                    $myObject->ObjectID = $Object['ObjectID'];
+                    $myObject->StationID = $Object['StationID'];
+                    $myObject->Description = $Object['Description'];
+                    $myObject->Date = $Object['Date'];
+                    $myObject->TrainID = $Object['TrainID'];
+                    $myObject->LastUpdated = $Object['LastUpdated'];
+
+                    if (!$myObject->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
+    }
+    
     public function delete($id)
     {
         $lostObject = LostObject::find($id);
