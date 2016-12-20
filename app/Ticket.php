@@ -10,6 +10,7 @@ class Ticket extends Model
 
     protected $primaryKey = 'TicketID';
     public $timestamps = false;
+    public $incrementing = false;
 
     protected $hidden = ['RouteID'];
     protected $guarded = ['TicketID'];

@@ -15,6 +15,7 @@ class User extends Authenticatable
 
     protected $primaryKey = 'StaffID';
     public $timestamps = false;
+    public $incrementing = false;
 
     protected $hidden = ['AddressID', 'StationID', 'Password', 'remember_token', 'Api_token'];
     protected $guarded = ['StaffID'];

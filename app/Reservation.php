@@ -10,6 +10,7 @@ class Reservation extends Model
 
     protected $primaryKey = 'ReservationID';
     public $timestamps = false;
+    public $incrementing = false;
 
     protected $hidden = ['RouteID'];
     protected $guarded = ['ReservationID'];

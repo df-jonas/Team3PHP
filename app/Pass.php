@@ -10,6 +10,7 @@ class Pass extends Model
 
     protected $primaryKey = 'PassID';
     public $timestamps = false;
+    public $incrementing = false;
 
     protected $hidden = ['TypePassID'];
     protected $guarded = ['PassID'];

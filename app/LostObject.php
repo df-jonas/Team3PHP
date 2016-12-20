@@ -10,6 +10,7 @@ class LostObject extends Model
 
     protected $primaryKey = 'ObjectID';
     public $timestamps = false;
+    public $incrementing = false;
 
     protected $hidden = ['StationID'];
     protected $guarded = ['ObjectID'];

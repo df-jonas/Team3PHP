@@ -10,6 +10,7 @@ class StationWithAddress extends Model
 
     protected $primaryKey = 'StationID';
     public $timestamps = false;
+    public $incrementing = false;
 
     protected $hidden = ['AddressID'];
     protected $guarded = ['StationID'];

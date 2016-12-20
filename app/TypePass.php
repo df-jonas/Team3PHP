@@ -10,7 +10,7 @@ class TypePass extends Model
 
     protected $primaryKey = 'TypePassID';
     public $timestamps = false;
-
+    public $incrementing = false;
 
     protected $guarded = ['TypePassID'];
     protected $fillable = ['Name', 'Price', 'LastUpdated'];

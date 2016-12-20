@@ -10,6 +10,7 @@ class Subscription extends Model
 
     protected $primaryKey = 'SubscriptionID';
     public $timestamps = false;
+    public $incrementing = false;
 
     protected $hidden = ['RouteID', 'DiscountID'];
     protected $guarded = ['SubscriptionID'];

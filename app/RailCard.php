@@ -10,6 +10,7 @@ class RailCard extends Model
 
     protected $primaryKey = 'CardID';
     public $timestamps = false;
+    public $incrementing = false;
 
 
     protected $guarded = ['CardID'];

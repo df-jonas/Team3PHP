@@ -10,6 +10,7 @@ class Customer extends Model
 
     protected $primaryKey = 'CustomerID';
     public $timestamps = false;
+    public $incrementing = false;
 
     protected $hidden = ['AddressID', 'RailCardID'];
     protected $guarded = ['CustomerID'];

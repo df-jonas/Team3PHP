@@ -10,6 +10,7 @@ class RouteWithStation extends Model
 
     protected $primaryKey = 'RouteID';
     public $timestamps = false;
+    public $incrementing = false;
 
     protected $hidden = ['DepartureStationID', 'ArrivalStationID'];
     protected $guarded = ['RouteID'];
