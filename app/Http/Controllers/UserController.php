@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        Auth::logout();
+
         if (Auth::once(['username' => $request->username, 'password' => $request->password]))
         {
             $result = [
@@ -36,7 +36,7 @@ class UserController extends Controller
             return response()->json($result);
         }
 
-        return $this->beautifyReturn(400);
+        return $this->beautifyReturnMessage(400, 'wrong username or password');
     }
 
     public function index()
