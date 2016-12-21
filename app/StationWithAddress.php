@@ -14,7 +14,7 @@ class StationWithAddress extends Model
 
     protected $hidden = ['AddressID'];
     protected $guarded = ['StationID'];
-    protected $fillable = ['AddressID', 'Name', 'LastUpdated'];
+    protected $fillable = ['AddressID', 'Name', 'LastUpdated', 'CoX', 'CoY'];
 
     protected $appends = ['Address'];
 

@@ -38,12 +38,16 @@ class StationController extends Controller
         if ($request->StationID
             && $request->AddressID
             && $request->Name
+            && $request->CoX
+            && $request->CoY
             && $request->LastUpdated
         ) {
             $station = new Station();
             $station->StationID = $request->StationID;
             $station->AddressID = $request->AddressID;
             $station->Name = $request->Name;
+            $station->CoX = $request->CoX;
+            $station->CoY = $request->CoY;
             $station->LastUpdated = $request->LastUpdated;
 
             try {
@@ -76,6 +80,10 @@ class StationController extends Controller
         if (!empty($station)) {
             if ($request->AddressID)
                 $station->AddressID = $request->AddressID;
+            if ($request->CoX)
+                $station->CoX = $request->CoX;
+            if ($request->CoY)
+                $station->CoY = $request->CoY;
             if ($request->Name)
                 $station->Name = $request->Name;
             if ($request->LastUpdated)
@@ -110,6 +118,8 @@ class StationController extends Controller
                     $myStation->StationID = $station['StationID'];
                     $myStation->AddressID = $station['AddressID'];
                     $myStation->Name = $station['Name'];
+                    $myStation->CoX = $station['Name'];
+                    $myStation->CoY = $station['Name'];
                     $myStation->LastUpdated = $station['LastUpdated'];
 
                     if (!$myStation->save())
