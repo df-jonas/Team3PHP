@@ -7,6 +7,7 @@ use App\RouteWithStation;
 use App\Traits\ExceptionTrait;
 use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RouteController extends Controller
 {
@@ -91,6 +92,12 @@ class RouteController extends Controller
             return $this->beautifyReturn(404);
         }
         return $this->beautifyReturn(400);
+    }
+
+    public function massUpdateStatus()
+    {
+        $status = DB::select('SELECT COUNT(DISTINCT RouteID) as Count, MAX(LastUpdated) as LastUpdated FROM Route');
+        return response()->json($status[0]);
     }
 
     public function massUpdate(Request $request)

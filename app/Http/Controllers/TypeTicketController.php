@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Traits\ReturnTrait;
 use App\TypeTicket;
+use Illuminate\Support\Facades\DB;
 
 class TypeTicketController extends Controller
 {
@@ -72,6 +73,12 @@ class TypeTicketController extends Controller
             return $this->beautifyReturn(404);
         }
         return $this->beautifyReturn(400);
+    }
+
+    public function massUpdateStatus()
+    {
+        $status = DB::select('SELECT COUNT(DISTINCT TypeTicketID) as Count, MAX(LastUpdated) as LastUpdated FROM TypeTicket');
+        return response()->json($status[0]);
     }
 
     public function massUpdate(Request $request)

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Station;
-use App\StationWithAddress;
 
 use App\Traits\ExceptionTrait;
 use App\Traits\ReturnTrait;
 use App\Traits\AddressTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StationController extends Controller
 {
@@ -26,7 +26,7 @@ class StationController extends Controller
 
     public function byID($id)
     {
-        $station = StationWithAddress::find($id);
+        $station = Station::find($id);
         if (!empty($station))
             return response()->json($station);
 
@@ -36,14 +36,16 @@ class StationController extends Controller
     public function create(Request $request)
     {
         if ($request->StationID
-            && $request->AddressID
             && $request->Name
+            && $request->CoX
+            && $request->CoY
             && $request->LastUpdated
         ) {
             $station = new Station();
             $station->StationID = $request->StationID;
-            $station->AddressID = $request->AddressID;
             $station->Name = $request->Name;
+            $station->CoX = $request->CoX;
+            $station->CoY = $request->CoY;
             $station->LastUpdated = $request->LastUpdated;
 
             try {
@@ -74,10 +76,12 @@ class StationController extends Controller
     {
         $station = Station::find($id);
         if (!empty($station)) {
-            if ($request->AddressID)
-                $station->AddressID = $request->AddressID;
             if ($request->Name)
                 $station->Name = $request->Name;
+            if ($request->CoX)
+                $station->CoX = $request->CoX;
+            if ($request->CoY)
+                $station->CoY = $request->CoY;
             if ($request->LastUpdated)
                 $station->LastUpdated = $request->LastUpdated;
             else
@@ -91,26 +95,33 @@ class StationController extends Controller
         return $this->beautifyReturn(400);
     }
 
+    public function massUpdateStatus()
+    {
+        $status = DB::select('SELECT COUNT(DISTINCT StationID) as Count, MAX(LastUpdated) as LastUpdated FROM Station');
+        return response()->json($status[0]);
+    }
+
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->StationList)) {
+        if (!empty($request->stationList)) {
 
-            $stationList = $request->StationList;
+            $stationList = $request->stationList;
 
             try
             {
                 foreach ($stationList as $station)
                 {
-                    $myStation = Station::find($station['StationID']);
+                    $myStation = Station::find($station['stationID']);
 
                     if (empty($myStation))
                         $myStation = New Station();
 
-                    $myStation->StationID = $station['StationID'];
-                    $myStation->AddressID = $station['AddressID'];
-                    $myStation->Name = $station['Name'];
-                    $myStation->LastUpdated = $station['LastUpdated'];
+                    $myStation->StationID = $station['stationID'];
+                    $myStation->Name = $station['name'];
+                    $myStation->CoX = $station['name'];
+                    $myStation->CoY = $station['name'];
+                    $myStation->LastUpdated = $station['lastUpdated'];
 
                     if (!$myStation->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
