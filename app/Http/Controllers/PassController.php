@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Traits\ReturnTrait;
 use App\Pass;
+use Illuminate\Support\Facades\DB;
 
 class PassController extends Controller
 {
@@ -81,7 +82,13 @@ class PassController extends Controller
         }
         return $this->beautifyReturn(400);
     }
-    
+
+    public function massUpdateStatus()
+    {
+        $status = DB::select('SELECT COUNT(DISTINCT PassID) as Count, MAX(LastUpdated) as LastUpdated FROM Pass');
+        return response()->json($status[0]);
+    }
+
     public function massUpdate(Request $request)
     {
 

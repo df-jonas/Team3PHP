@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Traits\ReturnTrait;
 use App\Reservation;
+use Illuminate\Support\Facades\DB;
 
 class ReservationController extends Controller
 {
@@ -80,6 +81,12 @@ class ReservationController extends Controller
             return $this->beautifyReturn(404);
         }
         return $this->beautifyReturn(400);
+    }
+
+    public function massUpdateStatus()
+    {
+        $status = DB::select('SELECT COUNT(DISTINCT ReservationID) as Count, MAX(LastUpdated) as LastUpdated FROM Reservation');
+        return response()->json($status[0]);
     }
 
     public function massUpdate(Request $request)

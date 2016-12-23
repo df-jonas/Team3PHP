@@ -6,6 +6,7 @@ use App\Address;
 use App\Traits\AddressTrait;
 use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
@@ -68,29 +69,35 @@ class AddressController extends Controller
         return $this->beautifyReturn(400);
     }
 
+    public function massUpdateStatus()
+    {
+        $status = DB::select('SELECT COUNT(DISTINCT AddressID) as Count, MAX(LastUpdated) as LastUpdated FROM Address');
+        return response()->json($status[0]);
+    }
+
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->AddressList)) {
+        if (!empty($request->addressList)) {
 
-            $addressList = $request->AddressList;
+            $addressList = $request->addressList;
 
             try
             {
                 foreach ($addressList as $address)
                 {
-                    $myAddress = Address::find($address['AddressID']);
+                    $myAddress = Address::find($address['addressID']);
 
                     if (empty($myAddress))
                         $myAddress = New Address();
 
-                    $myAddress->AddressID = $address['AddressID'];
-                    $myAddress->Street = $address['Street'];
-                    $myAddress->Number = $address['Number'];
-                    $myAddress->City = $address['City'];
-                    $myAddress->ZipCode = $address['ZipCode'];
-                    $myAddress->Coordinates = $address['Coordinates'];
-                    $myAddress->LastUpdated = $address['LastUpdated'];
+                    $myAddress->AddressID = $address['addressID'];
+                    $myAddress->Street = $address['street'];
+                    $myAddress->Number = $address['number'];
+                    $myAddress->City = $address['city'];
+                    $myAddress->ZipCode = $address['zipCode'];
+                    $myAddress->Coordinates = $address['coordinates'];
+                    $myAddress->LastUpdated = $address['lastUpdated'];
 
                     if (!$myAddress->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
@@ -104,7 +111,6 @@ class AddressController extends Controller
                 return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
             }
         }
-
         return $this->beautifyReturn(400);
     }
 
