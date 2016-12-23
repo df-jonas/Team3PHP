@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\LostObject;
 use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LostObjectController extends Controller
 {
@@ -75,6 +76,12 @@ class LostObjectController extends Controller
             return $this->beautifyReturn(404);
         }
         return $this->beautifyReturn(400);
+    }
+
+    public function massUpdateStatus()
+    {
+        $status = DB::select('SELECT COUNT(DISTINCT ObjectID) as Count, MAX(LastUpdated) as LastUpdated FROM LostObject');
+        return response()->json($status[0]);
     }
 
     public function massUpdate(Request $request)

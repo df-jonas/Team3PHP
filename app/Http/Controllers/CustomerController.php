@@ -6,6 +6,7 @@ use App\Customer;
 use App\RailCard;
 use App\Traits\AddressTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -119,6 +120,12 @@ class CustomerController extends Controller
         }
         return $this->beautifyReturn(400);
 
+    }
+
+    public function massUpdateStatus()
+    {
+        $status = DB::select('SELECT COUNT(DISTINCT CustomerID) as Count, MAX(LastUpdated) as LastUpdated FROM Customer');
+        return response()->json($status[0]);
     }
 
     public function massUpdate(Request $request)

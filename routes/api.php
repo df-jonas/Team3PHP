@@ -20,18 +20,24 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'address', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'AddressController@massUpdateStatus');
+
     Route::get('/', 'AddressController@index');
     Route::get('/{id}', 'AddressController@byID');
 
     Route::post('create', 'AddressController@create');
 
     Route::Put('update/{id}', 'AddressController@update');
+
+    //JavaSync
     Route::Put('massUpdate', 'AddressController@massUpdate');
 //    Route::Delete('delete/{id}', 'AddressController@delete');
 });
 
 Route::group(['prefix' => 'station', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'StationController@massUpdateStatus');
+
     Route::get('/', 'StationController@index');
     Route::get('/{id}', 'StationController@byID');
 
@@ -49,6 +55,8 @@ Route::group(['prefix' => 'staff'], function()
 
     Route::group(['middleware' => 'auth:api'], function()
     {
+        Route::get('massUpdateStatus', 'UserController@massUpdateStatus');
+
         Route::get('/', 'UserController@index');
         Route::get('/{id}', 'UserController@byID');
 
@@ -63,6 +71,8 @@ Route::group(['prefix' => 'staff'], function()
 
 Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'CustomerController@massUpdateStatus');
+
     Route::get('/', 'CustomerController@index');
     Route::get('/{id}', 'CustomerController@byID');
 
@@ -76,6 +86,8 @@ Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function()
 
 Route::group(['prefix' => 'route', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'RouteController@massUpdateStatus');
+
     Route::get('/', 'RouteController@index');
     Route::get('/{id}', 'RouteController@byID');
     Route::get('/{departureStationID}/{arrivalStationID}/', 'RouteController@byStations');
@@ -89,6 +101,8 @@ Route::group(['prefix' => 'route', 'middleware' => 'auth:api'], function()
 
 Route::group(['prefix' => 'subscription', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'SubscriptionController@massUpdateStatus');
+
     Route::get('/', 'SubscriptionController@index');
     Route::get('/{id}', 'SubscriptionController@byID');
 
@@ -101,6 +115,8 @@ Route::group(['prefix' => 'subscription', 'middleware' => 'auth:api'], function(
 
 Route::group(['prefix' => 'discount', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'DiscountController@massUpdateStatus');
+
     Route::get('/', 'DiscountController@index');
     Route::get('/{id}', 'DiscountController@byID');
 
@@ -113,6 +129,8 @@ Route::group(['prefix' => 'discount', 'middleware' => 'auth:api'], function()
 
 Route::group(['prefix' => 'line', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'LineController@massUpdateStatus');
+
     Route::get('/', 'LineController@index');
     Route::get('/{id}', 'LineController@byID');
 
@@ -125,6 +143,8 @@ Route::group(['prefix' => 'line', 'middleware' => 'auth:api'], function()
 
 Route::group(['prefix' => 'ticket', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'TicketController@massUpdateStatus');
+
     Route::get('/', 'TicketController@index');
     Route::get('/{id}', 'TicketController@byID');
 
@@ -138,6 +158,8 @@ Route::group(['prefix' => 'ticket', 'middleware' => 'auth:api'], function()
 
 Route::group(['prefix' => 'typeTicket', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'TypeTicketController@massUpdateStatus');
+
     Route::get('/', 'TypeTicketController@index');
     Route::get('/{id}', 'TypeTicketController@byID');
 
@@ -150,6 +172,8 @@ Route::group(['prefix' => 'typeTicket', 'middleware' => 'auth:api'], function()
 
 Route::group(['prefix' => 'pass', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'PassController@massUpdateStatus');
+
     Route::get('/', 'PassController@index');
     Route::get('/{id}', 'PassController@byID');
 
@@ -162,6 +186,8 @@ Route::group(['prefix' => 'pass', 'middleware' => 'auth:api'], function()
 
 Route::group(['prefix' => 'typePass', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'TypePassController@massUpdateStatus');
+
     Route::get('/', 'TypePassController@index');
     Route::get('/{id}', 'TypePassController@byID');
 
@@ -174,6 +200,8 @@ Route::group(['prefix' => 'typePass', 'middleware' => 'auth:api'], function()
 
 Route::group(['prefix' => 'reservation', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'ReservationController@massUpdateStatus');
+
     Route::get('/', 'ReservationController@index');
     Route::get('/{id}', 'ReservationController@byID');
 
@@ -186,6 +214,8 @@ Route::group(['prefix' => 'reservation', 'middleware' => 'auth:api'], function()
 
 Route::group(['prefix' => 'lostObject', 'middleware' => 'auth:api'], function()
 {
+    Route::get('massUpdateStatus', 'LostObjectController@massUpdateStatus');
+
     Route::get('/', 'LostObjectController@index');
     Route::get('/{id}', 'LostObjectController@byID');
 

@@ -11,6 +11,7 @@ use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 
 class UserController extends Controller
@@ -144,6 +145,12 @@ class UserController extends Controller
         }
         return $this->beautifyReturn(400);
 
+    }
+
+    public function massUpdateStatus()
+    {
+        $status = DB::select('SELECT COUNT(DISTINCT StaffID) as Count, MAX(LastUpdated) as LastUpdated FROM Staff');
+        return response()->json($status[0]);
     }
 
     public function massUpdate(Request $request)

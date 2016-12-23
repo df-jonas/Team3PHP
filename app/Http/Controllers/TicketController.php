@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Ticket;
 use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
@@ -80,6 +81,12 @@ class TicketController extends Controller
             return $this->beautifyReturn(404);
         }
         return $this->beautifyReturn(400);
+    }
+
+    public function massUpdateStatus()
+    {
+        $status = DB::select('SELECT COUNT(DISTINCT TicketID) as Count, MAX(LastUpdated) as LastUpdated FROM Ticket');
+        return response()->json($status[0]);
     }
 
     public function massUpdate(Request $request)

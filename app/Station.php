@@ -13,6 +13,6 @@ class Station extends Model
     public $incrementing = false;
 
     protected $guarded = ['StationID'];
-    protected $fillable = ['AddressID', 'Name', 'LastUpdated'];
+    protected $fillable = ['Name', 'CoX', 'CoY', 'LastUpdated'];
 
 }

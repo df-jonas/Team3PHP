@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Discount;
 use App\Traits\ReturnTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DiscountController extends Controller
 {
@@ -67,6 +68,12 @@ class DiscountController extends Controller
             return $this->beautifyReturn(404);
         }
         return $this->beautifyReturn(400);
+    }
+
+    public function massUpdateStatus()
+    {
+        $status = DB::select('SELECT COUNT(DISTINCT DiscountID) as Count, MAX(LastUpdated) as LastUpdated FROM Discount');
+        return response()->json($status[0]);
     }
 
     public function massUpdate(Request $request)
