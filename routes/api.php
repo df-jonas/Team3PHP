@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //})->middleware('auth:api');
 
+
 Route::group(['prefix' => 'address', 'middleware' => 'auth:api'], function()
 {
     Route::get('/', 'AddressController@index');
@@ -25,6 +26,7 @@ Route::group(['prefix' => 'address', 'middleware' => 'auth:api'], function()
     Route::post('create', 'AddressController@create');
 
     Route::Put('update/{id}', 'AddressController@update');
+    Route::Put('massUpdate', 'AddressController@massUpdate');
 //    Route::Delete('delete/{id}', 'AddressController@delete');
 });
 
@@ -37,6 +39,7 @@ Route::group(['prefix' => 'station', 'middleware' => 'auth:api'], function()
     Route::post('createWithAddress', 'StationController@createWithAddress');
 
     Route::Put('update/{id}', 'StationController@update');
+    Route::Put('massUpdate', 'StationController@massUpdate');
 //    Route::Delete('delete/{id}', 'StationController@delete');
 });
 
@@ -53,6 +56,7 @@ Route::group(['prefix' => 'staff'], function()
         Route::post('/createWithAddress', 'UserController@createWithAddress');
 
         Route::Put('update/{id}', 'UserController@update');
+        Route::Put('massUpdate', 'UserController@massUpdate');
 //        Route::Delete('delete/{id}', 'UserController@delete');
     });
 });
@@ -66,6 +70,7 @@ Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function()
     Route::post('/createWithAddress', 'CustomerController@createWithAddress');
 
     Route::Put('update/{id}', 'CustomerController@update');
+    Route::Put('massUpdate', 'CustomerController@massUpdate');
 //    Route::Delete('delete/{id}', 'CustomerController@delete');
 });
 
@@ -78,6 +83,7 @@ Route::group(['prefix' => 'route', 'middleware' => 'auth:api'], function()
     Route::post('create', 'RouteController@create');
 
     Route::Put('update/{id}', 'RouteController@update');
+    Route::Put('massUpdate', 'RouteController@massUpdate');
 //    Route::Delete('delete/{id}', 'RouteController@delete');
 });
 
@@ -89,6 +95,7 @@ Route::group(['prefix' => 'subscription', 'middleware' => 'auth:api'], function(
     Route::post('create', 'SubscriptionController@create');
 
     Route::Put('update/{id}', 'SubscriptionController@update');
+    Route::Put('massUpdate', 'SubscriptionController@massUpdate');
 //    Route::Delete('delete/{id}', 'StationController@delete');
 });
 
@@ -100,6 +107,7 @@ Route::group(['prefix' => 'discount', 'middleware' => 'auth:api'], function()
     Route::post('create', 'DiscountController@create');
 
     Route::Put('update/{id}', 'DiscountController@update');
+    Route::Put('massUpdate', 'DiscountController@massUpdate');
 //    Route::Delete('delete/{id}', 'RouteController@delete');
 });
 
@@ -111,6 +119,7 @@ Route::group(['prefix' => 'line', 'middleware' => 'auth:api'], function()
     Route::post('create', 'LineController@create');
 
     Route::Put('update/{id}', 'LineController@update');
+    Route::Put('massUpdate', 'LineController@massUpdate');
 //    Route::Delete('delete/{id}', 'RouteController@delete');
 });
 
@@ -120,6 +129,8 @@ Route::group(['prefix' => 'ticket', 'middleware' => 'auth:api'], function()
     Route::get('/{id}', 'TicketController@byID');
 
     Route::post('create', 'TicketController@create');
+
+    Route::Put('massUpdate', 'TicketController@massUpdate');
 
 //    Route::Put('update/{id}', 'TicketController@update');
 //    Route::Delete('delete/{id}', 'TicketController@delete');
@@ -133,6 +144,7 @@ Route::group(['prefix' => 'typeTicket', 'middleware' => 'auth:api'], function()
     Route::post('create', 'TypeTicketController@create');
 
     Route::Put('update/{id}', 'TypeTicketController@update');
+    Route::Put('massUpdate', 'TypeTicketController@massUpdate');
 //    Route::Delete('delete/{id}', 'TypeTicketController@delete');
 });
 
@@ -144,6 +156,7 @@ Route::group(['prefix' => 'pass', 'middleware' => 'auth:api'], function()
     Route::post('create', 'PassController@create');
 
     Route::Put('update/{id}', 'PassController@update');
+    Route::Put('massUpdate', 'PassController@massUpdate');
 //    Route::Delete('delete/{id}', 'PassController@delete');
 });
 
@@ -155,6 +168,7 @@ Route::group(['prefix' => 'typePass', 'middleware' => 'auth:api'], function()
     Route::post('create', 'TypePassController@create');
 
     Route::Put('update/{id}', 'TypePassController@update');
+    Route::Put('massUpdate', 'TypePassController@massUpdate');
 //    Route::Delete('delete/{id}', 'TypePassController@delete');
 });
 
@@ -166,6 +180,7 @@ Route::group(['prefix' => 'reservation', 'middleware' => 'auth:api'], function()
     Route::post('create', 'ReservationController@create');
 
     Route::Put('update/{id}', 'ReservationController@update');
+    Route::Put('massUpdate', 'ReservationController@massUpdate');
 //    Route::Delete('delete/{id}', 'ReservationController@delete');
 });
 
@@ -177,6 +192,7 @@ Route::group(['prefix' => 'lostObject', 'middleware' => 'auth:api'], function()
     Route::post('create', 'LostObjectController@create');
 
     Route::Put('update/{id}', 'LostObjectController@update');
+    Route::Put('massUpdate', 'LostObjectController@massUpdate');
 //    Route::Delete('delete/{id}', 'LostObjectController@delete');
 });
 

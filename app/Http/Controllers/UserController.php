@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        Auth::logout();
+
         if (Auth::once(['username' => $request->username, 'password' => $request->password]))
         {
             $result = [
@@ -36,7 +36,7 @@ class UserController extends Controller
             return response()->json($result);
         }
 
-        return $this->beautifyReturn(400);
+        return $this->beautifyReturnMessage(400, 'wrong username or password');
     }
 
     public function index()
@@ -57,7 +57,8 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->AddressID
+        if ($request->StaffID
+            && $request->AddressID
             && $request->StationID
             && $request->FirstName
             && $request->LastName
@@ -66,8 +67,10 @@ class UserController extends Controller
             && isset($request->Rights)
             && $request->BirthDate
             && $request->Email
+            && $request->LastUpdated
         ) {
             $user = new User();
+            $user->StaffID = $request->StaffID;
             $user->AddressID = $request->AddressID;
             $user->StationID = $request->StationID;
             $user->FirstName = $request->FirstName;
@@ -78,6 +81,7 @@ class UserController extends Controller
             $user->BirthDate = $request->BirthDate;
             $user->Email = $request->Email;
             $user->Api_token = Hash::make(uniqid($user->UserName, true));
+            $user->LastUpdated = $request->LastUpdated;
 
             try {
                 if ($user->save())
@@ -94,7 +98,7 @@ class UserController extends Controller
 
     public function createWithAddress(Request $request)
     {
-        $createAddressResponse = $this->createNewAdress($request);
+        $createAddressResponse = $this->createNewAddress($request);
 
         if (is_numeric($createAddressResponse)) {
             $request->request->add(['AddressID' => $createAddressResponse]);
@@ -127,6 +131,10 @@ class UserController extends Controller
                 $user->BirthDate = $request->BirthDate;
             if ($request->Email)
                 $user->Email = $request->Email;
+            if ($request->LastUpdated)
+                $user->LastUpdated = $request->LastUpdated;
+            else
+                $user->LastUpdated = time();
 
 
             if ($user->save())
@@ -136,6 +144,50 @@ class UserController extends Controller
         }
         return $this->beautifyReturn(400);
 
+    }
+
+    public function massUpdate(Request $request)
+    {
+
+        if (!empty($request->StaffList)) {
+
+            $staffList = $request->StaffList;
+
+            try
+            {
+                foreach ($staffList as $staff)
+                {
+                    $myStaff = User::find($staff['StaffID']);
+
+                    if (empty($myStaff))
+                        $myStaff = New User();
+
+                    $myStaff->StaffID = $staff['StaffID'];
+                    $myStaff->AddressID = $staff['AddressID'];
+                    $myStaff->StationID = $staff['StationID'];
+                    $myStaff->FirstName = $staff['FirstName'];
+                    $myStaff->LastName = $staff['LastName'];
+                    $myStaff->UserName = $staff['UserName'];
+                    $myStaff->Password = $staff['Password'];
+                    $myStaff->Rights = $staff['Rights'];
+                    $myStaff->BirthDate = $staff['BirthDate'];
+                    $myStaff->Email = $staff['Email'];
+                    $myStaff->Api_token = $staff['Api_token'];
+                    $myStaff->LastUpdated = $staff['LastUpdated'];
+
+                    if (!$myStaff->save())
+                        return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
+
+                }
+                return $this->beautifyReturn(200, ['Extra' => 'MassUpdated']);
+            }
+            catch (\Exception $e)
+            {
+                return $this->beautifyReturn(444, ['Error' => $this->beautifyException($e)]);
+            }
+        }
+
+        return $this->beautifyReturn(400);
     }
 
     public function delete($id)

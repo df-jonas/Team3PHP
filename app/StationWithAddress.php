@@ -10,10 +10,11 @@ class StationWithAddress extends Model
 
     protected $primaryKey = 'StationID';
     public $timestamps = false;
+    public $incrementing = false;
 
     protected $hidden = ['AddressID'];
     protected $guarded = ['StationID'];
-    protected $fillable = ['AddressID', 'Name'];
+    protected $fillable = ['AddressID', 'Name', 'LastUpdated'];
 
     protected $appends = ['Address'];
 
