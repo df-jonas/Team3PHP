@@ -35,20 +35,20 @@ class ReservationController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->ReservationID
-            && $request->PassengerCount
-            && $request->TrainID
-            && $request->Price
-            && $request->RouteID
-            && $request->LastUpdated
+        if ($request->reservationID
+            && $request->passengerCount
+            && $request->trainID
+            && $request->price
+            && $request->routeID
+            && $request->lastUpdated
         ) {
             $reservation = new Reservation();
-            $reservation->ReservationID = $request->ReservationID;
-            $reservation->PassengerCount = $request->PassengerCount;
-            $reservation->TrainID = $request->TrainID;
-            $reservation->Price = $request->Price;
-            $reservation->RouteID = $request->RouteID;
-            $reservation->LastUpdated = $request->LastUpdated;
+            $reservation->ReservationID = $request->reservationID;
+            $reservation->PassengerCount = $request->passengerCount;
+            $reservation->TrainID = $request->trainID;
+            $reservation->Price = $request->price;
+            $reservation->RouteID = $request->routeID;
+            $reservation->LastUpdated = $request->lastUpdated;
 
             if ($reservation->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'SubscriptionID' => $reservation->ReservationID]);
@@ -62,16 +62,16 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::find($id);
         if (!empty($reservation)) {
-            if ($request->PassengerCount)
-                $reservation->PassengerCount = $request->PassengerCount;
-            if ($request->TrainID)
-                $reservation->TrainID = $request->TrainID;
-            if ($request->Price)
-                $reservation->Price = $request->Price;
-            if ($request->RouteID)
-                $reservation->RouteID = $request->RouteID;
-            if ($request->LastUpdated)
-                $reservation->LastUpdated = $request->LastUpdated;
+            if ($request->passengerCount)
+                $reservation->PassengerCount = $request->passengerCount;
+            if ($request->trainID)
+                $reservation->TrainID = $request->trainID;
+            if ($request->price)
+                $reservation->Price = $request->price;
+            if ($request->routeID)
+                $reservation->RouteID = $request->routeID;
+            if ($request->lastUpdated)
+                $reservation->LastUpdated = $request->lastUpdated;
             else
                 $reservation->LastUpdated = time();
 
@@ -92,25 +92,25 @@ class ReservationController extends Controller
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->ReservationList)) {
+        if (!empty($request->reservationList)) {
 
-            $reservationList = $request->ReservationList;
+            $reservationList = $request->reservationList;
 
             try
             {
                 foreach ($reservationList as $reservation)
                 {
-                    $myReservation = Customer::find($reservation['ReservationID']);
+                    $myReservation = Customer::find($reservation['reservationID']);
 
                     if (empty($myReservation))
                         $myReservation = New Customer();
 
-                    $myReservation->ReservationID = $reservation['ReservationID'];
-                    $myReservation->PassengerCount = $reservation['PassengerCount'];
-                    $myReservation->TrainID = $reservation['TrainID'];
-                    $myReservation->Price = $reservation['Price'];
-                    $myReservation->RouteID = $reservation['RouteID'];
-                    $myReservation->LastUpdated = $reservation['LastUpdated'];
+                    $myReservation->ReservationID = $reservation['reservationID'];
+                    $myReservation->PassengerCount = $reservation['passengerCount'];
+                    $myReservation->TrainID = $reservation['trainID'];
+                    $myReservation->Price = $reservation['price'];
+                    $myReservation->RouteID = $reservation['routeID'];
+                    $myReservation->LastUpdated = $reservation['lastUpdated'];
 
                     if (!$myReservation->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);

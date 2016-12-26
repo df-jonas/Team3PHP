@@ -49,16 +49,16 @@ class RouteController extends Controller
 
     public function create(Request $request)
     {
-        if ( $request->RouteID
-            && $request->DepartureStationID
-            && $request->ArrivalStationID
-            && $request->LastUpdated
+        if ( $request->routeID
+            && $request->departureStationID
+            && $request->arrivalStationID
+            && $request->lastUpdated
         ) {
             $route = new Route();
-            $route->RouteID = $request->RouteID;
-            $route->DepartureStationID = $request->DepartureStationID;
-            $route->ArrivalStationID = $request->ArrivalStationID;
-            $route->LastUpdated = $request->LastUpdated;
+            $route->RouteID = $request->routeID;
+            $route->DepartureStationID = $request->departureStationID;
+            $route->ArrivalStationID = $request->arrivalStationID;
+            $route->LastUpdated = $request->lastUpdated;
 
             try {
                 if ($route->save())
@@ -76,12 +76,12 @@ class RouteController extends Controller
     {
         $route = Route::find($id);
         if (!empty($route)) {
-            if ($request->DepartureStationID)
-                $route->DepartureStationID = $request->DepartureStationID;
-            if ($request->ArrivalStationID)
-                $route->ArrivalStationID = $request->ArrivalStationID;
-            if ($request->LastUpdated)
-                $route->LastUpdated = $request->LastUpdated;
+            if ($request->departureStationID)
+                $route->DepartureStationID = $request->departureStationID;
+            if ($request->arrivalStationID)
+                $route->ArrivalStationID = $request->arrivalStationID;
+            if ($request->lastUpdated)
+                $route->LastUpdated = $request->lastUpdated;
             else
                 $route->LastUpdated = time();
 
@@ -103,23 +103,23 @@ class RouteController extends Controller
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->RouteList)) {
+        if (!empty($request->routeList)) {
 
-            $routeList = $request->RouteList;
+            $routeList = $request->routeList;
 
             try
             {
                 foreach ($routeList as $route)
                 {
-                    $myRoute = Route::find($route['RouteID']);
+                    $myRoute = Route::find($route['routeID']);
 
                     if (empty($myRoute))
                         $myRoute = New Route();
 
-                    $myRoute->RouteID = $route['RouteID'];
-                    $myRoute->DepartureStationID = $route['DepartureStationID'];
-                    $myRoute->ArrivalStationID = $route['ArrivalStationID'];
-                    $myRoute->LastUpdated = $route['LastUpdated'];
+                    $myRoute->RouteID = $route['routeID'];
+                    $myRoute->DepartureStationID = $route['departureStationID'];
+                    $myRoute->ArrivalStationID = $route['arrivalStationID'];
+                    $myRoute->LastUpdated = $route['lastUpdated'];
 
                     if (!$myRoute->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);

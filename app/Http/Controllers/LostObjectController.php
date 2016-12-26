@@ -30,20 +30,21 @@ class LostObjectController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->ObjectID
-            && $request->StationID
-            && $request->Description
-            && $request->Date
-            && $request->TrainID
-            && $request->LastUpdated
+        if ($request->objectID
+            && $request->stationID
+            && $request->description
+            && $request->date
+            && $request->trainID
+            && $request->lastUpdated
         ) {
             $lostObject = new LostObject();
-            $lostObject->ObjectID = $request->ObjectID;
-            $lostObject->StationID = $request->StationID;
-            $lostObject->Description = $request->Description;
-            $lostObject->Date = $request->Date;
-            $lostObject->TrainID = $request->TrainID;
-            $lostObject->LastUpdated = $request->LastUpdated;
+            $lostObject->ObjectID = $request->objectID;
+            $lostObject->StationID = $request->stationID;
+            $lostObject->Description = $request->description;
+            $lostObject->Date = $request->date;
+            $lostObject->TrainID = $request->trainID;
+            $lostObject->Found = $request->found;
+            $lostObject->LastUpdated = $request->lastUpdated;
 
             if ($lostObject->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'LostObjectID' => $lostObject->LostObjectID]);
@@ -57,16 +58,18 @@ class LostObjectController extends Controller
     {
         $lostObject = LostObject::find($id);
         if (!empty($lostObject)) {
-            if ($request->StationID)
-                $lostObject->StationID = $request->StationID;
-            if ($request->Description)
-                $lostObject->Description = $request->Description;
-            if ($request->Date)
-                $lostObject->Date = $request->Date;
-            if ($request->TrainID)
-                $lostObject->TrainID = $request->TrainID;
-            if ($request->LastUpdated)
-                $lostObject->LastUpdated = $request->LastUpdated;
+            if ($request->stationID)
+                $lostObject->StationID = $request->stationID;
+            if ($request->description)
+                $lostObject->Description = $request->description;
+            if ($request->date)
+                $lostObject->Date = $request->date;
+            if ($request->trainID)
+                $lostObject->TrainID = $request->trainID;
+            if ($request->found)
+                $lostObject->Found = $request->found;
+            if ($request->lastUpdated)
+                $lostObject->LastUpdated = $request->lastUpdated;
             else
                 $lostObject->LastUpdated = time();
 
@@ -95,17 +98,18 @@ class LostObjectController extends Controller
             {
                 foreach ($lostObjectList as $Object)
                 {
-                    $myObject = LostObject::find($Object['ObjectID']);
+                    $myObject = LostObject::find($Object['objectID']);
 
                     if (empty($myObject))
                         $myObject = New LostObject();
 
-                    $myObject->ObjectID = $Object['ObjectID'];
-                    $myObject->StationID = $Object['StationID'];
-                    $myObject->Description = $Object['Description'];
-                    $myObject->Date = $Object['Date'];
-                    $myObject->TrainID = $Object['TrainID'];
-                    $myObject->LastUpdated = $Object['LastUpdated'];
+                    $myObject->ObjectID = $Object['objectID'];
+                    $myObject->StationID = $Object['stationID'];
+                    $myObject->Description = $Object['description'];
+                    $myObject->Date = $Object['date'];
+                    $myObject->TrainID = $Object['trainID'];
+                    $myObject->Found = $Object['found'];
+                    $myObject->LastUpdated = $Object['lastUpdated'];
 
                     if (!$myObject->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);

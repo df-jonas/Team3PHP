@@ -30,16 +30,16 @@ class LineController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->LineID
-            && $request->RouteID
-            && $request->TrainType
-            && $request->LastUpdated
+        if ($request->lineID
+            && $request->routeID
+            && $request->trainType
+            && $request->lastUpdated
         ) {
             $line = new Line();
-            $line->LineID = $request->LineID;
-            $line->RouteID = $request->RouteID;
-            $line->TrainType = $request->TrainType;
-            $line->LastUpdated = $request->LastUpdated;
+            $line->LineID = $request->lineID;
+            $line->RouteID = $request->routeID;
+            $line->TrainType = $request->trainType;
+            $line->LastUpdated = $request->lastUpdated;
 
             if ($line->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'LineID' => $line->LineID]);
@@ -53,12 +53,12 @@ class LineController extends Controller
     {
         $line = Line::find($id);
         if (!empty($line)) {
-            if ($request->RouteID)
-                $line->RouteID = $request->RouteID;
-            if ($request->TrainType)
-                $line->TrainType = $request->TrainType;
-            if ($request->LastUpdated)
-                $line->LastUpdated = $request->LastUpdated;
+            if ($request->routeID)
+                $line->RouteID = $request->routeID;
+            if ($request->trainType)
+                $line->TrainType = $request->trainType;
+            if ($request->lastUpdated)
+                $line->LastUpdated = $request->lastUpdated;
             else
                 $line->LastUpdated = time();
 
@@ -80,23 +80,23 @@ class LineController extends Controller
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->LineList)) {
+        if (!empty($request->lineList)) {
 
-            $lineList = $request->LineList;
+            $lineList = $request->lineList;
 
             try
             {
                 foreach ($lineList as $line)
                 {
-                    $myLine = Line::find($line['LineID']);
+                    $myLine = Line::find($line['lineID']);
 
                     if (empty($myLine))
                         $myLine = New Line();
 
-                    $myLine->LineID = $line['LineID'];
-                    $myLine->RouteID = $line['RouteID'];
-                    $myLine->TrainType = $line['TrainType'];
-                    $myLine->LastUpdated = $line['LastUpdated'];
+                    $myLine->LineID = $line['lineID'];
+                    $myLine->RouteID = $line['routeID'];
+                    $myLine->TrainType = $line['trainType'];
+                    $myLine->LastUpdated = $line['lastUpdated'];
 
                     if (!$myLine->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);

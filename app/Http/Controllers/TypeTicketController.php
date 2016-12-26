@@ -30,18 +30,18 @@ class TypeTicketController extends Controller
 
     public function create(Request $request)
     {
-        if ( $request->TypeTicketID
-            && $request->Name
-            && $request->Price
-            && $request->ComfortClass
-            && $request->LastUpdated
+        if ( $request->typeTicketID
+            && $request->name
+            && $request->price
+            && $request->comfortClass
+            && $request->lastUpdated
         ) {
             $typeTicket = new TypeTicket();
-            $typeTicket->TypeTicketID = $request->TypeTicketID;
-            $typeTicket->Name = $request->Name;
-            $typeTicket->Price = $request->Price;
-            $typeTicket->ComfortClass = $request->ComfortClass;
-            $typeTicket->LastUpdated = $request->LastUpdated;
+            $typeTicket->TypeTicketID = $request->typeTicketID;
+            $typeTicket->Name = $request->name;
+            $typeTicket->Price = $request->price;
+            $typeTicket->ComfortClass = $request->comfortClass;
+            $typeTicket->LastUpdated = $request->lastUpdated;
 
             if ($typeTicket->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'TicketID' => $typeTicket->TypeTicketID]);
@@ -55,14 +55,14 @@ class TypeTicketController extends Controller
     {
         $typeTicket = TypeTicket::find($id);
         if (!empty($typeTicket)) {
-            if ($request->Name)
-                $typeTicket->Name = $request->Name;
-            if ($request->Price)
+            if ($request->name)
+                $typeTicket->Name = $request->name;
+            if ($request->price)
                 $typeTicket->Price = $request->Price;
-            if ($request->ComfortClass)
-                $typeTicket->ComfortClass = $request->ComfortClass;
-            if ($request->LastUpdated)
-                $typeTicket->LastUpdated = $request->LastUpdated;
+            if ($request->comfortClass)
+                $typeTicket->ComfortClass = $request->comfortClass;
+            if ($request->lastUpdated)
+                $typeTicket->LastUpdated = $request->lastUpdated;
             else
                 $typeTicket->LastUpdated = time();
 
@@ -84,24 +84,24 @@ class TypeTicketController extends Controller
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->TypeTicketList)) {
+        if (!empty($request->typeTicketList)) {
 
-            $typeTicketList = $request->TypeTicketList;
+            $typeTicketList = $request->typeTicketList;
 
             try
             {
                 foreach ($typeTicketList as $typeTicket)
                 {
-                    $myTypeTicket = TypeTicket::find($typeTicket['TypeTicketID']);
+                    $myTypeTicket = TypeTicket::find($typeTicket['typeTicketID']);
 
                     if (empty($myTypeTicket))
                         $myTypeTicket = New TypeTicket();
 
-                    $myTypeTicket->TypeTicketID = $typeTicket['TypeTicketID'];
-                    $myTypeTicket->Name = $typeTicket['Name'];
-                    $myTypeTicket->Price = $typeTicket['Price'];
-                    $myTypeTicket->ComfortClass = $typeTicket['ComfortClass'];
-                    $myTypeTicket->LastUpdated = $typeTicket['LastUpdated'];
+                    $myTypeTicket->TypeTicketID = $typeTicket['typeTicketID'];
+                    $myTypeTicket->Name = $typeTicket['name'];
+                    $myTypeTicket->Price = $typeTicket['price'];
+                    $myTypeTicket->ComfortClass = $typeTicket['comfortClass'];
+                    $myTypeTicket->LastUpdated = $typeTicket['lastUpdated'];
 
                     if (!$myTypeTicket->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);

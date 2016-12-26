@@ -35,16 +35,16 @@ class TypePassController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->TypePassID
-            && $request->Name
-            && $request->Price
-            && $request->LastUpdated
+        if ($request->typePassID
+            && $request->name
+            && $request->price
+            && $request->lastUpdated
         ) {
             $typePass = new TypePass();
-            $typePass->TypePassID = $request->TypePassID;
-            $typePass->Name = $request->Name;
-            $typePass->Price = $request->Price;
-            $typePass->LastUpdated = $request->LastUpdated;
+            $typePass->TypePassID = $request->typePassID;
+            $typePass->Name = $request->name;
+            $typePass->Price = $request->price;
+            $typePass->LastUpdated = $request->lastUpdated;
 
             if ($typePass->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'TypePassID' => $typePass->TypePassID]);
@@ -58,12 +58,12 @@ class TypePassController extends Controller
     {
         $typePass = TypePass::find($id);
         if (!empty($typePass)) {
-            if ($request->Name)
-                $typePass->Name = $request->Name;
-            if ($request->Price)
-                $typePass->Price = $request->Price;
-            if ($request->LastUpdated)
-                $typePass->LastUpdated = $request->LastUpdated;
+            if ($request->name)
+                $typePass->Name = $request->name;
+            if ($request->price)
+                $typePass->Price = $request->price;
+            if ($request->lastUpdated)
+                $typePass->LastUpdated = $request->lastUpdated;
             else
                 $typePass->LastUpdated = time();
 
@@ -84,23 +84,23 @@ class TypePassController extends Controller
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->TypePassList)) {
+        if (!empty($request->typePassList)) {
 
-            $typePassList = $request->TypePassList;
+            $typePassList = $request->typePassList;
 
             try
             {
                 foreach ($typePassList as $typePass)
                 {
-                    $myTypePass = TypePass::find($typePass['TypePassID']);
+                    $myTypePass = TypePass::find($typePass['typePassID']);
 
                     if (empty($myTypePass))
                         $myTypePass = New TypePass();
 
-                    $myTypePass->TypePassID = $typePass['TypePassID'];
-                    $myTypePass->Name = $typePass['Name'];
-                    $myTypePass->Price = $typePass['Price'];
-                    $myTypePass->LastUpdated = $typePass['LastUpdated'];
+                    $myTypePass->TypePassID = $typePass['typePassID'];
+                    $myTypePass->Name = $typePass['name'];
+                    $myTypePass->Price = $typePass['price'];
+                    $myTypePass->LastUpdated = $typePass['lastUpdated'];
 
                     if (!$myTypePass->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);

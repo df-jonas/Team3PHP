@@ -46,18 +46,18 @@ class AddressController extends Controller
     {
         $address = Address::find($id);
         if (!empty($address)) {
-            if ($request->Street)
-                $address->Street = $request->Street;
-            if ($request->Number)
-                $address->Number = $request->Number;
-            if ($request->City)
-                $address->City = $request->City;
-            if ($request->ZipCode)
-                $address->ZipCode = $request->ZipCode;
-            if ($request->Coordinates)
-                $address->Coordinates = $request->Coordinates;
-            if ($request->LastUpdated)
-                $address->LastUpdated = $request->LastUpdated;
+            if ($request->street)
+                $address->Street = $request->street;
+            if ($request->number)
+                $address->Number = $request->number;
+            if ($request->city)
+                $address->City = $request->city;
+            if ($request->zipCode)
+                $address->ZipCode = $request->zipCode;
+            if ($request->coordinates)
+                $address->Coordinates = $request->coordinates;
+            if ($request->lastUpdated)
+                $address->LastUpdated = $request->lastUpdated;
             else
                 $address->LastUpdated = time();
 

@@ -14,7 +14,7 @@ class LostObject extends Model
 
     protected $hidden = ['StationID'];
     protected $guarded = ['ObjectID'];
-    protected $fillable = ['StationID', 'Description', 'Date', 'TrainID', 'LastUpdated'];
+    protected $fillable = ['StationID', 'Description', 'Date', 'TrainID', 'Found', 'LastUpdated'];
 
     protected $appends = ['Station'];
 

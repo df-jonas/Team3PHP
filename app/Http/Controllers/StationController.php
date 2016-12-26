@@ -35,18 +35,18 @@ class StationController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->StationID
-            && $request->Name
-            && $request->CoX
-            && $request->CoY
-            && $request->LastUpdated
+        if ($request->stationID
+            && $request->name
+            && $request->coX
+            && $request->coY
+            && $request->lastUpdated
         ) {
             $station = new Station();
-            $station->StationID = $request->StationID;
-            $station->Name = $request->Name;
-            $station->CoX = $request->CoX;
-            $station->CoY = $request->CoY;
-            $station->LastUpdated = $request->LastUpdated;
+            $station->StationID = $request->stationID;
+            $station->Name = $request->name;
+            $station->CoX = $request->coX;
+            $station->CoY = $request->coY;
+            $station->LastUpdated = $request->lastUpdated;
 
             try {
                 if ($station->save())
@@ -60,30 +60,18 @@ class StationController extends Controller
         return $this->beautifyReturn(400);
     }
 
-    public function createWithAddress(Request $request)
-    {
-        $createAddressResponse = $this->createNewAddress($request);
-
-        if (is_numeric($createAddressResponse)) {
-            $request->request->add(['AddressID' => $createAddressResponse]);
-            return $this->create($request);
-        } else {
-            return $createAddressResponse;
-        }
-    }
-
     public function update(Request $request, $id)
     {
         $station = Station::find($id);
         if (!empty($station)) {
-            if ($request->Name)
-                $station->Name = $request->Name;
-            if ($request->CoX)
-                $station->CoX = $request->CoX;
-            if ($request->CoY)
-                $station->CoY = $request->CoY;
-            if ($request->LastUpdated)
-                $station->LastUpdated = $request->LastUpdated;
+            if ($request->name)
+                $station->Name = $request->name;
+            if ($request->coX)
+                $station->CoX = $request->coX;
+            if ($request->coY)
+                $station->CoY = $request->coY;
+            if ($request->lastUpdated)
+                $station->LastUpdated = $request->lastUpdated;
             else
                 $station->LastUpdated = time();
 

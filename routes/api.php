@@ -42,7 +42,6 @@ Route::group(['prefix' => 'station', 'middleware' => 'auth:api'], function()
     Route::get('/{id}', 'StationController@byID');
 
     Route::post('create', 'StationController@create');
-    Route::post('createWithAddress', 'StationController@createWithAddress');
 
     Route::Put('update/{id}', 'StationController@update');
     Route::Put('massUpdate', 'StationController@massUpdate');
