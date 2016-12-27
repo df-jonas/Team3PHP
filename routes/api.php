@@ -83,6 +83,21 @@ Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function()
 //    Route::Delete('delete/{id}', 'CustomerController@delete');
 });
 
+Route::group(['prefix' => 'railCard', 'middleware' => 'auth:api'], function()
+{
+    Route::get('massUpdateStatus', 'RailCardController@massUpdateStatus');
+
+    Route::get('/', 'RailCardController@index');
+    Route::get('/{id}', 'RailCardController@byID');
+
+    Route::post('create', 'RailCardController@create');
+    Route::post('/createWithAddress', 'RailCardController@createWithAddress');
+
+    Route::Put('update/{id}', 'RailCardController@update');
+    Route::Put('massUpdate', 'RailCardController@massUpdate');
+//    Route::Delete('delete/{id}', 'CustomerController@delete');
+});
+
 Route::group(['prefix' => 'route', 'middleware' => 'auth:api'], function()
 {
     Route::get('massUpdateStatus', 'RouteController@massUpdateStatus');
