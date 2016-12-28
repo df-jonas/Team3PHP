@@ -243,4 +243,12 @@ Route::group(['prefix' => 'lostObject', 'middleware' => 'auth:api'], function()
 Route::group(['prefix' => 'mixed'], function()
 {
     Route::post('/stations', 'StationController@stationsAutocomplete');
+
+    Route::group(['middleware' => 'auth:api'], function()
+    {
+        Route::get('/getDatabase', function() {
+            return File::get(storage_path('database/localDB.db'));
+
+        });
+    });
 });

@@ -68,6 +68,7 @@ class UserController extends Controller
             && isset($request->rihts)
             && $request->birthDate
             && $request->email
+            && $request->apiToken
             && $request->lastUpdated
         ) {
             $user = new User();
@@ -92,7 +93,7 @@ class UserController extends Controller
                 $user->Password = Hash::make($request->password);
 
             // Hash api_token if not already hashed
-            if (preg_match($hashPatern, $request->api_token))
+            if (preg_match($hashPatern, $request->apiToken))
                 $user->Api_token = $request->api_token;
             else
                 $user->Api_token = Hash::make(uniqid($user->UserName, true));
@@ -146,6 +147,8 @@ class UserController extends Controller
                 $user->BirthDate = $request->birthDate;
             if ($request->email)
                 $user->Email = $request->email;
+            if ($request->apiToken)
+                $user->Api_token = $request->apiToken;
             if ($request->lastUpdated)
                 $user->LastUpdated = $request->lastUpdated;
             else
