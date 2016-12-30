@@ -41,7 +41,7 @@ class TicketController extends Controller
             $ticket = new Ticket();
             $ticket->TicketID = $request->ticketID;
             $ticket->RouteID = $request->routeID;
-            $ticket->TypeTicketID = $request->rypeTicketID;
+            $ticket->TypeTicketID = $request->typeTicketID;
             $ticket->Date = $request->date;
             $ticket->ValidFrom = $request->validFrom;
             $ticket->ValidUntil = $request->validUntil;

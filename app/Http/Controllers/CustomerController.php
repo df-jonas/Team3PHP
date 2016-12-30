@@ -39,8 +39,8 @@ class CustomerController extends Controller
     public function create(Request $request)
     {
 
-        if ($request->custommerID
-            && $request->cardID
+        if ($request->customerID
+            && $request->railCardID
             && $request->addressID
             && $request->firstName
             && $request->lastName
@@ -57,8 +57,8 @@ class CustomerController extends Controller
 //            if (!$railcard->save())
 //                return $this->beautifyReturnMessage('400', 'Railcard could not be saved');
 
-            $customer->CustommerID = $request->custommerID;
-            $customer->RailCardID = $request->cardID;
+            $customer->CustomerID = $request->customerID;
+            $customer->RailCardID = $request->railCardID;
             $customer->AddressID = $request->addressID;
             $customer->FirstName = $request->firstName;
             $customer->LastName = $request->lastName;
@@ -139,12 +139,12 @@ class CustomerController extends Controller
             {
                 foreach ($customerList as $customer)
                 {
-                    $myCustomer = Customer::find($customer['custommerID']);
+                    $myCustomer = Customer::find($customer['customerID']);
 
                     if (empty($myCustomer))
                         $myCustomer = New Customer();
 
-                    $myCustomer->CustommerID = $customer['custommerID'];
+                    $myCustomer->CustomerID = $customer['customerID'];
                     $myCustomer->RailCardID = $customer['railCardID'];
                     $myCustomer->AddressID = $customer['addressID'];
                     $myCustomer->FirstName = $customer['firstName'];

@@ -65,10 +65,8 @@ class UserController extends Controller
             && $request->lastName
             && $request->userName
             && $request->password
-            && isset($request->rihts)
             && $request->birthDate
             && $request->email
-            && $request->apiToken
             && $request->lastUpdated
         ) {
             $user = new User();
@@ -78,11 +76,14 @@ class UserController extends Controller
             $user->FirstName = $request->firstName;
             $user->LastName = $request->lastName;
             $user->UserName = $request->userName;
-
-            $user->Rights = $request->rights;
             $user->BirthDate = $request->birthDate;
             $user->Email = $request->email;
             $user->LastUpdated = $request->lastUpdated;
+
+            if (isset($request->rights))
+                $user->Rights = $request->rights;
+            else
+                $user->Rights = 0;
 
             $hashPatern = '/^(\$2y\$10\$)/';
 
@@ -93,10 +94,11 @@ class UserController extends Controller
                 $user->Password = Hash::make($request->password);
 
             // Hash api_token if not already hashed
-            if (preg_match($hashPatern, $request->apiToken))
-                $user->Api_token = $request->api_token;
+            if (isset($request->apiToken) && preg_match($hashPatern, $request->apiToken))
+                    $user->Api_token = $request->apiToken;
             else
                 $user->Api_token = Hash::make(uniqid($user->UserName, true));
+            
 
 
             try {

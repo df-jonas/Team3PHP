@@ -90,9 +90,9 @@ class LostObjectController extends Controller
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->ObjectList)) {
+        if (!empty($request->lostObjectList)) {
 
-            $lostObjectList = $request->ObjectList;
+            $lostObjectList = $request->lostObjectList;
 
             try
             {
