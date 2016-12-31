@@ -39,6 +39,7 @@ class ReservationController extends Controller
             && $request->passengerCount
             && $request->trainID
             && $request->price
+            && $request->reservationDate
             && $request->routeID
             && $request->lastUpdated
         ) {
@@ -48,6 +49,7 @@ class ReservationController extends Controller
             $reservation->TrainID = $request->trainID;
             $reservation->Price = $request->price;
             $reservation->RouteID = $request->routeID;
+            $reservation->ReservationDate = $request->reservationDate;
             $reservation->LastUpdated = $request->lastUpdated;
 
             if ($reservation->save())
@@ -68,6 +70,8 @@ class ReservationController extends Controller
                 $reservation->TrainID = $request->trainID;
             if ($request->price)
                 $reservation->Price = $request->price;
+            if ($request->reservationDate)
+                $reservation->ReservationDate = $request->reservationDate;
             if ($request->routeID)
                 $reservation->RouteID = $request->routeID;
             if ($request->lastUpdated)
@@ -109,6 +113,7 @@ class ReservationController extends Controller
                     $myReservation->PassengerCount = $reservation['passengerCount'];
                     $myReservation->TrainID = $reservation['trainID'];
                     $myReservation->Price = $reservation['price'];
+                    $myReservation->ReservationDate = $reservation['reservationDate'];
                     $myReservation->RouteID = $reservation['routeID'];
                     $myReservation->LastUpdated = $reservation['lastUpdated'];
 
