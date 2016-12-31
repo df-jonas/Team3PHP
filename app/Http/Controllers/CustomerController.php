@@ -39,31 +39,32 @@ class CustomerController extends Controller
     public function create(Request $request)
     {
 
-        if ($request->CustommerID
-            && $request->AddressID
-            && $request->FirstName
-            && $request->LastName
-            && $request->BirthDate
-            && $request->Email
-            && $request->LastUpdated
+        if ($request->customerID
+            && $request->railCardID
+            && $request->addressID
+            && $request->firstName
+            && $request->lastName
+            && $request->birthDate
+            && $request->email
+            && $request->lastUpdated
         ) {
             $customer = new Customer();
 
-            $railcard = new RailCard();
-            $railcard->RailcardID = $request->CustomerID;
-            $railcard->LastUpdated = $request->LastUpdated;
+//            $railcard = new RailCard();
+//            $railcard->RailcardID = $request->customerID;
+//            $railcard->LastUpdated = $request->lastUpdated;
+//
+//            if (!$railcard->save())
+//                return $this->beautifyReturnMessage('400', 'Railcard could not be saved');
 
-            if (!$railcard->save())
-                return $this->beautifyReturnMessage('400', 'Railcard could not be saved');
-
-            $customer->CustommerID = $request->CustommerID;
-            $customer->RailCardID = $railcard->CardID;
-            $customer->AddressID = $request->AddressID;
-            $customer->FirstName = $request->FirstName;
-            $customer->LastName = $request->LastName;
-            $customer->BirthDate = $request->BirthDate;
-            $customer->Email = $request->Email;
-            $customer->LastUpdated = $request->LastUpdated;
+            $customer->CustomerID = $request->customerID;
+            $customer->RailCardID = $request->railCardID;
+            $customer->AddressID = $request->addressID;
+            $customer->FirstName = $request->firstName;
+            $customer->LastName = $request->lastName;
+            $customer->BirthDate = $request->birthDate;
+            $customer->Email = $request->email;
+            $customer->LastUpdated = $request->lastUpdated;
 
             if ($customer->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'CustomerID' => $customer->CustomerID]);
@@ -97,18 +98,18 @@ class CustomerController extends Controller
 
         $customer = Customer::find($id);
         if (!empty($customer)) {
-            if ($request->AddressID)
-                $customer->AddressID = $request->AddressID;
-            if ($request->FirstName)
-                $customer->FirstName = $request->FirstName;
-            if ($request->LastName)
-                $customer->LastName = $request->LastName;
-            if ($request->BirthDate)
-                $customer->BirthDate = $request->BirthDate;
-            if ($request->Email)
-                $customer->Email = $request->Email;
-            if ($request->LastUpdated)
-                $customer->LastUpdated = $request->LastUpdated;
+            if ($request->addressID)
+                $customer->AddressID = $request->addressID;
+            if ($request->firstName)
+                $customer->FirstName = $request->firstName;
+            if ($request->lastName)
+                $customer->LastName = $request->lastName;
+            if ($request->birthDate)
+                $customer->BirthDate = $request->birthDate;
+            if ($request->email)
+                $customer->Email = $request->email;
+            if ($request->lastUpdated)
+                $customer->LastUpdated = $request->lastUpdated;
             else
                 $customer->LastUpdated = time();
 
@@ -130,28 +131,27 @@ class CustomerController extends Controller
 
     public function massUpdate(Request $request)
     {
+        if (!empty($request->customerList)) {
 
-        if (!empty($request->CustomerList)) {
-
-            $customerList = $request->CustomerList;
+            $customerList = $request->customerList;
 
             try
             {
                 foreach ($customerList as $customer)
                 {
-                    $myCustomer = Customer::find($customer['CustommerID']);
+                    $myCustomer = Customer::find($customer['customerID']);
 
                     if (empty($myCustomer))
                         $myCustomer = New Customer();
 
-                    $myCustomer->CustommerID = $customer['CustommerID'];
-                    $myCustomer->RailCardID = $customer['RailCardID'];
-                    $myCustomer->AddressID = $customer['AddressID'];
-                    $myCustomer->FirstName = $customer['FirstName'];
-                    $myCustomer->LastName = $customer['LastName'];
-                    $myCustomer->BirthDate = $customer['BirthDate'];
-                    $myCustomer->Email = $customer['Email'];
-                    $myCustomer->LastUpdated = $customer['LastUpdated'];
+                    $myCustomer->CustomerID = $customer['customerID'];
+                    $myCustomer->RailCardID = $customer['railCardID'];
+                    $myCustomer->AddressID = $customer['addressID'];
+                    $myCustomer->FirstName = $customer['firstName'];
+                    $myCustomer->LastName = $customer['lastName'];
+                    $myCustomer->BirthDate = $customer['birthDate'];
+                    $myCustomer->Email = $customer['email'];
+                    $myCustomer->LastUpdated = $customer['lastUpdated'];
 
                     if (!$myCustomer->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);

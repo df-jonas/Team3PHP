@@ -30,22 +30,22 @@ class TicketController extends Controller
 
     public function create(Request $request)
     {
-        if ( $request->TicketID
-            && $request->RouteID
-            && $request->TypeTicketID
-            && $request->Date
-            && $request->ValidFrom
-            && $request->ValidUntil
-            && $request->LastUpdated
+        if ( $request->ticketID
+            && $request->routeID
+            && $request->typeTicketID
+            && $request->date
+            && $request->validFrom
+            && $request->validUntil
+            && $request->lastUpdated
         ) {
             $ticket = new Ticket();
-            $ticket->TicketID = $request->TicketID;
-            $ticket->RouteID = $request->RouteID;
-            $ticket->TypeTicketID = $request->TypeTicketID;
-            $ticket->Date = $request->Date;
-            $ticket->ValidFrom = $request->ValidFrom;
-            $ticket->ValidUntil = $request->ValidUntil;
-            $ticket->LastUpdated = $request->LastUpdated;
+            $ticket->TicketID = $request->ticketID;
+            $ticket->RouteID = $request->routeID;
+            $ticket->TypeTicketID = $request->typeTicketID;
+            $ticket->Date = $request->date;
+            $ticket->ValidFrom = $request->validFrom;
+            $ticket->ValidUntil = $request->validUntil;
+            $ticket->LastUpdated = $request->lastUpdated;
 
             if ($ticket->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'TicketID' => $ticket->TicketID]);
@@ -59,18 +59,18 @@ class TicketController extends Controller
     {
         $ticket = Ticket::find($id);
         if (!empty($ticket)) {
-            if ($request->RouteID)
-                $ticket->RouteID = $request->RouteID;
-            if ($request->TypeTicketID)
-                $ticket->TypeTicketID = $request->TypeTicketID;
-            if ($request->Date)
-                $ticket->Date = $request->Date;
-            if ($request->ValidFrom)
-                $ticket->ValidFrom = $request->ValidFrom;
-            if ($request->ValidUntil)
-                $ticket->ValidUntil = $request->ValidUntil;
-            if ($request->LastUpdated)
-                $ticket->LastUpdated = $request->LastUpdated;
+            if ($request->routeID)
+                $ticket->RouteID = $request->routeID;
+            if ($request->typeTicketID)
+                $ticket->TypeTicketID = $request->typeTicketID;
+            if ($request->date)
+                $ticket->Date = $request->date;
+            if ($request->validFrom)
+                $ticket->ValidFrom = $request->validFrom;
+            if ($request->validUntil)
+                $ticket->ValidUntil = $request->validUntil;
+            if ($request->lastUpdated)
+                $ticket->LastUpdated = $request->lastUpdated;
             else
                 $ticket->LastUpdated = time();
 
@@ -92,26 +92,26 @@ class TicketController extends Controller
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->TicketList)) {
+        if (!empty($request->ticketList)) {
 
-            $ticketList = $request->TicketList;
+            $ticketList = $request->ticketList;
 
             try
             {
                 foreach ($ticketList as $ticket)
                 {
-                    $myTicket = Ticket::find($ticket['TicketID']);
+                    $myTicket = Ticket::find($ticket['ticketID']);
 
                     if (empty($myTicket))
                         $myTicket = New Ticket();
 
-                    $myTicket->TicketID = $ticket['TicketID'];
-                    $myTicket->RouteID = $ticket['RouteID'];
-                    $myTicket->TypeTicketID = $ticket['TypeTicketID'];
-                    $myTicket->Date = $ticket['Date'];
-                    $myTicket->ValidFrom = $ticket['ValidFrom'];
-                    $myTicket->ValidUntil = $ticket['ValidUntil'];
-                    $myTicket->LastUpdated = $ticket['LastUpdated'];
+                    $myTicket->TicketID = $ticket['ticketID'];
+                    $myTicket->RouteID = $ticket['routeID'];
+                    $myTicket->TypeTicketID = $ticket['typeTicketID'];
+                    $myTicket->Date = $ticket['date'];
+                    $myTicket->ValidFrom = $ticket['validFrom'];
+                    $myTicket->ValidUntil = $ticket['validUntil'];
+                    $myTicket->LastUpdated = $ticket['lastUpdated'];
 
                     if (!$myTicket->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);

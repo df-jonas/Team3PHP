@@ -30,16 +30,16 @@ class DiscountController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->DiscountID
-            && $request->Name
-            && $request->Amount
-            && $request->LastUpdated
+        if ($request->discountID
+            && $request->name
+            && $request->amount
+            && $request->lastUpdated
         ) {
             $discount = new Discount();
-            $discount->DiscountID = $request->DiscountID;
-            $discount->Name = $request->Name;
-            $discount->Amount = $request->Amount;
-            $discount->LastUpdated = $request->LastUpdated;
+            $discount->DiscountID = $request->discountID;
+            $discount->Name = $request->name;
+            $discount->Amount = $request->amount;
+            $discount->LastUpdated = $request->lastUpdated;
 
             if ($discount->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'DiscountID' => $discount->DiscountID]);
@@ -53,12 +53,12 @@ class DiscountController extends Controller
     {
         $discount = Discount::find($id);
         if (!empty($discount)) {
-            if ($request->Name)
-                $discount->Name = $request->Name;
-            if ($request->Amount)
-                $discount->Amount = $request->Amount;
-            if ($request->LastUpdated)
-                $discount->LastUpdated = $request->LastUpdated;
+            if ($request->name)
+                $discount->Name = $request->name;
+            if ($request->amount)
+                $discount->Amount = $request->amount;
+            if ($request->lastUpdated)
+                $discount->LastUpdated = $request->lastUpdated;
             else
                 $discount->LastUpdated = time();
 
@@ -79,23 +79,23 @@ class DiscountController extends Controller
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->DiscountList)) {
+        if (!empty($request->discountList)) {
 
-            $discountList = $request->DiscountList;
+            $discountList = $request->discountList;
 
             try
             {
                 foreach ($discountList as $discount)
                 {
-                    $myDiscount = Discount::find($discount['DiscountID']);
+                    $myDiscount = Discount::find($discount['discountID']);
 
                     if (empty($myCustomer))
                         $myDiscount = New Discount();
 
-                    $myDiscount->DiscountID = $discount['DiscountID'];
-                    $myDiscount->Name = $discount['Name'];
-                    $myDiscount->Amount = $discount['Amount'];
-                    $myDiscount->LastUpdated = $discount['LastUpdated'];
+                    $myDiscount->DiscountID = $discount['discountID'];
+                    $myDiscount->Name = $discount['name'];
+                    $myDiscount->Amount = $discount['amount'];
+                    $myDiscount->LastUpdated = $discount['lastUpdated'];
 
                     if (!$myDiscount->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);

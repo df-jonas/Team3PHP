@@ -42,7 +42,6 @@ Route::group(['prefix' => 'station', 'middleware' => 'auth:api'], function()
     Route::get('/{id}', 'StationController@byID');
 
     Route::post('create', 'StationController@create');
-    Route::post('createWithAddress', 'StationController@createWithAddress');
 
     Route::Put('update/{id}', 'StationController@update');
     Route::Put('massUpdate', 'StationController@massUpdate');
@@ -81,6 +80,21 @@ Route::group(['prefix' => 'customer', 'middleware' => 'auth:api'], function()
 
     Route::Put('update/{id}', 'CustomerController@update');
     Route::Put('massUpdate', 'CustomerController@massUpdate');
+//    Route::Delete('delete/{id}', 'CustomerController@delete');
+});
+
+Route::group(['prefix' => 'railCard', 'middleware' => 'auth:api'], function()
+{
+    Route::get('massUpdateStatus', 'RailCardController@massUpdateStatus');
+
+    Route::get('/', 'RailCardController@index');
+    Route::get('/{id}', 'RailCardController@byID');
+
+    Route::post('create', 'RailCardController@create');
+    Route::post('/createWithAddress', 'RailCardController@createWithAddress');
+
+    Route::Put('update/{id}', 'RailCardController@update');
+    Route::Put('massUpdate', 'RailCardController@massUpdate');
 //    Route::Delete('delete/{id}', 'CustomerController@delete');
 });
 
@@ -229,4 +243,12 @@ Route::group(['prefix' => 'lostObject', 'middleware' => 'auth:api'], function()
 Route::group(['prefix' => 'mixed'], function()
 {
     Route::post('/stations', 'StationController@stationsAutocomplete');
+
+    Route::group(['middleware' => 'auth:api'], function()
+    {
+        Route::get('/getDatabase', function() {
+            return File::get(storage_path('database/localDB.db'));
+
+        });
+    });
 });

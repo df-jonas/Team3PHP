@@ -58,31 +58,48 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->StaffID
-            && $request->AddressID
-            && $request->StationID
-            && $request->FirstName
-            && $request->LastName
-            && $request->UserName
-            && $request->Password
-            && isset($request->Rights)
-            && $request->BirthDate
-            && $request->Email
-            && $request->LastUpdated
+        if ($request->staffID
+            && $request->addressID
+            && $request->stationID
+            && $request->firstName
+            && $request->lastName
+            && $request->userName
+            && $request->password
+            && $request->birthDate
+            && $request->email
+            && $request->lastUpdated
         ) {
             $user = new User();
-            $user->StaffID = $request->StaffID;
-            $user->AddressID = $request->AddressID;
-            $user->StationID = $request->StationID;
-            $user->FirstName = $request->FirstName;
-            $user->LastName = $request->LastName;
-            $user->UserName = $request->UserName;
-            $user->Password = Hash::make($request->Password);
-            $user->Rights = $request->Rights;
-            $user->BirthDate = $request->BirthDate;
-            $user->Email = $request->Email;
-            $user->Api_token = Hash::make(uniqid($user->UserName, true));
-            $user->LastUpdated = $request->LastUpdated;
+            $user->StaffID = $request->staffID;
+            $user->AddressID = $request->addressID;
+            $user->StationID = $request->stationID;
+            $user->FirstName = $request->firstName;
+            $user->LastName = $request->lastName;
+            $user->UserName = $request->userName;
+            $user->BirthDate = $request->birthDate;
+            $user->Email = $request->email;
+            $user->LastUpdated = $request->lastUpdated;
+
+            if (isset($request->rights))
+                $user->Rights = $request->rights;
+            else
+                $user->Rights = 0;
+
+            $hashPatern = '/^(\$2y\$10\$)/';
+
+            // Hash password if not already hashed
+            if (preg_match($hashPatern, $request->password))
+                $user->Password = $request->password;
+            else
+                $user->Password = Hash::make($request->password);
+
+            // Hash api_token if not already hashed
+            if (isset($request->apiToken) && preg_match($hashPatern, $request->apiToken))
+                    $user->Api_token = $request->apiToken;
+            else
+                $user->Api_token = Hash::make(uniqid($user->UserName, true));
+            
+
 
             try {
                 if ($user->save())
@@ -114,29 +131,38 @@ class UserController extends Controller
 
         $user = User::find($id);
         if (!empty($user)) {
-            if ($request->AddressID)
-                $user->AddressID = $request->AddressID;
-            if ($request->StationID)
-                $user->StationID = $request->StationID;
-            if ($request->FirstName)
-                $user->FirstName = $request->FirstName;
-            if ($request->LastName)
-                $user->LastName = $request->LastName;
-            if ($request->UserName)
-                $user->UserName = $request->UserName;
-            if ($request->Password)
-                $user->Password = Hash::make($request->Password);
-            if (isset($request->Rights))
-                $user->Rights = $request->Rights;
-            if ($request->BirthDate)
-                $user->BirthDate = $request->BirthDate;
-            if ($request->Email)
-                $user->Email = $request->Email;
-            if ($request->LastUpdated)
-                $user->LastUpdated = $request->LastUpdated;
+            $hashPatern = '/^(\$2y\$10\$)/';
+
+            if ($request->addressID)
+                $user->AddressID = $request->addressID;
+            if ($request->stationID)
+                $user->StationID = $request->stationID;
+            if ($request->firstName)
+                $user->FirstName = $request->firstName;
+            if ($request->lastName)
+                $user->LastName = $request->lastName;
+            if ($request->userName)
+                $user->UserName = $request->userName;
+            if (isset($request->rights))
+                $user->Rights = $request->rights;
+            if ($request->birthDate)
+                $user->BirthDate = $request->birthDate;
+            if ($request->email)
+                $user->Email = $request->email;
+            if ($request->apiToken)
+                $user->Api_token = $request->apiToken;
+            if ($request->lastUpdated)
+                $user->LastUpdated = $request->lastUpdated;
             else
                 $user->LastUpdated = time();
 
+            if ($request->password)
+            {
+                if (preg_match($hashPatern, $request->password))
+                    $user->Password = $request->password;
+                else
+                    $user->Password = Hash::make($request->password);
+            }
 
             if ($user->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Updated']);
@@ -156,31 +182,31 @@ class UserController extends Controller
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->StaffList)) {
+        if (!empty($request->staffList)) {
 
-            $staffList = $request->StaffList;
+            $staffList = $request->staffList;
 
             try
             {
                 foreach ($staffList as $staff)
                 {
-                    $myStaff = User::find($staff['StaffID']);
+                    $myStaff = User::find($staff['staffID']);
 
                     if (empty($myStaff))
                         $myStaff = New User();
 
-                    $myStaff->StaffID = $staff['StaffID'];
-                    $myStaff->AddressID = $staff['AddressID'];
-                    $myStaff->StationID = $staff['StationID'];
-                    $myStaff->FirstName = $staff['FirstName'];
-                    $myStaff->LastName = $staff['LastName'];
-                    $myStaff->UserName = $staff['UserName'];
-                    $myStaff->Password = $staff['Password'];
-                    $myStaff->Rights = $staff['Rights'];
-                    $myStaff->BirthDate = $staff['BirthDate'];
-                    $myStaff->Email = $staff['Email'];
-                    $myStaff->Api_token = $staff['Api_token'];
-                    $myStaff->LastUpdated = $staff['LastUpdated'];
+                    $myStaff->StaffID = $staff['staffID'];
+                    $myStaff->AddressID = $staff['addressID'];
+                    $myStaff->StationID = $staff['stationID'];
+                    $myStaff->FirstName = $staff['firstName'];
+                    $myStaff->LastName = $staff['lastName'];
+                    $myStaff->UserName = $staff['userName'];
+                    $myStaff->Password = $staff['password'];
+                    $myStaff->Rights = $staff['rights'];
+                    $myStaff->BirthDate = $staff['birthDate'];
+                    $myStaff->Email = $staff['email'];
+                    $myStaff->Api_token = $staff['api_token'];
+                    $myStaff->LastUpdated = $staff['lastUpdated'];
 
                     if (!$myStaff->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);
