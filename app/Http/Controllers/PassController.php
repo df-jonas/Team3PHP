@@ -35,20 +35,20 @@ class PassController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->PassID
-            && $request->TypePassID
-            && $request->Date
-            && $request->StartDate
-            && $request->ComfortClass
-            && $request->LastUpdated
+        if ($request->passID
+            && $request->typePassID
+            && $request->date
+            && $request->startDate
+            && $request->comfortClass
+            && $request->lastUpdated
         ) {
             $pass = new Pass();
-            $pass->PassID = $request->PassID;
-            $pass->TypePassID = $request->TypePassID;
-            $pass->Date = $request->Date;
-            $pass->StartDate = $request->StartDate;
-            $pass->ComfortClass = $request->ComfortClass;
-            $pass->LastUpdated = $request->LastUpdated;
+            $pass->PassID = $request->passID;
+            $pass->TypePassID = $request->typePassID;
+            $pass->Date = $request->date;
+            $pass->StartDate = $request->startDate;
+            $pass->ComfortClass = $request->comfortClass;
+            $pass->LastUpdated = $request->lastUpdated;
 
             if ($pass->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'SubscriptionID' => $pass->PassID]);
@@ -62,16 +62,16 @@ class PassController extends Controller
     {
         $pass = Pass::find($id);
         if (!empty($pass)) {
-            if ($request->TypePassID)
-                $pass->TypePassID = $request->TypePassID;
-            if ($request->Date)
-                $pass->Date = $request->Date;
-            if ($request->StartDate)
-                $pass->StartDate = $request->StartDate;
-            if ($request->ComfortClass)
-                $pass->ComfortClass = $request->ComfortClass;
-            if ($request->LastUpdated)
-                $pass->LastUpdated = $request->LastUpdated;
+            if ($request->typePassID)
+                $pass->TypePassID = $request->typePassID;
+            if ($request->date)
+                $pass->Date = $request->date;
+            if ($request->startDate)
+                $pass->StartDate = $request->startDate;
+            if ($request->comfortClass)
+                $pass->ComfortClass = $request->comfortClass;
+            if ($request->lastUpdated)
+                $pass->LastUpdated = $request->lastUpdated;
             else
                 $pass->LastUpdated = time();
 
@@ -92,25 +92,25 @@ class PassController extends Controller
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->PassList)) {
+        if (!empty($request->passList)) {
 
-            $passList = $request->PassList;
+            $passList = $request->passList;
 
             try
             {
                 foreach ($passList as $pass)
                 {
-                    $myPass = Pass::find($pass['PassID']);
+                    $myPass = Pass::find($pass['passID']);
 
                     if (empty($myPass))
                         $myPass = New Pass();
 
-                    $myPass->PassID = $pass['PassID'];
-                    $myPass->TypePassID = $pass['TypePassID'];
-                    $myPass->Date = $pass['Date'];
-                    $myPass->StartDate = $pass['StartDate'];
-                    $myPass->ComfortClass = $pass['ComfortClass'];
-                    $myPass->LastUpdated = $pass['LastUpdated'];
+                    $myPass->PassID = $pass['passID'];
+                    $myPass->TypePassID = $pass['typePassID'];
+                    $myPass->Date = $pass['date'];
+                    $myPass->StartDate = $pass['startDate'];
+                    $myPass->ComfortClass = $pass['comfortClass'];
+                    $myPass->LastUpdated = $pass['lastUpdated'];
 
                     if (!$myPass->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);

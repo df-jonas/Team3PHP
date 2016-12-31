@@ -30,12 +30,12 @@ class RailCardController extends Controller
 
     public function create(Request $request)
     {
-        if ( $request->CardID
-            && $request->LastUpdated
+        if ( $request->cardID
+            && $request->lastUpdated
         ) {
             $railCard = new RailCard();
-            $railCard->CardID = $request->CardID;
-            $railCard->LastUpdated = $request->LastUpdated;
+            $railCard->CardID = $request->cardID;
+            $railCard->LastUpdated = $request->lastUpdated;
 
             if ($railCard->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'RailCardID' => $railCard->TypePassID]);
@@ -49,11 +49,10 @@ class RailCardController extends Controller
     {
         $railCard = RailCard::find($id);
         if (!empty($railCard)) {
-            if ($request->TypePassID)
-                $railCard->TypePassID = $request->TypePassID;
-            if ($request->LastUpdated)
-                $railCard->LastUpdated = $request->LastUpdated;
-
+            if ($request->typePassID)
+                $railCard->TypePassID = $request->typePassID;
+            if ($request->lastUpdated)
+                $railCard->LastUpdated = $request->lastUpdated;
 
             if ($railCard->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Updated']);
@@ -72,21 +71,21 @@ class RailCardController extends Controller
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->RailCardList)) {
+        if (!empty($request->railCardList)) {
 
-            $railCardList = $request->RailCardList;
+            $railCardList = $request->railCardList;
 
             try
             {
                 foreach ($railCardList as $railCard)
                 {
-                    $myRailCard = RailCard::find($railCard['TypePassID']);
+                    $myRailCard = RailCard::find($railCard['typePassID']);
 
                     if (empty($myRailCard))
                         $myRailCard = New RailCard();
 
-                    $myRailCard->TypePassID = $railCard['CardID'];
-                    $myRailCard->LastUpdated = $railCard['LastUpdated'];
+                    $myRailCard->TypePassID = $railCard['cardID'];
+                    $myRailCard->LastUpdated = $railCard['lastUpdated'];
 
                     if (!$myRailCard->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);

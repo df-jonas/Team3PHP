@@ -35,22 +35,22 @@ class SubscriptionController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->SubscriptionID
-            && $request->RailCardID
-            && $request->RouteID
-            && $request->DiscountID
-            && $request->ValidFrom
-            && $request->ValidUntil
-            && $request->LastUpdated
+        if ($request->subscriptionID
+            && $request->railCardID
+            && $request->routeID
+            && $request->discountID
+            && $request->validFrom
+            && $request->validUntil
+            && $request->lastUpdated
         ) {
             $subscription = new Subscription();
-            $subscription->SubscriptionID = $request->SubscriptionID;
-            $subscription->RailCardID = $request->RailCardID;
-            $subscription->RouteID = $request->RouteID;
-            $subscription->DiscountID = $request->DiscountID;
-            $subscription->ValidFrom = $request->ValidFrom;
-            $subscription->ValidUntil = $request->ValidUntil;
-            $subscription->LastUpdated = $request->LastUpdated;
+            $subscription->SubscriptionID = $request->subscriptionID;
+            $subscription->RailCardID = $request->railCardID;
+            $subscription->RouteID = $request->routeID;
+            $subscription->DiscountID = $request->discountID;
+            $subscription->ValidFrom = $request->validFrom;
+            $subscription->ValidUntil = $request->validUntil;
+            $subscription->LastUpdated = $request->lastUpdated;
 
             if ($subscription->save())
                 return $this->beautifyReturn(200, ['Extra' => 'Created', 'SubscriptionID' => $subscription->SubscriptionID]);
@@ -64,18 +64,18 @@ class SubscriptionController extends Controller
     {
         $subscription = Subscription::find($id);
         if (!empty($subscription)) {
-            if ($request->RailCardID)
-                $subscription->RailCardID = $request->RailCardID;
-            if ($request->RouteID)
-                $subscription->RouteID = $request->RouteID;
-            if ($request->DiscountID)
-                $subscription->DiscountID = $request->DiscountID;
-            if ($request->ValidFrom)
-                $subscription->ValidFrom = $request->ValidFrom;
-            if ($request->ValidUntil)
-                $subscription->ValidUntil = $request->ValidUntil;
-            if ($request->LastUpdated)
-                $subscription->LastUpdated = $request->LastUpdated;
+            if ($request->railCardID)
+                $subscription->RailCardID = $request->railCardID;
+            if ($request->routeID)
+                $subscription->RouteID = $request->routeID;
+            if ($request->discountID)
+                $subscription->DiscountID = $request->discountID;
+            if ($request->validFrom)
+                $subscription->ValidFrom = $request->validFrom;
+            if ($request->validUntil)
+                $subscription->ValidUntil = $request->validUntil;
+            if ($request->lastUpdated)
+                $subscription->LastUpdated = $request->lastUpdated;
             else
                 $subscription->LastUpdated = time();
 
@@ -96,26 +96,26 @@ class SubscriptionController extends Controller
     public function massUpdate(Request $request)
     {
 
-        if (!empty($request->SubscriptionList)) {
+        if (!empty($request->subscriptionList)) {
 
-            $subscriptionList = $request->SubscriptionList;
+            $subscriptionList = $request->subscriptionList;
 
             try
             {
                 foreach ($subscriptionList as $subscription)
                 {
-                    $mySubscription = Subscription::find($subscription['SubscriptionID']);
+                    $mySubscription = Subscription::find($subscription['subscriptionID']);
 
                     if (empty($mySubscription))
                         $mySubscription = New Subscription();
 
-                    $mySubscription->SubscriptionID = $subscription['SubscriptionID'];
-                    $mySubscription->RailCardID = $subscription['RailCardID'];
-                    $mySubscription->RouteID = $subscription['RouteID'];
-                    $mySubscription->DiscountID = $subscription['DiscountID'];
-                    $mySubscription->ValidFrom = $subscription['ValidFrom'];
-                    $mySubscription->ValidUntil = $subscription['ValidUntil'];
-                    $mySubscription->LastUpdated = $subscription['LastUpdated'];
+                    $mySubscription->SubscriptionID = $subscription['subscriptionID'];
+                    $mySubscription->RailCardID = $subscription['railCardID'];
+                    $mySubscription->RouteID = $subscription['routeID'];
+                    $mySubscription->DiscountID = $subscription['discountID'];
+                    $mySubscription->ValidFrom = $subscription['validFrom'];
+                    $mySubscription->ValidUntil = $subscription['validUntil'];
+                    $mySubscription->LastUpdated = $subscription['lastUpdated'];
 
                     if (!$mySubscription->save())
                         return $this->beautifyReturn(460, ['Extra' => 'MassUpdate']);

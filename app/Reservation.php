@@ -14,7 +14,7 @@ class Reservation extends Model
 
     protected $hidden = ['RouteID'];
     protected $guarded = ['ReservationID'];
-    protected $fillable = ['PassengerCount', 'TrainID', 'Price', 'RouteID', 'LastUpdated'];
+    protected $fillable = ['PassengerCount', 'TrainID', 'Price','ReservationDate', 'RouteID', 'LastUpdated'];
 
     protected $appends = ['Route'];
 

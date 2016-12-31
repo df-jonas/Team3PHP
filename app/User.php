@@ -17,7 +17,8 @@ class User extends Authenticatable
     public $timestamps = false;
     public $incrementing = false;
 
-    protected $hidden = ['AddressID', 'StationID', 'Password', 'remember_token', 'Api_token'];
+//    protected $hidden = ['AddressID', 'StationID', 'Password', 'remember_token', 'Api_token'];
+    protected $hidden = ['AddressID', 'StationID'];
     protected $guarded = ['StaffID'];
     protected $fillable = ['AddressID', 'StationID', 'FirstName', 'LastName', 'UserName', 'Password', 'Rights', 'BirthDate', 'Email', 'Api_token', 'LastUpdated'];
 
